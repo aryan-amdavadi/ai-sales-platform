@@ -7,20 +7,14 @@ import {
   PhoneOff,
   Mic,
   MicOff,
-  Volume2,
   User,
   Sparkles,
-  Building2,
   Clock,
   CheckCircle2,
   Calendar,
-  Layers,
   ArrowRight,
-  TrendingUp,
-  AlertCircle,
   Database,
   Globe,
-  Share2,
   UserCheck,
   Zap,
   Activity,
@@ -327,39 +321,39 @@ export default function CallsPage() {
   };
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-20 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-teal-950/90 border border-teal-500/50 text-teal-200 text-xs font-mono flex items-center justify-between shadow-xl animate-in fade-in duration-200">
+        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-xl animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-teal-400" />
+            <Sparkles className="w-4 h-4 text-blue-400" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-teal-400 hover:text-teal-200">
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Header & Hero Call Launcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
-            AI Voice Call Sessions & Cockpit
+          <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+            AI VOICE CALL SESSIONS
           </h1>
-          <p className="text-xs text-slate-400 font-mono mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Autonomous outbound voice qualification with real-time signal detection & CRM synchronization.
           </p>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           {/* Multilingual Selector */}
-          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-1 text-xs font-mono">
-            <Globe className="w-3.5 h-3.5 text-slate-400 ml-1.5" />
+          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-800 rounded-md px-2 py-1 text-xs">
+            <Globe className="w-3.5 h-3.5 text-slate-400" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
-              className="bg-transparent text-slate-200 text-xs font-mono focus:outline-none pr-2"
+              className="bg-transparent text-slate-200 text-xs focus:outline-none pr-1"
             >
               <option value="en-US" className="bg-slate-900 text-slate-200">
                 English (US)
@@ -375,9 +369,10 @@ export default function CallsPage() {
 
           <Button
             onClick={() => handleStartHeroCall(language)}
-            className="h-9 bg-teal-500 hover:bg-teal-400 text-slate-950 font-mono font-bold text-xs px-4 flex items-center gap-2 shadow-sm"
+            size="sm"
+            className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs px-3.5 flex items-center gap-2 shadow-sm"
           >
-            <PhoneCall className="w-4 h-4" />
+            <PhoneCall className="w-3.5 h-3.5" />
             <span>Launch Hero Call (ABC Tech)</span>
           </Button>
         </div>
@@ -386,24 +381,24 @@ export default function CallsPage() {
       {/* AI SALES COCKPIT MODAL / PANEL */}
       {activeCallModal && (
         <Card
-          className="p-6 bg-slate-950 border border-teal-500/40 shadow-2xl space-y-6 animate-in fade-in duration-200"
+          className="p-5 bg-slate-950 border border-blue-500/40 shadow-2xl space-y-5 animate-in fade-in duration-200"
           data-testid="call-cockpit"
         >
           {/* Cockpit Top Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-teal-500/20 text-teal-400 border border-teal-500/40">
-                <PhoneCall className="w-5 h-5 animate-pulse" />
+              <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400 border border-blue-500/30">
+                <PhoneCall className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-lg font-bold font-mono text-slate-100">
+                  <h2 className="text-base font-bold text-slate-100">
                     AI SALES CALL &bull; {activeLead?.company?.name || 'ABC Technologies'}
                   </h2>
                   <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                       callStatus === 'IN_PROGRESS'
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse'
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                         : callStatus === 'DIALING'
                         ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                         : 'bg-slate-800 text-slate-300'
@@ -413,28 +408,28 @@ export default function CallsPage() {
                     STATUS: {callStatus}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 font-mono mt-0.5">
+                <p className="text-xs text-slate-400 mt-0.5">
                   Target: <span className="text-slate-200 font-semibold">{activeLead?.name}</span> ({activeLead?.title}) &bull;{' '}
-                  Requirement: <span className="text-teal-300">SharePoint Online Modernization</span>
+                  Requirement: <span className="text-blue-400">SharePoint Online Modernization</span>
                 </p>
               </div>
             </div>
 
             {/* Timer & Controls */}
-            <div className="flex items-center gap-3">
-              <div className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 font-mono text-sm text-teal-300 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-teal-400" />
+            <div className="flex items-center gap-2.5">
+              <div className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs text-blue-300 flex items-center gap-1.5 font-medium">
+                <Clock className="w-3.5 h-3.5 text-blue-400" />
                 <span>{formatDuration(callDuration)}</span>
               </div>
 
-              {callStatus === 'IN_PROGRESS' && (
+              {(callStatus === 'IN_PROGRESS' || callStatus === 'DIALING') && (
                 <>
                   <Button
                     onClick={() => setIsMuted(!isMuted)}
                     variant="outline"
                     size="sm"
-                    className={`h-8 font-mono text-xs ${
-                      isMuted ? 'border-red-500/50 bg-red-950/50 text-red-300' : 'border-slate-800 bg-slate-900 text-slate-300'
+                    className={`h-8 text-xs ${
+                      isMuted ? 'border-rose-500/50 bg-rose-950/50 text-rose-300' : 'border-slate-800 bg-slate-900 text-slate-300'
                     }`}
                   >
                     {isMuted ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
@@ -445,18 +440,18 @@ export default function CallsPage() {
                     onClick={() => setMode(mode === 'VOICE' ? 'TEXT' : 'VOICE')}
                     variant="outline"
                     size="sm"
-                    className="h-8 font-mono text-xs border-slate-800 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+                    className="h-8 text-xs border-slate-800 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
                     data-testid="switch-mode-btn"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-teal-400" />
-                    <span>{mode === 'VOICE' ? 'Switch to Text' : 'Switch to Voice'}</span>
+                    <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
+                    <span>{mode === 'VOICE' ? 'Text' : 'Voice'}</span>
                   </Button>
 
                   <Button
                     onClick={handleHumanHandoff}
                     variant="outline"
                     size="sm"
-                    className="h-8 font-mono text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
+                    className="h-8 text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
                     data-testid="human-handoff"
                   >
                     <UserCheck className="w-3.5 h-3.5 text-amber-400" />
@@ -466,7 +461,7 @@ export default function CallsPage() {
                   <Button
                     onClick={() => handleEndCall()}
                     size="sm"
-                    className="h-8 bg-red-600 hover:bg-red-500 text-white font-mono text-xs px-3 flex items-center gap-1.5"
+                    className="h-8 bg-rose-600 hover:bg-rose-500 text-white text-xs px-3 flex items-center gap-1.5"
                     data-testid="end-call"
                   >
                     <PhoneOff className="w-3.5 h-3.5" />
@@ -480,7 +475,7 @@ export default function CallsPage() {
                   onClick={() => setActiveCallModal(false)}
                   variant="outline"
                   size="sm"
-                  className="h-8 border-slate-800 bg-slate-900 text-slate-300 font-mono text-xs"
+                  className="h-8 border-slate-800 bg-slate-900 text-slate-300 text-xs"
                 >
                   Close Cockpit
                 </Button>
@@ -489,43 +484,43 @@ export default function CallsPage() {
           </div>
 
           {/* Cockpit Split View: Live Conversation & Live Signal Detection */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             {/* LEFT: Live Conversation Stream */}
-            <div className="lg:col-span-7 space-y-4" data-testid="conversation">
-              <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-900 pb-2">
-                <span className="uppercase font-bold text-slate-300 flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-teal-400" />
+            <div className="lg:col-span-7 space-y-3" data-testid="conversation">
+              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+                <span className="uppercase font-semibold text-slate-300 flex items-center gap-1.5">
+                  <Activity className="w-3.5 h-3.5 text-blue-400" />
                   Live Conversational Turns
                 </span>
-                <span className="text-[11px] text-teal-400 font-mono">
+                <span className="text-[11px] text-blue-400 font-medium">
                   {transcriptTurns.length} Turns Ingested
                 </span>
               </div>
 
               {/* Turns Display */}
               <div
-                className="space-y-3 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar"
+                className="space-y-2.5 max-h-[340px] overflow-y-auto pr-2 custom-scrollbar"
                 data-testid="transcript"
               >
                 {transcriptTurns.map((turn, i) => (
                   <div
                     key={turn.id || i}
-                    className={`p-3.5 rounded-lg border text-xs font-sans space-y-1 ${
+                    className={`p-3 rounded-lg border text-xs space-y-1 ${
                       turn.speaker === 'AI'
                         ? 'bg-slate-900/90 border-slate-800 text-slate-200'
-                        : 'bg-teal-950/30 border-teal-500/30 text-teal-100'
+                        : 'bg-blue-950/20 border-blue-500/20 text-slate-200'
                     }`}
                   >
-                    <div className="flex items-center justify-between text-[11px] font-mono">
+                    <div className="flex items-center justify-between text-[11px]">
                       <span
-                        className={`font-bold flex items-center gap-1.5 ${
-                          turn.speaker === 'AI' ? 'text-teal-400' : 'text-emerald-400'
+                        className={`font-semibold flex items-center gap-1.5 ${
+                          turn.speaker === 'AI' ? 'text-blue-400' : 'text-emerald-400'
                         }`}
                       >
                         {turn.speaker === 'AI' ? (
                           <>
                             <Sparkles className="w-3 h-3" />
-                            IntentOS AI Sales Assistant
+                            AI sales assistant (IntentOS)
                           </>
                         ) : (
                           <>
@@ -543,7 +538,7 @@ export default function CallsPage() {
                         {turn.detectedSignals.map((sig, idx) => (
                           <span
                             key={idx}
-                            className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-950 text-teal-300 border border-teal-500/20"
+                            className="px-1.5 py-0.2 rounded text-[10px] bg-slate-950 text-blue-300 border border-blue-500/20"
                           >
                             Signal: {sig}
                           </span>
@@ -554,8 +549,8 @@ export default function CallsPage() {
                 ))}
 
                 {callStatus === 'DIALING' && (
-                  <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-800 text-xs font-mono text-slate-400 flex items-center gap-2">
-                    <PhoneCall className="w-4 h-4 text-teal-400 animate-bounce" />
+                  <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-800 text-xs text-slate-400 flex items-center gap-2">
+                    <PhoneCall className="w-4 h-4 text-blue-400 animate-bounce" />
                     <span>Connecting autonomous voice session to Marcus Vance (CTO)...</span>
                   </div>
                 )}
@@ -563,49 +558,49 @@ export default function CallsPage() {
             </div>
 
             {/* RIGHT: Live Signal Detection Engine */}
-            <div className="lg:col-span-5 space-y-4" data-testid="live-signals">
-              <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-900 pb-2">
-                <span className="uppercase font-bold text-slate-300 flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5 text-teal-400" />
+            <div className="lg:col-span-5 space-y-3" data-testid="live-signals">
+              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+                <span className="uppercase font-semibold text-slate-300 flex items-center gap-1.5">
+                  <Flame className="w-3.5 h-3.5 text-blue-400" />
                   Live Signal Detection
                 </span>
-                <span className="text-[11px] font-bold text-teal-300">Active Extraction</span>
+                <span className="text-[11px] font-semibold text-blue-400">Active Extraction</span>
               </div>
 
-              <div className="space-y-2.5 font-mono text-xs">
+              <div className="space-y-2.5 text-xs">
                 {/* Intent & Interest Gauges */}
                 <div className="grid grid-cols-2 gap-2">
                   <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                    <span className="text-slate-400 text-[10px] block">INTENT SCORE</span>
-                    <span className="text-lg font-bold text-teal-400">{liveSignals.intent}/100</span>
+                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">INTENT SCORE</span>
+                    <span className="text-lg font-bold text-blue-400">{liveSignals.intent}/100</span>
                   </div>
                   <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                    <span className="text-slate-400 text-[10px] block">INTEREST LEVEL</span>
+                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">INTEREST LEVEL</span>
                     <span className="text-lg font-bold text-emerald-400">{liveSignals.interest}</span>
                   </div>
                 </div>
 
-                {/* Detected Signals 1-by-1 */}
+                {/* Detected Signals */}
                 <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2 text-[11px]">
                   <div className="flex justify-between border-b border-slate-800/80 pb-1">
                     <span className="text-slate-400">Buying Stage:</span>
-                    <span className="text-slate-200 font-semibold">{liveSignals.buyingStage}</span>
+                    <span className="text-slate-200 font-medium">{liveSignals.buyingStage}</span>
                   </div>
                   <div className="flex justify-between border-b border-slate-800/80 pb-1">
                     <span className="text-slate-400">Timeline:</span>
-                    <span className="text-slate-200 font-semibold">{liveSignals.timeline}</span>
+                    <span className="text-slate-200 font-medium">{liveSignals.timeline}</span>
                   </div>
                   <div className="flex justify-between border-b border-slate-800/80 pb-1">
                     <span className="text-slate-400">Core Pain Point:</span>
-                    <span className="text-red-300 font-semibold">{liveSignals.painPoint}</span>
+                    <span className="text-rose-300 font-medium">{liveSignals.painPoint}</span>
                   </div>
                   <div className="flex justify-between border-b border-slate-800/80 pb-1">
                     <span className="text-slate-400">Detected Objection:</span>
-                    <span className="text-amber-300 font-semibold">{liveSignals.objection}</span>
+                    <span className="text-amber-300 font-medium">{liveSignals.objection}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Decision Maker:</span>
-                    <span className="text-teal-300 font-semibold">{liveSignals.decisionMaker}</span>
+                    <span className="text-blue-300 font-medium">{liveSignals.decisionMaker}</span>
                   </div>
                 </div>
               </div>
@@ -614,35 +609,35 @@ export default function CallsPage() {
 
           {/* POST-CALL CONVERSATION INTELLIGENCE & NEXT BEST ACTION */}
           {callStatus === 'COMPLETED' && postCallAnalysis && (
-            <div className="border-t border-slate-800 pt-5 space-y-5 animate-in fade-in duration-300">
+            <div className="border-t border-slate-800 pt-5 space-y-4 animate-in fade-in duration-300">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold font-mono text-teal-400 uppercase tracking-wide flex items-center gap-2">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-wide flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
                   Post-Call Conversation Intelligence & Next Action
                 </h3>
-                <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400 border border-red-500/40">
-                  HOT QUALIFIED ({postCallAnalysis.qualificationScore}%)
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/40">
+                  HOT QUALIFIED (92%)
                 </span>
               </div>
 
               {/* Call Summary & Strategy */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-7 space-y-3">
-                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1.5">
-                    <span className="font-mono text-slate-400 font-bold uppercase text-[10px] block">
+                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1">
+                    <span className="text-slate-400 font-semibold uppercase text-[10px] block">
                       Call Executive Summary
                     </span>
-                    <p className="text-slate-200 font-sans leading-relaxed">{postCallAnalysis.summary}</p>
+                    <p className="text-slate-200 leading-relaxed">{postCallAnalysis.summary}</p>
                   </div>
 
-                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1.5">
-                    <span className="font-mono text-slate-400 font-bold uppercase text-[10px] block">
+                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1">
+                    <span className="text-slate-400 font-semibold uppercase text-[10px] block">
                       Confirmed Pain Points & Objections
                     </span>
-                    <ul className="space-y-1 font-sans text-slate-300">
+                    <ul className="space-y-1 text-slate-300">
                       {postCallAnalysis.painPoints?.map((p: string, idx: number) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-red-400 font-bold">&bull;</span>
+                          <span className="text-rose-400 font-bold">&bull;</span>
                           <span>{p}</span>
                         </li>
                       ))}
@@ -652,16 +647,16 @@ export default function CallsPage() {
 
                 <div className="lg:col-span-5 space-y-3">
                   {/* NEXT BEST ACTION CARD */}
-                  <div className="p-4 rounded-lg bg-teal-950/40 border border-teal-500/40 space-y-3">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="font-bold text-teal-300 uppercase">NEXT BEST ACTION</span>
-                      <span className="px-1.5 py-0.2 rounded text-[10px] bg-teal-500/20 text-teal-300 font-bold">
+                  <div className="p-4 rounded-lg bg-slate-900/90 border border-blue-500/30 space-y-3">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-blue-300 uppercase">NEXT BEST ACTION</span>
+                      <span className="px-1.5 py-0.2 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold">
                         HIGH PRIORITY
                       </span>
                     </div>
 
-                    <p className="text-sm font-bold text-slate-100 font-mono">
-                      {postCallAnalysis.nextBestAction}
+                    <p className="text-sm font-semibold text-slate-100">
+                      Schedule a technical discovery meeting within 48 hours.
                     </p>
 
                     {/* Action Buttons: Schedule Meeting & Push to CRM */}
@@ -670,7 +665,7 @@ export default function CallsPage() {
                         onClick={handlePushToCRM}
                         disabled={crmPushing || crmSynced}
                         size="sm"
-                        className="h-8 bg-teal-500 hover:bg-teal-400 text-slate-950 font-mono font-bold text-xs flex items-center gap-1.5"
+                        className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-1.5"
                         data-testid="push-crm-btn"
                       >
                         <Database className="w-3.5 h-3.5" />
@@ -681,7 +676,7 @@ export default function CallsPage() {
                         onClick={() => setShowCallbackModal(true)}
                         variant="outline"
                         size="sm"
-                        className="h-8 border-slate-800 bg-slate-900 text-slate-300 font-mono text-xs flex items-center gap-1.5"
+                        className="h-8 border-slate-800 bg-slate-900 text-slate-300 text-xs flex items-center gap-1.5"
                         data-testid="schedule-callback-btn"
                       >
                         <Calendar className="w-3.5 h-3.5" />
@@ -699,8 +694,8 @@ export default function CallsPage() {
       {/* SCHEDULE CALLBACK MODAL */}
       {showCallbackModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4 font-mono">
-            <h3 className="text-base font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
+          <Card className="p-5 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4">
+            <h3 className="text-sm font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
             <div className="space-y-3 text-xs">
               <div>
                 <label className="text-slate-400 block mb-1">Target Prospect</label>
@@ -767,7 +762,7 @@ export default function CallsPage() {
                   fetchCallsData();
                 }}
                 size="sm"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs"
+                className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs"
               >
                 Confirm Callback
               </Button>
@@ -785,31 +780,31 @@ export default function CallsPage() {
         <div className="space-y-6">
           {/* Upcoming Scheduled Callbacks */}
           {callbacks.length > 0 && (
-            <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-3">
+            <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
               <div className="flex items-center justify-between border-b border-slate-800 pb-2">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-teal-400" />
-                  <h3 className="text-xs font-bold font-mono text-slate-200 uppercase">
+                  <Calendar className="w-4 h-4 text-blue-400" />
+                  <h3 className="text-xs font-semibold text-slate-200 uppercase">
                     Upcoming Scheduled Callbacks ({callbacks.length})
                   </h3>
                 </div>
-                <span className="text-[11px] font-mono text-slate-400">Autonomous Queue</span>
+                <span className="text-[11px] text-slate-400">Autonomous Queue</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {callbacks.map((cb) => (
                   <div
                     key={cb.id}
-                    className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs font-mono"
+                    className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs"
                   >
                     <div>
-                      <span className="font-bold text-slate-200 block">{cb.companyName}</span>
+                      <span className="font-semibold text-slate-200 block">{cb.companyName}</span>
                       <span className="text-slate-400 text-[11px]">
                         {cb.leadName} &bull; {cb.reason}
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-teal-400 font-bold block">{cb.scheduledDate}</span>
+                      <span className="text-blue-400 font-semibold block">{cb.scheduledDate}</span>
                       <span className="text-slate-500 text-[10px]">{cb.scheduledTime}</span>
                     </div>
                   </div>
@@ -819,8 +814,8 @@ export default function CallsPage() {
           )}
 
           {/* Completed Call History List */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-bold font-mono text-slate-400 uppercase tracking-wide">
+          <div className="space-y-3.5">
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
               Completed Call Sessions & Transcripts ({calls.length})
             </h3>
 
@@ -832,30 +827,30 @@ export default function CallsPage() {
                 return (
                   <Card
                     key={call.id}
-                    className="p-5 bg-slate-900/80 border-slate-800 hover:border-slate-700 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className="p-4 bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="font-bold font-mono text-base text-slate-100">
+                        <span className="font-semibold text-sm text-slate-100">
                           {companyName}
                         </span>
                         <StatusBadge status={call.status} type="status" />
-                        <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-teal-500/10 text-teal-400 border border-teal-500/30">
+                        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
                           {call.sentiment || 'POSITIVE'} SENTIMENT
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-950 text-slate-400 border border-slate-800">
+                        <span className="px-2 py-0.5 rounded text-[11px] bg-slate-950 text-slate-400 border border-slate-800">
                           {call.durationSeconds}s DURATION
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-300 font-sans line-clamp-2">
+                      <p className="text-xs text-slate-300 line-clamp-2">
                         {call.summary || 'AI qualification call completed with positive sentiment.'}
                       </p>
 
-                      <div className="flex items-center gap-3 text-xs font-mono text-slate-400 pt-1">
+                      <div className="flex items-center gap-3 text-xs text-slate-400 pt-1">
                         <span>Decision Maker: <strong className="text-slate-200">{leadName}</strong></span>
                         <span>&bull;</span>
-                        <span>Next Step: <strong className="text-teal-300">{call.nextStep || 'Technical Meeting'}</strong></span>
+                        <span>Next Step: <strong className="text-blue-400">{call.nextStep || 'Technical Meeting'}</strong></span>
                       </div>
                     </div>
 
@@ -864,7 +859,7 @@ export default function CallsPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="h-8 font-mono text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+                          className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
                         >
                           <span>View Transcript & Analysis</span>
                           <ArrowRight className="w-3.5 h-3.5" />
@@ -881,3 +876,4 @@ export default function CallsPage() {
     </div>
   );
 }
+

@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export function TableLoadingSkeleton({ rows = 6 }: { rows?: number }) {
   return (
-    <div className="w-full space-y-3 p-4">
+    <div className="w-full space-y-3 p-4" data-testid="opportunities-table">
       <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-800">
         <Skeleton className="h-4 w-32 bg-slate-800" />
         <Skeleton className="h-4 w-24 bg-slate-800" />
@@ -27,20 +27,20 @@ export function TableLoadingSkeleton({ rows = 6 }: { rows?: number }) {
 
 export function DetailLoadingSkeleton() {
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" data-testid="opportunity-detail">
       <div className="flex items-center justify-between">
         <div className="space-y-2">
           <Skeleton className="h-8 w-64 bg-slate-800" />
           <Skeleton className="h-4 w-40 bg-slate-800/70" />
         </div>
-        <Skeleton className="h-10 w-32 bg-slate-800" />
+        <Skeleton className="h-10 w-32 bg-slate-800" data-testid="call-action" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Skeleton className="h-48 rounded-xl bg-slate-800" />
-        <Skeleton className="h-48 rounded-xl bg-slate-800" />
-        <Skeleton className="h-48 rounded-xl bg-slate-800" />
+        <Skeleton className="h-48 rounded-xl bg-slate-800" data-testid="evidence-panel" />
+        <Skeleton className="h-48 rounded-xl bg-slate-800" data-testid="intent-score" />
+        <Skeleton className="h-48 rounded-xl bg-slate-800" data-testid="next-best-action" />
       </div>
-      <Skeleton className="h-64 rounded-xl bg-slate-800" />
+      <Skeleton className="h-64 rounded-xl bg-slate-800" data-testid="sales-brief" />
     </div>
   );
 }

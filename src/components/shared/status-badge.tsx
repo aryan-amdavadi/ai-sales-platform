@@ -1,5 +1,4 @@
 import React from 'react';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 interface StatusBadgeProps {
@@ -14,7 +13,7 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
   if (type === 'urgency') {
     switch (status) {
       case 'IMMEDIATE':
-        variantClass = 'bg-red-500/10 text-red-400 border-red-500/30 font-semibold';
+        variantClass = 'bg-rose-500/10 text-rose-400 border-rose-500/30 font-semibold';
         break;
       case 'HIGH':
         variantClass = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
@@ -23,16 +22,16 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
         variantClass = 'bg-blue-500/10 text-blue-400 border-blue-500/30';
         break;
       case 'LOW':
-        variantClass = 'bg-slate-500/10 text-slate-400 border-slate-500/30';
+        variantClass = 'bg-slate-500/10 text-slate-400 border-slate-700';
         break;
     }
   } else if (type === 'source') {
     switch (status) {
       case 'LINKEDIN':
-        variantClass = 'bg-sky-500/10 text-sky-400 border-sky-500/30';
+        variantClass = 'bg-blue-500/10 text-blue-400 border-blue-500/30';
         break;
       case 'X':
-        variantClass = 'bg-zinc-500/10 text-zinc-300 border-zinc-500/30';
+        variantClass = 'bg-slate-700/30 text-slate-300 border-slate-700';
         break;
       case 'WEBSITE':
         variantClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
@@ -41,7 +40,7 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
         variantClass = 'bg-purple-500/10 text-purple-400 border-purple-500/30';
         break;
       case 'FREELANCE_PLATFORM':
-        variantClass = 'bg-teal-500/10 text-teal-400 border-teal-500/30';
+        variantClass = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
         break;
     }
   } else {
@@ -49,29 +48,29 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
     switch (status) {
       case 'HIGH_INTENT':
       case 'QUALIFIED':
-        variantClass = 'bg-teal-500/15 text-teal-300 border-teal-500/40 font-medium';
+        variantClass = 'bg-blue-500/15 text-blue-300 border-blue-500/30 font-semibold';
         break;
       case 'INTERESTED':
       case 'MEETING':
-        variantClass = 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 font-medium';
+        variantClass = 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 font-semibold';
         break;
       case 'CONTACTED':
-        variantClass = 'bg-indigo-500/15 text-indigo-300 border-indigo-500/40';
+        variantClass = 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30';
         break;
       case 'RELEVANT':
-        variantClass = 'bg-sky-500/15 text-sky-300 border-sky-500/40';
+        variantClass = 'bg-sky-500/15 text-sky-300 border-sky-500/30';
         break;
       case 'DISCOVERED':
-        variantClass = 'bg-slate-500/15 text-slate-400 border-slate-600';
+        variantClass = 'bg-slate-800 text-slate-400 border-slate-700';
         break;
       case 'COMPLETED':
-        variantClass = 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40';
+        variantClass = 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30';
         break;
       case 'IN_PROGRESS':
-        variantClass = 'bg-amber-500/15 text-amber-300 border-amber-500/40 animate-pulse';
+        variantClass = 'bg-amber-500/15 text-amber-300 border-amber-500/30 animate-pulse';
         break;
       case 'ACTIVE':
-        variantClass = 'bg-teal-500/15 text-teal-300 border-teal-500/40';
+        variantClass = 'bg-blue-500/15 text-blue-300 border-blue-500/30';
         break;
     }
   }
@@ -81,7 +80,7 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded text-xs font-mono tracking-tight border',
+        'inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium tracking-tight border',
         variantClass,
         className
       )}
@@ -90,3 +89,4 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
     </span>
   );
 }
+

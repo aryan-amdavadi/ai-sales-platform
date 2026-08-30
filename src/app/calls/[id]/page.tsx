@@ -5,21 +5,14 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft,
-  PhoneCall,
   Sparkles,
-  Building2,
   Calendar,
-  Clock,
   User,
-  ShieldCheck,
   CheckCircle2,
-  AlertCircle,
   Database,
   UserCheck,
   Activity,
-  Layers,
   ArrowRight,
-  TrendingUp,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -119,43 +112,41 @@ export default function CallDetailPage() {
     turns = [];
   }
 
-  const isHero = call.lead?.company?.name === 'ABC Technologies';
-
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-20 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-teal-950/90 border border-teal-500/50 text-teal-200 text-xs font-mono flex items-center justify-between shadow-xl animate-in fade-in duration-200">
+        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-xl animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-teal-400" />
+            <Sparkles className="w-4 h-4 text-blue-400" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-teal-400 hover:text-teal-200">
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div className="flex items-start sm:items-center gap-3">
           <Link
             href="/calls"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
+            className="p-2 rounded-md text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+              <h1 className="text-xl font-bold tracking-tight text-slate-100">
                 Call Analysis &bull; {call.lead?.company?.name || 'Account'}
               </h1>
               <StatusBadge status={call.status} type="status" />
-              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
+              <span className="px-2 py-0.5 rounded text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/30">
                 {call.sentiment || 'POSITIVE'} SENTIMENT
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-mono mt-1">
+            <p className="text-xs text-slate-400 mt-1">
               Prospect: <span className="text-slate-200 font-semibold">{call.lead?.name}</span> ({call.lead?.title}) &bull;{' '}
               Duration: <span className="text-slate-200">{call.durationSeconds} seconds</span> &bull; Recorded{' '}
               {new Date(call.createdAt).toLocaleDateString()}
@@ -169,7 +160,7 @@ export default function CallDetailPage() {
             onClick={handleHumanHandoff}
             variant="outline"
             size="sm"
-            className="h-8 font-mono text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
+            className="h-8 text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
             data-testid="human-handoff"
           >
             <UserCheck className="w-3.5 h-3.5 text-amber-400" />
@@ -180,17 +171,18 @@ export default function CallDetailPage() {
             onClick={() => setShowCallbackModal(true)}
             variant="outline"
             size="sm"
-            className="h-8 border-slate-800 bg-slate-900 text-slate-300 font-mono text-xs flex items-center gap-1.5"
+            className="h-8 border-slate-800 bg-slate-900 text-slate-300 text-xs flex items-center gap-1.5"
             data-testid="schedule-callback-btn"
           >
-            <Calendar className="w-3.5 h-3.5 text-teal-400" />
+            <Calendar className="w-3.5 h-3.5 text-blue-400" />
             <span>Schedule Callback</span>
           </Button>
 
           <Button
             onClick={handlePushToCRM}
             disabled={crmPushing || crmSynced}
-            className="h-8 bg-teal-500 hover:bg-teal-400 text-slate-950 font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm"
+            size="sm"
+            className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm"
             data-testid="push-crm-btn"
           >
             <Database className="w-3.5 h-3.5" />
@@ -201,7 +193,7 @@ export default function CallDetailPage() {
             <Button
               variant="outline"
               size="sm"
-              className="h-8 font-mono text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+              className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
             >
               <span>View Opportunity</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -215,89 +207,89 @@ export default function CallDetailPage() {
         {/* LEFT: Conversation Intelligence, Insights & Next Best Action */}
         <div className="lg:col-span-7 space-y-6">
           {/* Executive Summary */}
-          <Card className="p-6 bg-slate-900/80 border-slate-800 space-y-4">
+          <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-teal-400" />
-                <h3 className="text-sm font-bold font-mono text-slate-100 uppercase tracking-tight">
+                <Sparkles className="w-4 h-4 text-blue-400" />
+                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">
                   Call Executive Summary
                 </h3>
               </div>
-              <span className="text-xs font-mono text-teal-300">Autonomous Extraction</span>
+              <span className="text-xs text-blue-400 font-medium">Autonomous Extraction</span>
             </div>
 
-            <p className="text-xs text-slate-200 font-sans leading-relaxed">
+            <p className="text-xs text-slate-200 leading-relaxed">
               {call.summary ||
                 'Autonomous AI sales discovery session completed with verified positive sentiment. Prospect confirmed immediate procurement timeline and requested technical discussion.'}
             </p>
           </Card>
 
           {/* NEXT BEST ACTION CARD */}
-          <Card className="p-6 bg-teal-950/30 border-teal-500/40 space-y-4">
-            <div className="flex items-center justify-between text-teal-400 border-b border-teal-500/20 pb-2">
-              <div className="flex items-center gap-1.5 font-bold font-mono text-xs uppercase">
+          <Card className="p-5 bg-slate-900/90 border-blue-500/30 space-y-4">
+            <div className="flex items-center justify-between text-blue-400 border-b border-blue-500/20 pb-2">
+              <div className="flex items-center gap-1.5 font-bold text-xs uppercase">
                 <Sparkles className="w-4 h-4" />
                 <span>Next Best Action Recommendation</span>
               </div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-teal-500/20 text-teal-300 font-bold">
+              <span className="px-2 py-0.5 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold">
                 HIGH PRIORITY
               </span>
             </div>
 
             <div>
-              <h4 className="text-base font-bold font-mono text-slate-100">
+              <h4 className="text-base font-semibold text-slate-100">
                 {call.nextStep || 'Schedule a technical discovery meeting within 48 hours.'}
               </h4>
-              <p className="text-xs text-slate-300 mt-1 font-sans">
+              <p className="text-xs text-slate-300 mt-1">
                 Prospect explicitly agreed to an architectural briefing on legacy migration accelerators and zero-downtime cutover.
               </p>
             </div>
 
-            <div className="space-y-1.5 text-xs font-mono text-slate-300 pt-1">
+            <div className="space-y-1.5 text-xs text-slate-300 pt-1">
               <div className="flex items-start gap-2">
-                <span className="text-teal-400 font-bold">&bull;</span>
+                <span className="text-blue-400 font-bold">&bull;</span>
                 <span>Confirmed Decision Maker: {call.lead?.name} ({call.lead?.title})</span>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-teal-400 font-bold">&bull;</span>
+                <span className="text-blue-400 font-bold">&bull;</span>
                 <span>Active 30-Day vendor evaluation and shortlisting mandate</span>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-teal-400 font-bold">&bull;</span>
+                <span className="text-blue-400 font-bold">&bull;</span>
                 <span>Core pain point: Legacy migration from on-premise servers with zero downtime</span>
               </div>
             </div>
           </Card>
 
           {/* Pain Points & Objections */}
-          <Card className="p-6 bg-slate-900/80 border-slate-800 space-y-4">
-            <h3 className="text-sm font-bold font-mono text-slate-100 uppercase tracking-tight border-b border-slate-800 pb-2">
+          <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
+            <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide border-b border-slate-800 pb-2">
               Confirmed Pain Points & Objections
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
-                <span className="font-mono text-red-400 uppercase text-[11px] font-bold block">
+                <span className="text-rose-400 uppercase text-[11px] font-semibold block">
                   Identified Pain Points
                 </span>
                 <ul className="space-y-1 text-slate-300">
                   <li className="flex items-start gap-1.5">
-                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span className="text-rose-400 font-bold">&bull;</span>
                     <span>Legacy SharePoint 2016 server end-of-life vulnerabilities</span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span className="text-rose-400 font-bold">&bull;</span>
                     <span>Custom PowerApps/SPFx workflow form refactoring</span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span className="text-rose-400 font-bold">&bull;</span>
                     <span>User training and change management for 750 employees</span>
                   </li>
                 </ul>
               </div>
 
               <div className="space-y-1.5">
-                <span className="font-mono text-amber-400 uppercase text-[11px] font-bold block">
+                <span className="text-amber-400 uppercase text-[11px] font-semibold block">
                   Anticipated Objections
                 </span>
                 <ul className="space-y-1 text-slate-300">
@@ -318,63 +310,63 @@ export default function CallDetailPage() {
         {/* RIGHT: Full Transcript & Sentiment Timeline */}
         <div className="lg:col-span-5 space-y-6">
           {/* BANT Qualification Card */}
-          <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-3">
+          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-xs font-mono uppercase font-bold text-slate-300">
+              <span className="text-xs uppercase font-semibold text-slate-300">
                 Post-Call Qualification
               </span>
-              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400 border border-red-500/40">
+              <span className="px-2 py-0.5 rounded text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/40">
                 HOT QUALIFIED (92%)
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+            <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block">NEED FIT</span>
-                <span className="font-bold text-teal-400">96%</span>
+                <span className="text-slate-400 text-[10px] block uppercase font-semibold">NEED FIT</span>
+                <span className="font-bold text-blue-400">96%</span>
               </div>
               <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block">AUTHORITY</span>
-                <span className="font-bold text-teal-400">95%</span>
+                <span className="text-slate-400 text-[10px] block uppercase font-semibold">AUTHORITY</span>
+                <span className="font-bold text-blue-400">95%</span>
               </div>
               <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block">TIMING</span>
-                <span className="font-bold text-teal-400">92%</span>
+                <span className="text-slate-400 text-[10px] block uppercase font-semibold">TIMING</span>
+                <span className="font-bold text-blue-400">92%</span>
               </div>
               <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block">INTEREST</span>
+                <span className="text-slate-400 text-[10px] block uppercase font-semibold">INTEREST</span>
                 <span className="font-bold text-emerald-400">HIGH</span>
               </div>
             </div>
           </Card>
 
           {/* Full Transcript Stream */}
-          <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
+          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3.5">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-teal-400" />
-                <h3 className="text-xs font-bold font-mono text-slate-200 uppercase">
+                <Activity className="w-4 h-4 text-blue-400" />
+                <h3 className="text-xs font-semibold text-slate-200 uppercase">
                   Full Dialogue Transcript ({turns.length} Turns)
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-slate-400">Speaker Timestamps</span>
+              <span className="text-[10px] text-slate-400">Speaker Timestamps</span>
             </div>
 
-            <div className="space-y-3 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar" data-testid="transcript">
+            <div className="space-y-2.5 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar" data-testid="transcript">
               {turns.length > 0 ? (
                 turns.map((turn: any, i: number) => (
                   <div
                     key={i}
-                    className={`p-3 rounded-lg border text-xs font-sans space-y-1 ${
+                    className={`p-3 rounded-lg border text-xs space-y-1 ${
                       turn.speaker === 'AI'
                         ? 'bg-slate-950 border-slate-800 text-slate-200'
-                        : 'bg-teal-950/20 border-teal-500/30 text-teal-100'
+                        : 'bg-blue-950/20 border-blue-500/20 text-slate-200'
                     }`}
                   >
-                    <div className="flex items-center justify-between text-[11px] font-mono">
+                    <div className="flex items-center justify-between text-[11px]">
                       <span
-                        className={`font-bold flex items-center gap-1.5 ${
-                          turn.speaker === 'AI' ? 'text-teal-400' : 'text-emerald-400'
+                        className={`font-semibold flex items-center gap-1.5 ${
+                          turn.speaker === 'AI' ? 'text-blue-400' : 'text-emerald-400'
                         }`}
                       >
                         {turn.speaker === 'AI' ? (
@@ -395,7 +387,7 @@ export default function CallDetailPage() {
                   </div>
                 ))
               ) : (
-                <div className="text-xs font-mono text-slate-400">
+                <div className="text-xs text-slate-400">
                   {call.transcript?.rawText || 'Call completed with positive engagement.'}
                 </div>
               )}
@@ -407,8 +399,8 @@ export default function CallDetailPage() {
       {/* SCHEDULE CALLBACK MODAL */}
       {showCallbackModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4 font-mono">
-            <h3 className="text-base font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
+          <Card className="p-5 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4">
+            <h3 className="text-sm font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
             <div className="space-y-3 text-xs">
               <div>
                 <label className="text-slate-400 block mb-1">Target Prospect</label>
@@ -474,7 +466,7 @@ export default function CallDetailPage() {
                   showToast('Callback scheduled for September 2, 2026 at 14:00 EST.');
                 }}
                 size="sm"
-                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs"
+                className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs"
               >
                 Confirm Callback
               </Button>
@@ -485,3 +477,4 @@ export default function CallDetailPage() {
     </div>
   );
 }
+

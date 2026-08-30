@@ -14,7 +14,8 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx scripts/seed.ts",
-    "audit": "node scripts/audit/master-audit.mjs"
+    "audit": "node scripts/audit/master-audit.mjs",
+    "audit:ui": "node scripts/audit/verify-ui.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",

@@ -5,15 +5,8 @@ import Link from 'next/link';
 import {
   Compass,
   Search,
-  Filter,
-  Sparkles,
   RefreshCw,
-  ExternalLink,
-  CheckCircle,
-  Cpu,
   ArrowRight,
-  Globe,
-  Sliders,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -90,27 +83,30 @@ export default function DiscoveryPage() {
   const locations = ['ALL', 'Austin, TX', 'San Francisco, CA', 'Boston, MA', 'Seattle, WA', 'New York, NY', 'Chicago, IL'];
 
   return (
-    <div className="space-y-6 pb-12" data-testid="discovery-page">
+    <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="discovery-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
               <Compass className="w-5 h-5" />
             </div>
-            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
-              PUBLIC INTENT DISCOVERY ENGINE
-            </h1>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+                PUBLIC INTENT DISCOVERY ENGINE
+              </h1>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Continuously ingest and analyze public procurement signals, RFPs, and executive technology searches.
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-slate-400 mt-1">
-            Continuously ingest and analyze public procurement signals, RFPs, and executive technology searches.
-          </p>
         </div>
 
         <Button
           onClick={handleManualScan}
           disabled={scanning}
-          className="text-xs font-mono font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center gap-2"
+          size="sm"
+          className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-2 h-8"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${scanning ? 'animate-spin' : ''}`} />
           <span>{scanning ? 'Scanning Public Feeds...' : 'Scan Public Feeds'}</span>
@@ -118,7 +114,7 @@ export default function DiscoveryPage() {
       </div>
 
       {/* Discovery Query Builder */}
-      <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
+      <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           {/* Keyword Search */}
           <div className="md:col-span-6 relative">
@@ -128,7 +124,7 @@ export default function DiscoveryPage() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && fetchDiscoveryResults()}
-              className="pl-9 bg-slate-950 border-slate-800 text-slate-200 text-xs font-mono placeholder:text-slate-500 focus-visible:ring-teal-500"
+              className="pl-9 bg-slate-950 border-slate-800 text-slate-200 text-xs placeholder:text-slate-500 focus-visible:ring-blue-500"
             />
           </div>
 
@@ -137,7 +133,7 @@ export default function DiscoveryPage() {
             <select
               value={source}
               onChange={(e) => setSource(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-teal-500"
+              className="w-full bg-slate-950 border border-slate-800 rounded-md px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
             >
               {sources.map((s) => (
                 <option key={s.key} value={s.key}>
@@ -149,13 +145,13 @@ export default function DiscoveryPage() {
         </div>
 
         {/* Secondary Filters */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800/70 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800/70 text-xs">
           <div>
-            <label className="text-slate-400 block mb-1">Industry Focus</label>
+            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Industry Focus</label>
             <select
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-teal-500"
+              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
             >
               {industries.map((ind) => (
                 <option key={ind} value={ind}>
@@ -166,11 +162,11 @@ export default function DiscoveryPage() {
           </div>
 
           <div>
-            <label className="text-slate-400 block mb-1">Geography / Location</label>
+            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Geography / Location</label>
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-teal-500"
+              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
             >
               {locations.map((loc) => (
                 <option key={loc} value={loc}>
@@ -181,7 +177,7 @@ export default function DiscoveryPage() {
           </div>
 
           <div>
-            <label className="text-slate-400 block mb-1">Min Intent Filter: {minIntent}+</label>
+            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Min Intent Filter: {minIntent}+</label>
             <input
               type="range"
               min="50"
@@ -189,16 +185,16 @@ export default function DiscoveryPage() {
               step="5"
               value={minIntent}
               onChange={(e) => setMinIntent(Number(e.target.value))}
-              className="w-full accent-teal-400 cursor-pointer"
+              className="w-full accent-blue-500 cursor-pointer"
             />
           </div>
         </div>
       </Card>
 
       {/* Discovery Results Count Header */}
-      <div className="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
+      <div className="flex items-center justify-between text-xs text-slate-400 px-1">
         <span>Found {results.length} public intent requirements matching ICP</span>
-        <span className="text-teal-400">Autonomous Ingestion Queue Active</span>
+        <span className="text-blue-400 font-medium">Autonomous Ingestion Queue Active</span>
       </div>
 
       {/* Results Cards */}
@@ -226,8 +222,8 @@ export default function DiscoveryPage() {
             return (
               <Card
                 key={item.id}
-                className={`p-5 bg-slate-900/80 border-slate-800 hover:border-slate-700 transition-all space-y-3.5 ${
-                  isHero ? 'border-teal-500/40 bg-teal-950/20' : ''
+                className={`p-5 bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors space-y-3 ${
+                  isHero ? 'border-blue-500/40 bg-blue-950/10' : ''
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -235,12 +231,12 @@ export default function DiscoveryPage() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <Link
                         href={`/opportunities/${item.id}`}
-                        className="font-bold text-sm text-slate-100 hover:text-teal-300 transition-colors"
+                        className="font-semibold text-sm text-slate-100 hover:text-blue-400 transition-colors"
                       >
                         {item.company.name}
                       </Link>
                       {isHero && (
-                        <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-teal-500/20 text-teal-300 border border-teal-500/40">
+                        <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">
                           HERO
                         </span>
                       )}
@@ -252,8 +248,8 @@ export default function DiscoveryPage() {
                   </div>
 
                   <div className="text-right flex-shrink-0">
-                    <div className="text-[10px] font-mono text-slate-400">INTENT</div>
-                    <div className="text-lg font-bold font-mono text-teal-400">{item.intentScore}</div>
+                    <div className="text-[10px] text-slate-400 uppercase font-semibold">INTENT</div>
+                    <div className="text-base font-bold text-blue-400">{item.intentScore}</div>
                   </div>
                 </div>
 
@@ -261,12 +257,12 @@ export default function DiscoveryPage() {
                 <div className="space-y-1 bg-slate-950/80 p-3 rounded-lg border border-slate-800/80">
                   <h4 className="text-xs font-semibold text-slate-200">{req?.title}</h4>
                   <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-                    "{req?.rawEvidence || req?.description}"
+                    &ldquo;{req?.rawEvidence || req?.description}&rdquo;
                   </p>
                 </div>
 
                 {/* Footer Meta & Actions */}
-                <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 text-xs font-mono">
+                <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 text-xs">
                   <span className="text-emerald-400 font-semibold">
                     ${item.pipelineValue?.toLocaleString()} Pipeline
                   </span>
@@ -274,7 +270,7 @@ export default function DiscoveryPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 text-xs font-mono border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center gap-1"
+                      className="h-7 text-xs border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center gap-1"
                     >
                       <span>Review & Qualify</span>
                       <ArrowRight className="w-3 h-3" />
@@ -289,3 +285,4 @@ export default function DiscoveryPage() {
     </div>
   );
 }
+

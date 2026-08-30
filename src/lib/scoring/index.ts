@@ -89,19 +89,24 @@ export async function getOpportunities(params: LeadFilterParams) {
 
   if (params.search && params.search.trim() !== '') {
     const term = params.search.trim();
-    where.OR = [
-      { name: { contains: term } },
-      { title: { contains: term } },
-      { salesBrief: { contains: term } },
-      { company: { name: { contains: term } } },
-      { company: { industry: { contains: term } } },
-      { company: { techStack: { contains: term } } },
-      { company: { hiringSignals: { contains: term } } },
-      { requirements: { some: { title: { contains: term } } } },
-      { requirements: { some: { tags: { contains: term } } } },
-      { requirements: { some: { description: { contains: term } } } },
-      { requirements: { some: { rawEvidence: { contains: term } } } },
-    ];
+    const lower = term.toLowerCase();
+    const upper = term.toUpperCase();
+    const titleCase = term.charAt(0).toUpperCase() + term.slice(1).toLowerCase();
+    const terms = Array.from(new Set([term, lower, upper, titleCase]));
+
+    where.OR = terms.flatMap((t) => [
+      { name: { contains: t } },
+      { title: { contains: t } },
+      { salesBrief: { contains: t } },
+      { company: { name: { contains: t } } },
+      { company: { industry: { contains: t } } },
+      { company: { techStack: { contains: t } } },
+      { company: { hiringSignals: { contains: t } } },
+      { requirements: { some: { title: { contains: t } } } },
+      { requirements: { some: { tags: { contains: t } } } },
+      { requirements: { some: { description: { contains: t } } } },
+      { requirements: { some: { rawEvidence: { contains: t } } } },
+    ]);
   }
 
   if (params.minIntent !== undefined) {

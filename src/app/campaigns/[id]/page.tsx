@@ -5,17 +5,10 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft,
-  Megaphone,
-  Target,
-  Users,
-  PhoneCall,
-  Calendar,
-  ArrowRight,
   Edit,
   Sparkles,
   Search,
   Filter,
-  CheckCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -102,8 +95,8 @@ export default function CampaignDetailPage() {
   if (loading) return <DetailLoadingSkeleton />;
   if (error || !campaign) {
     return (
-      <div className="space-y-6">
-        <Link href="/campaigns" className="text-xs font-mono text-slate-400 hover:text-slate-200 flex items-center gap-1">
+      <div className="space-y-6 max-w-7xl mx-auto">
+        <Link href="/campaigns" className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Campaigns
         </Link>
         <ErrorState message={error || 'Campaign not found'} onRetry={fetchCampaign} />
@@ -128,37 +121,37 @@ export default function CampaignDetailPage() {
   const meetingsCount = leads.filter((l: any) => ['MEETING', 'CONVERTED'].includes(l.status)).length;
 
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-6 pb-16 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-teal-950/90 border border-teal-500/50 text-teal-200 text-xs font-mono flex items-center justify-between shadow-xl animate-in fade-in duration-200">
+        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-xl animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-teal-400" />
+            <Sparkles className="w-4 h-4 text-blue-400" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-teal-400 hover:text-teal-200">
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div className="flex items-start sm:items-center gap-3">
           <Link
             href="/campaigns"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
+            className="p-2 rounded-md text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl font-bold font-mono tracking-tight text-slate-100">
+              <h1 className="text-xl font-bold tracking-tight text-slate-100">
                 {campaign.name}
               </h1>
               <StatusBadge status={campaign.status} type="status" />
             </div>
-            <p className="text-xs text-slate-400 font-mono mt-0.5">
+            <p className="text-xs text-slate-400 mt-0.5">
               Goal: <span className="text-slate-200">{campaign.goal}</span>
             </p>
           </div>
@@ -168,35 +161,35 @@ export default function CampaignDetailPage() {
           onClick={() => setShowEditModal(true)}
           variant="outline"
           size="sm"
-          className="h-8 font-mono text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+          className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
         >
-          <Edit className="w-3.5 h-3.5 text-teal-400" />
+          <Edit className="w-3.5 h-3.5 text-blue-400" />
           <span>Edit Campaign</span>
         </Button>
       </div>
 
       {/* Campaign Dashboard Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-slate-900/80 border-slate-800">
-          <span className="text-[10px] font-mono text-slate-400 uppercase">Enrolled Leads</span>
-          <p className="text-2xl font-bold font-mono text-slate-100 mt-1">{leads.length}</p>
+        <Card className="p-4 bg-slate-900/60 border-slate-800">
+          <span className="text-[10px] text-slate-400 uppercase font-semibold">Enrolled Leads</span>
+          <p className="text-2xl font-bold text-slate-100 mt-1">{leads.length}</p>
         </Card>
-        <Card className="p-4 bg-slate-900/80 border-slate-800">
-          <span className="text-[10px] font-mono text-slate-400 uppercase">Contacted</span>
-          <p className="text-2xl font-bold font-mono text-indigo-400 mt-1">{contactedCount}</p>
+        <Card className="p-4 bg-slate-900/60 border-slate-800">
+          <span className="text-[10px] text-slate-400 uppercase font-semibold">Contacted</span>
+          <p className="text-2xl font-bold text-indigo-400 mt-1">{contactedCount}</p>
         </Card>
-        <Card className="p-4 bg-slate-900/80 border-slate-800">
-          <span className="text-[10px] font-mono text-slate-400 uppercase">Interested</span>
-          <p className="text-2xl font-bold font-mono text-emerald-400 mt-1">{interestedCount}</p>
+        <Card className="p-4 bg-slate-900/60 border-slate-800">
+          <span className="text-[10px] text-slate-400 uppercase font-semibold">Interested</span>
+          <p className="text-2xl font-bold text-emerald-400 mt-1">{interestedCount}</p>
         </Card>
-        <Card className="p-4 bg-slate-900/80 border-slate-800">
-          <span className="text-[10px] font-mono text-slate-400 uppercase">Meetings Booked</span>
-          <p className="text-2xl font-bold font-mono text-teal-300 mt-1">{meetingsCount}</p>
+        <Card className="p-4 bg-slate-900/60 border-slate-800">
+          <span className="text-[10px] text-slate-400 uppercase font-semibold">Meetings Booked</span>
+          <p className="text-2xl font-bold text-blue-400 mt-1">{meetingsCount}</p>
         </Card>
       </div>
 
       {/* Filter Target Leads Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-lg bg-slate-900/80 border border-slate-800 font-mono text-xs">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 text-xs">
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <Search className="w-4 h-4 text-slate-400" />
           <input
@@ -226,12 +219,12 @@ export default function CampaignDetailPage() {
 
       {/* Leads Table */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold font-mono uppercase tracking-wider text-slate-300">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
           Target Opportunities ({filteredLeads.length})
         </h3>
-        <Card className="bg-slate-900/90 border-slate-800 overflow-x-auto">
+        <Card className="bg-slate-900/60 border-slate-800 overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] font-mono uppercase tracking-wider text-slate-400">
+            <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
               <tr>
                 <th className="py-3 px-4">Company & Prospect</th>
                 <th className="py-3 px-4">Requirement</th>
@@ -240,7 +233,7 @@ export default function CampaignDetailPage() {
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-sans">
+            <tbody className="divide-y divide-slate-800/60">
               {filteredLeads.map((lead: any) => (
                 <tr key={lead.id} className="hover:bg-slate-800/40 transition-colors">
                   <td className="py-3 px-4">
@@ -250,7 +243,7 @@ export default function CampaignDetailPage() {
                   <td className="py-3 px-4 max-w-[240px] truncate text-slate-300">
                     {lead.requirements?.[0]?.title || 'System Modernization'}
                   </td>
-                  <td className="py-3 px-4 text-center font-mono font-bold text-teal-400">
+                  <td className="py-3 px-4 text-center font-bold text-blue-400">
                     {lead.intentScore}
                   </td>
                   <td className="py-3 px-4">
@@ -258,7 +251,7 @@ export default function CampaignDetailPage() {
                   </td>
                   <td className="py-3 px-4 text-right">
                     <Link href={`/opportunities/${lead.id}`}>
-                      <Button size="sm" variant="ghost" className="h-7 text-xs font-mono text-teal-400 hover:bg-teal-500/10">
+                      <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-400 hover:bg-blue-500/10">
                         View
                       </Button>
                     </Link>
@@ -273,8 +266,8 @@ export default function CampaignDetailPage() {
       {/* EDIT CAMPAIGN MODAL */}
       {showEditModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4 font-mono">
-            <h3 className="text-base font-bold text-slate-100 uppercase">Edit Campaign Settings</h3>
+          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4">
+            <h3 className="text-sm font-bold text-slate-100 uppercase">Edit Campaign Settings</h3>
             <form onSubmit={handleUpdateCampaign} className="space-y-3 text-xs">
               <div>
                 <label className="text-slate-400 block mb-1">Campaign Name</label>
@@ -283,7 +276,7 @@ export default function CampaignDetailPage() {
                   required
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200 text-xs"
                 />
               </div>
 
@@ -292,7 +285,7 @@ export default function CampaignDetailPage() {
                 <select
                   value={editStatus}
                   onChange={(e) => setEditStatus(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200 text-xs"
                 >
                   <option value="ACTIVE">ACTIVE</option>
                   <option value="PAUSED">PAUSED</option>
@@ -306,7 +299,7 @@ export default function CampaignDetailPage() {
                   type="text"
                   value={editAudience}
                   onChange={(e) => setEditAudience(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200 text-xs"
                 />
               </div>
 
@@ -316,7 +309,7 @@ export default function CampaignDetailPage() {
                   rows={2}
                   value={editGoal}
                   onChange={(e) => setEditGoal(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200 text-xs"
                 />
               </div>
 
@@ -334,7 +327,7 @@ export default function CampaignDetailPage() {
                   type="submit"
                   disabled={editing}
                   size="sm"
-                  className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs"
                 >
                   {editing ? 'Saving...' : 'Save Changes'}
                 </Button>
@@ -346,3 +339,4 @@ export default function CampaignDetailPage() {
     </div>
   );
 }
+

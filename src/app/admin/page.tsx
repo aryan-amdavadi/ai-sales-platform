@@ -12,7 +12,6 @@ import {
   Server,
   CheckCircle,
   Search,
-  Filter,
   User,
   Bot,
 } from 'lucide-react';
@@ -50,9 +49,9 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
-          System Observability & Audit Logs
+      <div className="space-y-6 max-w-7xl mx-auto">
+        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+          ADMIN OBSERVABILITY & AUDIT LOGS
         </h1>
         <TableLoadingSkeleton rows={6} />
       </div>
@@ -61,9 +60,9 @@ export default function AdminPage() {
 
   if (error || !data) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
-          System Observability & Audit Logs
+      <div className="space-y-6 max-w-7xl mx-auto">
+        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+          ADMIN OBSERVABILITY & AUDIT LOGS
         </h1>
         <ErrorState message={error || 'No admin data'} onRetry={fetchAdmin} />
       </div>
@@ -84,21 +83,23 @@ export default function AdminPage() {
   });
 
   return (
-    <div className="space-y-8 pb-16" data-testid="admin-page">
+    <div className="space-y-6 pb-16 max-w-7xl mx-auto" data-testid="admin-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
-              Admin Observability & Audit Logs
-            </h1>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+                ADMIN OBSERVABILITY & AUDIT LOGS
+              </h1>
+              <p className="text-xs text-slate-400 mt-0.5">
+                System status, infrastructure health, compute utilization, and transactional activity logs.
+              </p>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 font-mono mt-1">
-            System status, infrastructure health, compute utilization, and transactional activity logs.
-          </p>
         </div>
       </div>
 
@@ -116,7 +117,7 @@ export default function AdminPage() {
           value={data.totalOpportunities}
           subtitle="In Database"
           icon={Target}
-          variant="teal"
+          variant="blue"
         />
         <MetricCard
           title="Campaigns"
@@ -142,37 +143,37 @@ export default function AdminPage() {
       </div>
 
       {/* Subsystem Operational Status */}
-      <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
+      <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
-            <Server className="w-4 h-4 text-teal-400" />
-            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+            <Server className="w-4 h-4 text-blue-400" />
+            <h3 className="text-xs font-semibold text-slate-100 uppercase">
               Subsystem Operational Telemetry
             </h3>
           </div>
-          <span className="text-xs font-mono text-emerald-400 font-medium">All Subsystems Operational</span>
+          <span className="text-xs text-emerald-400 font-medium">All Subsystems Operational</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px]">DATABASE STATUS</span>
-            <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
+            <span className="text-slate-400 text-[10px] uppercase font-semibold">DATABASE STATUS</span>
+            <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
               <CheckCircle className="w-3.5 h-3.5" />
               <span>{data.systemStatus?.database}</span>
             </div>
           </div>
 
           <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px]">VOICE INFERENCE ENGINE</span>
-            <div className="flex items-center gap-1.5 text-teal-400 font-bold">
+            <span className="text-slate-400 text-[10px] uppercase font-semibold">VOICE INFERENCE ENGINE</span>
+            <div className="flex items-center gap-1.5 text-blue-400 font-medium">
               <CheckCircle className="w-3.5 h-3.5" />
               <span>{data.systemStatus?.voiceEngine}</span>
             </div>
           </div>
 
           <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px]">UPTIME & LATENCY</span>
-            <div className="flex items-center gap-1.5 text-slate-200 font-bold">
+            <span className="text-slate-400 text-[10px] uppercase font-semibold">UPTIME & LATENCY</span>
+            <div className="flex items-center gap-1.5 text-slate-200 font-medium">
               <span>{data.systemStatus?.uptime} &bull; {data.systemStatus?.latencyMs}ms</span>
             </div>
           </div>
@@ -183,13 +184,13 @@ export default function AdminPage() {
       <div className="space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-teal-400" />
-            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+            <Activity className="w-4 h-4 text-blue-400" />
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
               Activity Logs & Security Audit Trail
             </h3>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-xs">
+          <div className="flex items-center gap-2 text-xs">
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
               <Search className="w-3.5 h-3.5 text-slate-400" />
               <input
@@ -217,9 +218,9 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <Card className="bg-slate-900/90 border-slate-800 overflow-x-auto">
-          <table className="w-full text-left text-xs font-mono" data-testid="audit-table">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
+        <Card className="bg-slate-900/60 border-slate-800 overflow-x-auto">
+          <table className="w-full text-left text-xs" data-testid="audit-table">
+            <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
               <tr>
                 <th className="py-3 px-4">Timestamp</th>
                 <th className="py-3 px-4">Actor</th>
@@ -228,37 +229,37 @@ export default function AdminPage() {
                 <th className="py-3 px-4">Result & Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-sans">
+            <tbody className="divide-y divide-slate-800/60">
               {filteredLogs.map((act: any) => {
                 const actorName = act.user?.name || (act.action.includes('CALL') || act.action.includes('ANALYZED') ? 'Nova AI Copilot' : 'System Engine');
                 const isAI = actorName.includes('AI') || actorName.includes('Nova');
 
                 return (
-                  <tr key={act.id} className="hover:bg-slate-800/40 transition-colors font-mono">
+                  <tr key={act.id} className="hover:bg-slate-800/40 transition-colors">
                     <td className="py-3 px-4 whitespace-nowrap text-slate-400 text-[11px]">
                       {new Date(act.createdAt).toLocaleString()}
                     </td>
 
                     <td className="py-3 px-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] ${
-                        isAI ? 'bg-teal-950/60 text-teal-300 border border-teal-500/30' : 'bg-slate-800 text-slate-200 border border-slate-700'
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ${
+                        isAI ? 'bg-blue-950/60 text-blue-300 border border-blue-500/30' : 'bg-slate-800 text-slate-200 border border-slate-700'
                       }`}>
-                        {isAI ? <Bot className="w-3 h-3 text-teal-400" /> : <User className="w-3 h-3 text-slate-400" />}
+                        {isAI ? <Bot className="w-3 h-3 text-blue-400" /> : <User className="w-3 h-3 text-slate-400" />}
                         <span>{actorName}</span>
                       </span>
                     </td>
 
                     <td className="py-3 px-4 whitespace-nowrap">
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700 text-[11px]">
+                      <span className="px-2 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 text-[11px] font-medium">
                         {act.action}
                       </span>
                     </td>
 
-                    <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-semibold font-sans">
+                    <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-medium">
                       {act.lead?.company?.name ? `${act.lead.company.name} (${act.lead.name || 'Lead'})` : 'System Workspace'}
                     </td>
 
-                    <td className="py-3 px-4 text-slate-300 text-xs font-sans max-w-md">
+                    <td className="py-3 px-4 text-slate-300 text-xs max-w-md">
                       {act.details}
                     </td>
                   </tr>
@@ -271,3 +272,4 @@ export default function AdminPage() {
     </div>
   );
 }
+

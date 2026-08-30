@@ -11,7 +11,6 @@ import {
   Layers,
   MapPin,
   Users,
-  Sparkles,
   ArrowRight,
   ArrowLeft,
   Zap,
@@ -62,26 +61,26 @@ export default function OnboardingPage() {
     <div className="max-w-2xl mx-auto py-10 px-4 space-y-8" data-testid="onboarding-page">
       {/* Brand Header */}
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center justify-center p-2 rounded-xl bg-teal-500/10 border border-teal-500/30 text-teal-400 mb-2">
-          <Zap className="w-6 h-6 fill-teal-400" />
+        <div className="inline-flex items-center justify-center p-2 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 mb-2">
+          <Zap className="w-6 h-6 fill-blue-400" />
         </div>
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
           WORKSPACE SETUP WIZARD
         </h1>
-        <p className="text-xs text-slate-400 font-mono">
+        <p className="text-xs text-slate-400">
           Configure your autonomous public intent discovery engine in 7 steps.
         </p>
       </div>
 
       {/* Progress Bar */}
       <div className="space-y-2">
-        <div className="flex justify-between text-xs font-mono text-slate-400">
+        <div className="flex justify-between text-xs text-slate-400">
           <span>Step {step} of {totalSteps}</span>
-          <span className="text-teal-400">{Math.round((step / totalSteps) * 100)}% Completed</span>
+          <span className="text-blue-400 font-semibold">{Math.round((step / totalSteps) * 100)}% Completed</span>
         </div>
         <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
           <div
-            className="h-full bg-teal-400 rounded-full transition-all duration-300"
+            className="h-full bg-blue-500 rounded-full transition-all duration-300"
             style={{ width: `${(step / totalSteps) * 100}%` }}
           />
         </div>
@@ -91,41 +90,41 @@ export default function OnboardingPage() {
       <Card className="p-8 bg-slate-900/90 border-slate-800 shadow-lg space-y-6">
         {step === 1 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <Building className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">1. Company Identity</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">1. Company Identity</h3>
             </div>
             <p className="text-xs text-slate-400">What is your company or organization name?</p>
             <Input
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="e.g. Acme Technologies"
-              className="bg-slate-950 border-slate-800 text-slate-100 text-sm font-mono"
+              className="bg-slate-950 border-slate-800 text-slate-100 text-xs"
             />
           </div>
         )}
 
         {step === 2 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <Globe className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">2. Website & Domain</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">2. Website & Domain</h3>
             </div>
             <p className="text-xs text-slate-400">Enter your primary company website domain.</p>
             <Input
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
               placeholder="https://company.com"
-              className="bg-slate-950 border-slate-800 text-slate-100 text-sm font-mono"
+              className="bg-slate-950 border-slate-800 text-slate-100 text-xs"
             />
           </div>
         )}
 
         {step === 3 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <Package className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">3. Products & Core Capabilities</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">3. Products & Core Capabilities</h3>
             </div>
             <p className="text-xs text-slate-400">
               List the primary services, products, or consulting offerings you want to sell.
@@ -134,16 +133,16 @@ export default function OnboardingPage() {
               rows={3}
               value={products}
               onChange={(e) => setProducts(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-3 text-slate-100 text-xs font-mono focus:outline-none focus:border-teal-500"
+              className="w-full bg-slate-950 border border-slate-800 rounded-md p-3 text-slate-100 text-xs focus:outline-none focus:border-blue-500"
             />
           </div>
         )}
 
         {step === 4 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <Layers className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">4. Target Industries</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">4. Target Industries</h3>
             </div>
             <p className="text-xs text-slate-400">Select the vertical industries you want to monitor for public RFPs.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -153,9 +152,9 @@ export default function OnboardingPage() {
                   <button
                     key={ind}
                     onClick={() => toggleIndustry(ind)}
-                    className={`p-2.5 rounded-lg border text-left text-xs font-mono transition-colors ${
+                    className={`p-2.5 rounded-lg border text-left text-xs transition-colors ${
                       selected
-                        ? 'bg-teal-500/15 border-teal-500/40 text-teal-300 font-semibold'
+                        ? 'bg-blue-500/15 border-blue-500/40 text-blue-300 font-semibold'
                         : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                     }`}
                   >
@@ -169,25 +168,25 @@ export default function OnboardingPage() {
 
         {step === 5 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <MapPin className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">5. Target Geographies</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">5. Target Geographies</h3>
             </div>
             <p className="text-xs text-slate-400">Specify target regions or countries for procurement requirements.</p>
             <Input
               value={locations}
               onChange={(e) => setLocations(e.target.value)}
               placeholder="e.g. United States, EMEA, APAC"
-              className="bg-slate-950 border-slate-800 text-slate-100 text-sm font-mono"
+              className="bg-slate-950 border-slate-800 text-slate-100 text-xs"
             />
           </div>
         )}
 
         {step === 6 && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-teal-400">
+            <div className="flex items-center gap-2.5 text-blue-400">
               <Users className="w-5 h-5" />
-              <h3 className="text-base font-bold font-mono text-slate-100">6. Ideal Customer Profile (ICP)</h3>
+              <h3 className="text-sm font-bold text-slate-100 uppercase">6. Ideal Customer Profile (ICP)</h3>
             </div>
             <p className="text-xs text-slate-400">
               Describe target decision maker roles and company sizing thresholds.
@@ -196,17 +195,17 @@ export default function OnboardingPage() {
               rows={4}
               value={icp}
               onChange={(e) => setIcp(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-3 text-slate-100 text-xs font-mono focus:outline-none focus:border-teal-500"
+              className="w-full bg-slate-950 border border-slate-800 rounded-md p-3 text-slate-100 text-xs focus:outline-none focus:border-blue-500"
             />
           </div>
         )}
 
         {step === 7 && (
           <div className="text-center py-6 space-y-4">
-            <div className="w-12 h-12 rounded-full bg-teal-500/20 border border-teal-500/40 text-teal-400 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold font-mono text-slate-100">
+            <h3 className="text-lg font-bold text-slate-100">
               Your AI sales intelligence workspace is ready.
             </h3>
             <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
@@ -223,7 +222,7 @@ export default function OnboardingPage() {
               variant="outline"
               size="sm"
               onClick={() => setStep((s) => s - 1)}
-              className="text-xs font-mono border-slate-700 bg-slate-950 text-slate-300 flex items-center gap-1"
+              className="text-xs border-slate-700 bg-slate-950 text-slate-300 flex items-center gap-1"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Previous</span>
@@ -236,7 +235,7 @@ export default function OnboardingPage() {
             <Button
               size="sm"
               onClick={() => setStep((s) => s + 1)}
-              className="text-xs font-mono font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center gap-1 ml-auto"
+              className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1 ml-auto"
             >
               <span>Next Step</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -245,7 +244,7 @@ export default function OnboardingPage() {
             <Button
               size="sm"
               onClick={() => router.push('/dashboard')}
-              className="text-xs font-mono font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 px-6 ml-auto"
+              className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white px-6 ml-auto"
             >
               Enter Dashboard
             </Button>
@@ -255,3 +254,4 @@ export default function OnboardingPage() {
     </div>
   );
 }
+

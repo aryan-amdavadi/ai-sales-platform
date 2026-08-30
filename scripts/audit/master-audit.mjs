@@ -47,9 +47,12 @@ auditResults.unitTests = runStep('Vitest Unit Tests', 'npx vitest run tests/unit
 auditResults.integrationTests = runStep('Vitest Integration Pipeline', 'npx vitest run tests/unit/ai-pipeline-integration.test.ts tests/unit/call-crm-integration.test.ts');
 
 // 6. E2E Tests
-auditResults.e2eTests = runStep('Playwright E2E Test Suite', 'npx playwright test tests/e2e/dashboard.spec.ts tests/e2e/opportunities.spec.ts tests/e2e/navigation-responsive.spec.ts');
+auditResults.e2eTests = runStep('Playwright E2E Test Suite', 'npx playwright test tests/e2e/dashboard.spec.ts tests/e2e/opportunities.spec.ts tests/e2e/navigation-responsive.spec.ts --workers=1');
 
-// 7. Markup Audit
+// 7. UI/UX Design System Audit
+auditResults.ui = runStep('UI/UX Enterprise Aesthetic Audit', 'node scripts/audit/verify-ui.mjs');
+
+// 8. Markup Audit
 auditResults.markup = runStep('Markup & TestID Audit', 'node scripts/audit/verify-markup.mjs');
 
 // 8. Feature Audit

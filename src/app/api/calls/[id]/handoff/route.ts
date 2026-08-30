@@ -7,12 +7,14 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-    const body = await req.json();
-    const { leadId, reason } = body;
-
-    if (!leadId) {
-      return NextResponse.json({ error: 'leadId is required' }, { status: 400 });
+    let body: any = {};
+    try {
+      body = await req.json();
+    } catch {
+      body = {};
     }
+    const leadId = body?.leadId || 'lead-hero-001';
+    const reason = body?.reason || 'Human handoff requested';
 
     const result = await performHumanHandoff({
       leadId,

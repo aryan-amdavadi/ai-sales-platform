@@ -5,20 +5,21 @@ import {
   Menu,
   Search,
   Bell,
-  Terminal,
   Sparkles,
   PhoneCall,
   Calendar,
   Database,
   Flame,
+  PlayCircle,
   CheckCircle2,
-  X,
-  ArrowRight,
 } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
   onMobileMenuToggle: () => void;
+  onStartGuidedDemo?: () => void;
 }
 
 interface NotificationItem {
@@ -31,7 +32,8 @@ interface NotificationItem {
   read: boolean;
 }
 
-export function Header({ onMobileMenuToggle }: HeaderProps) {
+export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
+  const pathname = usePathname();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([
     {
@@ -82,7 +84,6 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
   ]);
 
   const popoverRef = useRef<HTMLDivElement>(null);
-
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   useEffect(() => {
@@ -103,12 +104,28 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 
+  const getPageTitle = (path: string) => {
+    if (path.startsWith('/dashboard')) return 'Overview Dashboard';
+    if (path.startsWith('/opportunities/')) return 'Opportunity Intelligence';
+    if (path.startsWith('/opportunities')) return 'Opportunities Explorer';
+    if (path.startsWith('/discover')) return 'Public Intent Discovery';
+    if (path.startsWith('/campaigns/')) return 'Campaign Management';
+    if (path.startsWith('/campaigns')) return 'Outreach Campaigns';
+    if (path.startsWith('/calls/')) return 'Call Session Intelligence';
+    if (path.startsWith('/calls')) return 'AI Voice Cockpit';
+    if (path.startsWith('/intelligence')) return 'Account Intelligence';
+    if (path.startsWith('/analytics')) return 'Conversion Analytics';
+    if (path.startsWith('/settings')) return 'Platform Settings';
+    if (path.startsWith('/admin')) return 'System Health & Audit Logs';
+    return 'Sales Intelligence';
+  };
+
   const getIcon = (type: NotificationItem['type']) => {
     switch (type) {
       case 'HIGH_INTENT':
-        return <Flame className="w-3.5 h-3.5 text-red-400" />;
+        return <Flame className="w-3.5 h-3.5 text-rose-400" />;
       case 'CALL_COMPLETED':
-        return <PhoneCall className="w-3.5 h-3.5 text-teal-400" />;
+        return <PhoneCall className="w-3.5 h-3.5 text-blue-400" />;
       case 'MEETING_RECOMMENDED':
         return <Sparkles className="w-3.5 h-3.5 text-amber-400" />;
       case 'CALLBACK_SCHEDULED':
@@ -119,7 +136,8 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-20 h-14 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-20 h-14 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 flex items-center justify-between px-4 sm:px-6">
+      {/* Left: Mobile Toggle & Breadcrumb */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMobileMenuToggle}
@@ -129,34 +147,48 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400">
-          <span className="text-slate-200 font-semibold">WORKSPACE:</span>
-          <span className="text-teal-400">Production Pipeline</span>
-          <span className="text-slate-600">/</span>
-          <span className="text-slate-400">Autonomous Intent Discovery</span>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-slate-400 hidden sm:inline">Workspace</span>
+          <span className="text-slate-600 hidden sm:inline">/</span>
+          <span className="font-semibold text-slate-100">{getPageTitle(pathname)}</span>
         </div>
       </div>
 
+      {/* Right: Quick Search, Guided Demo, Notifications, User */}
       <div className="flex items-center gap-3">
-        {/* Quick Search shortcut */}
+        {/* Quick Search */}
         <Link
           href="/opportunities"
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-colors font-mono"
+          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-colors"
         >
           <Search className="w-3.5 h-3.5" />
           <span>Quick search...</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-400">
+          <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-400 font-mono">
             ⌘K
           </kbd>
         </Link>
 
-        {/* AI Agent Status Pill */}
-        <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-300 text-xs font-mono">
-          <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
-          <span>Nova AI Engine: Live</span>
+        {/* Guided Demo Launch Button */}
+        {onStartGuidedDemo && (
+          <Button
+            onClick={onStartGuidedDemo}
+            size="sm"
+            variant="outline"
+            className="h-8 text-xs font-medium border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 flex items-center gap-1.5"
+            data-testid="guided-demo-btn"
+          >
+            <PlayCircle className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Guided Demo</span>
+          </Button>
+        )}
+
+        {/* Live Engine Status Badge */}
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="text-[11px] text-slate-300">Nova AI: Ready</span>
         </div>
 
-        {/* Notification Center Trigger & Dropdown */}
+        {/* Notification Center */}
         <div className="relative" ref={popoverRef}>
           <button
             onClick={() => setNotificationsOpen(!notificationsOpen)}
@@ -166,27 +198,27 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-500" />
             )}
           </button>
 
-          {/* Notifications Dropdown Card */}
+          {/* Notifications Dropdown */}
           {notificationsOpen && (
             <div
-              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 font-mono text-xs"
+              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs"
               data-testid="notifications-panel"
             >
               <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <Bell className="w-4 h-4 text-teal-400" />
-                  <span className="font-bold text-slate-100 uppercase tracking-wide">
-                    Live Notifications ({unreadCount})
+                  <Bell className="w-4 h-4 text-blue-400" />
+                  <span className="font-semibold text-slate-100">
+                    Notifications ({unreadCount})
                   </span>
                 </div>
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-[11px] text-teal-400 hover:text-teal-300 transition-colors"
+                    className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     Mark read
                   </button>
@@ -207,17 +239,17 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
                     className={`block p-2.5 rounded-lg border transition-all ${
                       n.read
                         ? 'bg-slate-950/60 border-slate-800/80 text-slate-400 hover:bg-slate-950 hover:text-slate-200'
-                        : 'bg-teal-950/20 border-teal-500/30 text-slate-200 hover:bg-teal-950/40'
+                        : 'bg-blue-950/20 border-blue-500/30 text-slate-200 hover:bg-blue-950/40'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-200">
+                      <div className="flex items-center gap-1.5 font-semibold text-[11px] text-slate-200">
                         {getIcon(n.type)}
                         <span>{n.title}</span>
                       </div>
                       <span className="text-[10px] text-slate-500">{n.timestamp}</span>
                     </div>
-                    <p className="text-[11px] font-sans text-slate-300 leading-relaxed">
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
                       {n.message}
                     </p>
                   </Link>
@@ -227,21 +259,12 @@ export function Header({ onMobileMenuToggle }: HeaderProps) {
           )}
         </div>
 
-        {/* Telemetry / Admin Link */}
-        <Link
-          href="/admin"
-          className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 transition-colors"
-          title="System Health & Telemetry"
-        >
-          <Terminal className="w-4 h-4" />
-        </Link>
-
-        {/* User Account / Role */}
+        {/* User Avatar */}
         <Link
           href="/settings"
           className="flex items-center gap-2 pl-2 border-l border-slate-800"
         >
-          <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-mono text-slate-200 font-medium">
+          <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-semibold text-slate-200">
             AM
           </div>
         </Link>

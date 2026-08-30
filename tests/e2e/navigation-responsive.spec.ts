@@ -10,37 +10,40 @@ test.describe('Navigation & Responsive Shell', () => {
     // Go to Discover
     await page.locator('aside.hidden a[href="/discover"]').click();
     await expect(page).toHaveURL(/.*discover/);
-    await expect(page.locator('text=PUBLIC INTENT DISCOVERY ENGINE')).toBeVisible();
+    await expect(page.locator('text=PUBLIC INTENT DISCOVERY ENGINE').first()).toBeVisible();
 
     // Go to Campaigns
     await page.locator('aside.hidden a[href="/campaigns"]').click();
     await expect(page).toHaveURL(/.*campaigns/);
-    await expect(page.locator('text=AUTONOMOUS OUTREACH CAMPAIGNS')).toBeVisible();
+    await expect(page.locator('text=AUTONOMOUS OUTREACH CAMPAIGNS').first()).toBeVisible();
 
     // Go to AI Voice Calls
     await page.locator('aside.hidden a[href="/calls"]').click();
     await expect(page).toHaveURL(/.*calls/);
-    await expect(page.locator('text=AI VOICE CALL SESSIONS')).toBeVisible();
+    await expect(page.locator('text=AI VOICE CALL SESSIONS').first()).toBeVisible();
 
     // Go to Intelligence
     await page.locator('aside.hidden a[href="/intelligence"]').click();
     await expect(page).toHaveURL(/.*intelligence/);
-    await expect(page.locator('text=ACCOUNT & FIRMOGRAPHIC INTELLIGENCE')).toBeVisible();
+    await expect(page.locator('text=ACCOUNT & FIRMOGRAPHIC INTELLIGENCE').first()).toBeVisible();
 
     // Go to Analytics
+    await page.locator('aside.hidden a[href="/analytics"]').scrollIntoViewIfNeeded();
     await page.locator('aside.hidden a[href="/analytics"]').click();
     await expect(page).toHaveURL(/.*analytics/);
-    await expect(page.locator('text=CONVERSION & INTENT ANALYTICS')).toBeVisible();
+    await expect(page.locator('text=CONVERSION & INTENT ANALYTICS').first()).toBeVisible();
 
     // Go to Settings
+    await page.locator('aside.hidden a[href="/settings"]').scrollIntoViewIfNeeded();
     await page.locator('aside.hidden a[href="/settings"]').click();
     await expect(page).toHaveURL(/.*settings/);
-    await expect(page.locator('text=PLATFORM SETTINGS')).toBeVisible();
+    await expect(page.locator('text=PLATFORM SETTINGS').first()).toBeVisible();
 
     // Go to Admin
+    await page.locator('aside.hidden a[href="/admin"]').scrollIntoViewIfNeeded();
     await page.locator('aside.hidden a[href="/admin"]').click();
     await expect(page).toHaveURL(/.*admin/);
-    await expect(page.locator('text=ADMIN OBSERVABILITY & AUDIT LOGS')).toBeVisible();
+    await expect(page.locator('text=ADMIN OBSERVABILITY & AUDIT LOGS').first()).toBeVisible();
   });
 
   test('mobile drawer navigation works on small screens (375px)', async ({ page }) => {
