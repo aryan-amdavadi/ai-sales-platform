@@ -128,9 +128,9 @@ export default function OpportunityDetailPage() {
       setCallingState('connected');
       setTimeout(() => {
         setCallingState('idle');
-        router.push('/calls');
-      }, 1500);
-    }, 1200);
+        router.push(`/calls?leadId=${id}&start=true`);
+      }, 500);
+    }, 400);
   };
 
   if (loading) {

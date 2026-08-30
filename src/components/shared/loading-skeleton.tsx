@@ -44,3 +44,5 @@ export function DetailLoadingSkeleton() {
     </div>
   );
 }
+
+export const LoadingSkeleton = TableLoadingSkeleton;

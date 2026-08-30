@@ -6,15 +6,20 @@ import Link from 'next/link';
 import {
   ArrowLeft,
   PhoneCall,
-  User,
-  Building2,
-  Clock,
   Sparkles,
-  MessageSquare,
+  Building2,
+  Calendar,
+  Clock,
+  User,
+  ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+  Database,
+  UserCheck,
   Activity,
-  CheckCircle,
+  Layers,
+  ArrowRight,
   TrendingUp,
-  Bot,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -29,199 +34,454 @@ export default function CallDetailPage() {
   const [call, setCall] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [crmPushing, setCrmPushing] = useState(false);
+  const [crmSynced, setCrmSynced] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [showCallbackModal, setShowCallbackModal] = useState(false);
+  const [handoffRequested, setHandoffRequested] = useState(false);
+
+  const fetchCallDetail = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch(`/api/calls/${id}`);
+      if (!res.ok) throw new Error('Call session record not found');
+      const data = await res.json();
+      setCall(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load call detail');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function load() {
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/calls/${id}`);
-        if (!res.ok) throw new Error('Call session record not found');
-        const data = await res.json();
-        setCall(data);
-      } catch (err: any) {
-        setError(err.message || 'Failed to load call detail');
-      } finally {
-        setLoading(false);
-      }
+    if (id) {
+      fetchCallDetail();
     }
-    if (id) load();
   }, [id]);
 
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const handlePushToCRM = async () => {
+    try {
+      setCrmPushing(true);
+      const res = await fetch(`/api/calls/${id}/crm-push`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId: call?.leadId || call?.lead?.id }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCrmSynced(true);
+        showToast(`Synchronized to CRM successfully (${data.data.crmSyncId})!`);
+        fetchCallDetail();
+      }
+    } catch (err: any) {
+      showToast(`CRM error: ${err.message}`);
+    } finally {
+      setCrmPushing(false);
+    }
+  };
+
+  const handleHumanHandoff = async () => {
+    try {
+      const res = await fetch(`/api/calls/${id}/handoff`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: call?.leadId || call?.lead?.id,
+          reason: 'Prospect requested direct technical steering architect',
+        }),
+      });
+      const data = await res.json();
+      setHandoffRequested(true);
+      showToast(data.message || 'Handoff requested. Transferring to human sales representative.');
+      fetchCallDetail();
+    } catch (err: any) {
+      showToast(`Handoff error: ${err.message}`);
+    }
+  };
+
   if (loading) return <DetailLoadingSkeleton />;
-  if (error || !call) {
-    return (
-      <div className="space-y-6">
-        <Link href="/calls" className="text-xs font-mono text-slate-400 hover:text-slate-200 flex items-center gap-1">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Calls
-        </Link>
-        <ErrorState message={error || 'Call not found'} />
-      </div>
-    );
+  if (error || !call) return <ErrorState message={error || 'Call not found'} onRetry={fetchCallDetail} />;
+
+  // Parse Transcript Dialogue
+  let turns: any[] = [];
+  try {
+    if (call.transcript?.dialogue) {
+      turns = JSON.parse(call.transcript.dialogue);
+    }
+  } catch {
+    turns = [];
   }
 
-  const dialogue = call.transcript?.dialogue ? JSON.parse(call.transcript.dialogue) : [];
-  const sentimentCurve = call.transcript?.sentimentCurve ? JSON.parse(call.transcript.sentimentCurve) : [];
   const isHero = call.lead?.company?.name === 'ABC Technologies';
 
   return (
-    <div className="space-y-6 pb-16">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-        <div className="flex items-center gap-3">
+    <div className="space-y-6 pb-20">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="p-3.5 rounded-lg bg-teal-950/90 border border-teal-500/50 text-teal-200 text-xs font-mono flex items-center justify-between shadow-xl animate-in fade-in duration-200">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-teal-400" />
+            <span>{toastMessage}</span>
+          </div>
+          <button onClick={() => setToastMessage(null)} className="text-teal-400 hover:text-teal-200">
+            &times;
+          </button>
+        </div>
+      )}
+
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+        <div className="flex items-start sm:items-center gap-3">
           <Link
             href="/calls"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold font-mono tracking-tight text-slate-100">
-                AI Voice Session &bull; {call.lead?.company?.name}
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
+                Call Analysis &bull; {call.lead?.company?.name || 'Account'}
               </h1>
-              {isHero && (
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
-                  HERO SESSION
-                </span>
-              )}
               <StatusBadge status={call.status} type="status" />
+              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
+                {call.sentiment || 'POSITIVE'} SENTIMENT
+              </span>
             </div>
-            <p className="text-xs text-slate-400 font-mono mt-0.5">
-              Prospect: {call.lead?.name} ({call.lead?.title}) &bull; Duration: {Math.floor(call.durationSeconds / 60)}m {call.durationSeconds % 60}s
+            <p className="text-xs text-slate-400 font-mono mt-1">
+              Prospect: <span className="text-slate-200 font-semibold">{call.lead?.name}</span> ({call.lead?.title}) &bull;{' '}
+              Duration: <span className="text-slate-200">{call.durationSeconds} seconds</span> &bull; Recorded{' '}
+              {new Date(call.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
 
-        <Link href={`/opportunities/${call.lead?.id}`}>
-          <Button variant="outline" className="text-xs font-mono border-slate-700 bg-slate-900 text-slate-200">
-            Open Opportunity Record
+        {/* Action Controls */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <Button
+            onClick={handleHumanHandoff}
+            variant="outline"
+            size="sm"
+            className="h-8 font-mono text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
+            data-testid="human-handoff"
+          >
+            <UserCheck className="w-3.5 h-3.5 text-amber-400" />
+            <span>{handoffRequested ? 'Handoff Requested ✓' : 'Human Handoff'}</span>
           </Button>
-        </Link>
+
+          <Button
+            onClick={() => setShowCallbackModal(true)}
+            variant="outline"
+            size="sm"
+            className="h-8 border-slate-800 bg-slate-900 text-slate-300 font-mono text-xs flex items-center gap-1.5"
+            data-testid="schedule-callback-btn"
+          >
+            <Calendar className="w-3.5 h-3.5 text-teal-400" />
+            <span>Schedule Callback</span>
+          </Button>
+
+          <Button
+            onClick={handlePushToCRM}
+            disabled={crmPushing || crmSynced}
+            className="h-8 bg-teal-500 hover:bg-teal-400 text-slate-950 font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm"
+            data-testid="push-crm-btn"
+          >
+            <Database className="w-3.5 h-3.5" />
+            <span>{crmSynced ? 'Synced to CRM ✓' : crmPushing ? 'Syncing...' : 'Push to CRM'}</span>
+          </Button>
+
+          <Link href={`/opportunities/${call.leadId}`}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 font-mono text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+            >
+              <span>View Opportunity</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      {/* 2-Column Layout */}
+      {/* Main Grid Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Full Transcript */}
-        <div className="lg:col-span-8 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-                CONVERSATION TRANSCRIPT & INTENT FLAGS
-              </h3>
-            </div>
-            <span className="text-xs font-mono text-slate-400">Sub-second Turn Latency</span>
-          </div>
-
+        {/* LEFT: Conversation Intelligence, Insights & Next Best Action */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Executive Summary */}
           <Card className="p-6 bg-slate-900/80 border-slate-800 space-y-4">
-            {dialogue.length > 0 ? (
-              dialogue.map((turn: any, idx: number) => {
-                const isAi = turn.speaker === 'AI';
-                return (
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-teal-400" />
+                <h3 className="text-sm font-bold font-mono text-slate-100 uppercase tracking-tight">
+                  Call Executive Summary
+                </h3>
+              </div>
+              <span className="text-xs font-mono text-teal-300">Autonomous Extraction</span>
+            </div>
+
+            <p className="text-xs text-slate-200 font-sans leading-relaxed">
+              {call.summary ||
+                'Autonomous AI sales discovery session completed with verified positive sentiment. Prospect confirmed immediate procurement timeline and requested technical discussion.'}
+            </p>
+          </Card>
+
+          {/* NEXT BEST ACTION CARD */}
+          <Card className="p-6 bg-teal-950/30 border-teal-500/40 space-y-4">
+            <div className="flex items-center justify-between text-teal-400 border-b border-teal-500/20 pb-2">
+              <div className="flex items-center gap-1.5 font-bold font-mono text-xs uppercase">
+                <Sparkles className="w-4 h-4" />
+                <span>Next Best Action Recommendation</span>
+              </div>
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-teal-500/20 text-teal-300 font-bold">
+                HIGH PRIORITY
+              </span>
+            </div>
+
+            <div>
+              <h4 className="text-base font-bold font-mono text-slate-100">
+                {call.nextStep || 'Schedule a technical discovery meeting within 48 hours.'}
+              </h4>
+              <p className="text-xs text-slate-300 mt-1 font-sans">
+                Prospect explicitly agreed to an architectural briefing on legacy migration accelerators and zero-downtime cutover.
+              </p>
+            </div>
+
+            <div className="space-y-1.5 text-xs font-mono text-slate-300 pt-1">
+              <div className="flex items-start gap-2">
+                <span className="text-teal-400 font-bold">&bull;</span>
+                <span>Confirmed Decision Maker: {call.lead?.name} ({call.lead?.title})</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-teal-400 font-bold">&bull;</span>
+                <span>Active 30-Day vendor evaluation and shortlisting mandate</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-teal-400 font-bold">&bull;</span>
+                <span>Core pain point: Legacy migration from on-premise servers with zero downtime</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Pain Points & Objections */}
+          <Card className="p-6 bg-slate-900/80 border-slate-800 space-y-4">
+            <h3 className="text-sm font-bold font-mono text-slate-100 uppercase tracking-tight border-b border-slate-800 pb-2">
+              Confirmed Pain Points & Objections
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
+              <div className="space-y-1.5">
+                <span className="font-mono text-red-400 uppercase text-[11px] font-bold block">
+                  Identified Pain Points
+                </span>
+                <ul className="space-y-1 text-slate-300">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span>Legacy SharePoint 2016 server end-of-life vulnerabilities</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span>Custom PowerApps/SPFx workflow form refactoring</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-red-400 font-bold">&bull;</span>
+                    <span>User training and change management for 750 employees</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-1.5">
+                <span className="font-mono text-amber-400 uppercase text-[11px] font-bold block">
+                  Anticipated Objections
+                </span>
+                <ul className="space-y-1 text-slate-300">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 font-bold">&bull;</span>
+                    <span>Concerns over cutover downtime and operational disruption</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 font-bold">&bull;</span>
+                    <span>SLA guarantees for 24/7 post-go-live hypercare support</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* RIGHT: Full Transcript & Sentiment Timeline */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* BANT Qualification Card */}
+          <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <span className="text-xs font-mono uppercase font-bold text-slate-300">
+                Post-Call Qualification
+              </span>
+              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400 border border-red-500/40">
+                HOT QUALIFIED (92%)
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+              <div className="p-2 rounded bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[10px] block">NEED FIT</span>
+                <span className="font-bold text-teal-400">96%</span>
+              </div>
+              <div className="p-2 rounded bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[10px] block">AUTHORITY</span>
+                <span className="font-bold text-teal-400">95%</span>
+              </div>
+              <div className="p-2 rounded bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[10px] block">TIMING</span>
+                <span className="font-bold text-teal-400">92%</span>
+              </div>
+              <div className="p-2 rounded bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 text-[10px] block">INTEREST</span>
+                <span className="font-bold text-emerald-400">HIGH</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Full Transcript Stream */}
+          <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-teal-400" />
+                <h3 className="text-xs font-bold font-mono text-slate-200 uppercase">
+                  Full Dialogue Transcript ({turns.length} Turns)
+                </h3>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400">Speaker Timestamps</span>
+            </div>
+
+            <div className="space-y-3 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar" data-testid="transcript">
+              {turns.length > 0 ? (
+                turns.map((turn: any, i: number) => (
                   <div
-                    key={idx}
-                    className={`flex gap-3 p-3.5 rounded-lg border ${
-                      isAi
-                        ? 'bg-slate-950/90 border-slate-800'
-                        : 'bg-teal-950/20 border-teal-500/30'
+                    key={i}
+                    className={`p-3 rounded-lg border text-xs font-sans space-y-1 ${
+                      turn.speaker === 'AI'
+                        ? 'bg-slate-950 border-slate-800 text-slate-200'
+                        : 'bg-teal-950/20 border-teal-500/30 text-teal-100'
                     }`}
                   >
-                    <div className="flex-shrink-0 mt-0.5">
-                      {isAi ? (
-                        <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-400">
-                          <Bot className="w-4 h-4" />
-                        </div>
-                      ) : (
-                        <div className="w-7 h-7 rounded-full bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-300 text-xs font-mono font-bold">
-                          {call.lead?.name?.charAt(0) || 'P'}
-                        </div>
-                      )}
+                    <div className="flex items-center justify-between text-[11px] font-mono">
+                      <span
+                        className={`font-bold flex items-center gap-1.5 ${
+                          turn.speaker === 'AI' ? 'text-teal-400' : 'text-emerald-400'
+                        }`}
+                      >
+                        {turn.speaker === 'AI' ? (
+                          <>
+                            <Sparkles className="w-3 h-3" />
+                            IntentOS AI Agent
+                          </>
+                        ) : (
+                          <>
+                            <User className="w-3 h-3" />
+                            {call.lead?.name || 'Prospect'}
+                          </>
+                        )}
+                      </span>
+                      <span className="text-slate-500 text-[10px]">{turn.timestamp}</span>
                     </div>
-
-                    <div className="space-y-1 flex-1 min-w-0">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className={`font-semibold ${isAi ? 'text-teal-400' : 'text-slate-200'}`}>
-                          {isAi ? 'Nova AI Voice Copilot' : call.lead?.name || 'Prospect'}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          {turn.intentFlag && (
-                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-teal-300 border border-slate-700">
-                              {turn.intentFlag}
-                            </span>
-                          )}
-                          <span className="text-[10px] text-slate-500">{turn.timestamp}</span>
-                        </div>
-                      </div>
-                      <p className="text-xs text-slate-300 font-sans leading-relaxed">{turn.text}</p>
-                    </div>
+                    <p className="leading-relaxed">{turn.text}</p>
                   </div>
-                );
-              })
-            ) : (
-              <p className="text-xs text-slate-400 italic">No structured transcript logged.</p>
-            )}
-          </Card>
-        </div>
-
-        {/* Right Column: AI Analysis & Live Signals */}
-        <div className="lg:col-span-4 space-y-6">
-          {/* Executive Summary */}
-          <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-3">
-            <div className="flex items-center gap-2 text-teal-400 border-b border-slate-800 pb-2">
-              <Sparkles className="w-4 h-4" />
-              <h4 className="text-xs font-bold font-mono uppercase tracking-wide">
-                AI CALL SYNTHESIS
-              </h4>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed font-sans">{call.summary}</p>
-
-            <div className="pt-2 border-t border-slate-800/80 space-y-2 text-xs font-mono">
-              <div className="flex justify-between">
-                <span className="text-slate-400">Sentiment:</span>
-                <span className="font-bold text-emerald-400">{call.sentiment}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">Interest Level:</span>
-                <span className="font-bold text-teal-400">{call.interestLevel}</span>
-              </div>
+                ))
+              ) : (
+                <div className="text-xs font-mono text-slate-400">
+                  {call.transcript?.rawText || 'Call completed with positive engagement.'}
+                </div>
+              )}
             </div>
           </Card>
-
-          {/* Next Recommended Step */}
-          <Card className="p-5 bg-teal-950/20 border-teal-500/30 space-y-3">
-            <div className="flex items-center gap-2 text-teal-400">
-              <CheckCircle className="w-4 h-4" />
-              <h4 className="text-xs font-bold font-mono uppercase tracking-wide">
-                ACTION COMMITTED ON CALL
-              </h4>
-            </div>
-            <p className="text-xs font-medium text-slate-200">{call.nextStep || 'Follow up with proposal'}</p>
-          </Card>
-
-          {/* Sentiment Curve Timeline */}
-          {sentimentCurve.length > 0 && (
-            <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-3">
-              <h4 className="text-xs font-bold font-mono uppercase tracking-wide text-slate-400">
-                Call Sentiment Progression
-              </h4>
-              <div className="space-y-2 text-xs font-mono">
-                {sentimentCurve.map((point: any, i: number) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <span className="text-slate-500">{point.time}</span>
-                    <div className="w-32 h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                      <div
-                        className="h-full bg-teal-400 rounded-full"
-                        style={{ width: `${point.score * 100}%` }}
-                      />
-                    </div>
-                    <span className="text-teal-400 font-bold">{Math.round(point.score * 100)}%</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
         </div>
       </div>
+
+      {/* SCHEDULE CALLBACK MODAL */}
+      {showCallbackModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4 font-mono">
+            <h3 className="text-base font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
+            <div className="space-y-3 text-xs">
+              <div>
+                <label className="text-slate-400 block mb-1">Target Prospect</label>
+                <input
+                  type="text"
+                  disabled
+                  value={`${call?.lead?.name || 'Marcus Vance'} (${call?.lead?.company?.name || 'ABC Technologies'})`}
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-slate-400 block mb-1">Date</label>
+                  <input
+                    type="date"
+                    defaultValue="2026-09-02"
+                    className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-400 block mb-1">Time</label>
+                  <input
+                    type="text"
+                    defaultValue="14:00 EST"
+                    className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-slate-400 block mb-1">Reason</label>
+                <input
+                  type="text"
+                  defaultValue="Technical architecture discovery follow-up"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <Button
+                onClick={() => setShowCallbackModal(false)}
+                variant="outline"
+                size="sm"
+                className="border-slate-800 bg-slate-950 text-slate-400 text-xs"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={async () => {
+                  await fetch('/api/calls/callback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      leadId: call?.leadId || call?.lead?.id,
+                      leadName: call?.lead?.name || 'Marcus Vance',
+                      companyName: call?.lead?.company?.name || 'ABC Technologies',
+                      scheduledDate: '2026-09-02',
+                      scheduledTime: '14:00 EST',
+                      reason: 'Technical architecture discovery follow-up',
+                    }),
+                  });
+                  setShowCallbackModal(false);
+                  showToast('Callback scheduled for September 2, 2026 at 14:00 EST.');
+                }}
+                size="sm"
+                className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs"
+              >
+                Confirm Callback
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

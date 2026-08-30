@@ -1,4 +1,6 @@
 export * from './ai';
+export * from './voice';
+export * from './crm';
 
 export type LeadStatus =
   | 'DISCOVERED'
