@@ -1,0 +1,211 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  role         String        @default("SALES_REP")
+  avatarUrl    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  calls        Call[]
+  activityLogs ActivityLog[]
+}
+
+model Company {
+  id             String           @id @default(cuid())
+  name           String
+  domain         String?
+  industry       String
+  size           String
+  location       String
+  description    String?
+  linkedinUrl    String?
+  websiteUrl     String?
+  techStack      String? // JSON or comma-separated list of technologies
+  hiringSignals  String? // Summary of recent hiring signals
+  fundingSignals String? // Recent funding details
+  growthSignals  String? // Headcount & market growth indicators
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  leads          Lead[]
+  insights       CompanyInsight[]
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  name           String
+  description    String
+  targetAudience String?
+  priceRange     String?
+  valueProps     String? // Comma-separated or JSON features
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model LeadSource {
+  id           String        @id @default(cuid())
+  name         String
+  platform     String // LINKEDIN, X, WEBSITE, PUBLIC_DIRECTORY, FREELANCE_PLATFORM
+  sourceUrl    String?
+  confidence   Int           @default(85)
+  rawData      String?
+  createdAt    DateTime      @default(now())
+  leads        Lead[]
+  requirements Requirement[]
+}
+
+model Lead {
+  id                 String           @id @default(cuid())
+  name               String
+  title              String
+  email              String?
+  phone              String?
+  linkedinUrl        String?
+  companyId          String
+  company            Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  sourceId           String?
+  source             LeadSource?      @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  campaignId         String?
+  campaign           Campaign?        @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  status             String           @default("DISCOVERED") // DISCOVERED, RELEVANT, HIGH_INTENT, QUALIFIED, CONTACTED, INTERESTED, MEETING, CONVERTED, ARCHIVED
+  intentScore        Int              @default(50) // 0 - 100
+  urgency            String           @default("MEDIUM") // LOW, MEDIUM, HIGH, IMMEDIATE
+  qualificationScore Int              @default(50) // 0 - 100
+  pipelineValue      Float            @default(25000)
+  salesBrief         String? // Synthesized AI sales brief
+  discoveredAt       DateTime         @default(now())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  requirements       Requirement[]
+  qualifications     Qualification[]
+  recommendations    Recommendation[]
+  calls              Call[]
+  activityLogs       ActivityLog[]
+}
+
+model Requirement {
+  id              String      @id @default(cuid())
+  leadId          String
+  lead            Lead        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  sourceId        String?
+  source          LeadSource? @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  title           String
+  description     String
+  category        String?
+  tags            String? // Comma-separated or JSON list of key requirements
+  budgetEstimate  String?
+  timeframe       String?
+  rawEvidence     String? // Exact excerpt or quote demonstrating intent
+  confidenceScore Int         @default(85)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model CompanyInsight {
+  id           String   @id @default(cuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  insightType  String // HIRING, TECH_STACK, FUNDING, EXPANSION, LEADERSHIP
+  headline     String
+  details      String
+  confidence   Int      @default(90)
+  sourceUrl    String?
+  discoveredAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+}
+
+model Campaign {
+  id             String   @id @default(cuid())
+  name           String
+  targetAudience String
+  status         String   @default("ACTIVE") // DRAFT, ACTIVE, PAUSED, COMPLETED
+  goal           String?
+  channels       String? // JSON or comma-separated list of channels (Voice AI, Email, LinkedIn)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  leads          Lead[]
+  calls          Call[]
+}
+
+model Call {
+  id              String      @id @default(cuid())
+  leadId          String
+  lead            Lead        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  campaignId      String?
+  campaign        Campaign?   @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status          String      @default("COMPLETED") // SCHEDULED, IN_PROGRESS, COMPLETED, FAILED, MISSED
+  scheduledAt     DateTime?
+  startedAt       DateTime?
+  endedAt         DateTime?
+  durationSeconds Int         @default(0)
+  summary         String?
+  sentiment       String?     @default("POSITIVE") // POSITIVE, NEUTRAL, NEGATIVE, HIGHLY_INTERESTED
+  interestLevel   String?     @default("MEDIUM") // LOW, MEDIUM, HIGH, EXTREME
+  nextStep        String?
+  recordingUrl    String?
+  transcript      Transcript?
+  createdAt       DateTime    @default(now())
+}
+
+model Transcript {
+  id              String   @id @default(cuid())
+  callId          String   @unique
+  call            Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  dialogue        String // JSON array of [{speaker: "AI"|"Lead", text: string, timestamp: string, intentFlag?: string}]
+  rawText         String?
+  speakerTimeline String? // JSON metadata
+  sentimentCurve  String? // JSON curve of sentiment changes
+  createdAt       DateTime @default(now())
+}
+
+model Qualification {
+  id             String   @id @default(cuid())
+  leadId         String
+  lead           Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  budgetFit      Int      @default(80)
+  authorityFit   Int      @default(90)
+  needFit        Int      @default(85)
+  timingFit      Int      @default(80)
+  overallScore   Int      @default(84)
+  reasoning      String?
+  summary        String?
+  status         String   @default("QUALIFIED") // QUALIFIED, DISQUALIFIED, PENDING
+  evaluatedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+}
+
+model Recommendation {
+  id               String   @id @default(cuid())
+  leadId           String
+  lead             Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  actionType       String // CALL_NOW, SEND_PROPOSAL, SCHEDULE_DEMO, FOLLOW_UP, RESEARCH
+  title            String
+  rationale        String
+  priority         String   @default("HIGH") // HIGH, MEDIUM, LOW
+  suggestedChannel String   @default("Voice AI")
+  suggestedMessage String?
+  executed         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  leadId    String?
+  lead      Lead?    @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  action    String
+  details   String?
+  metadata  String? // JSON string
+  createdAt DateTime @default(now())
+}
