@@ -92,10 +92,15 @@ export async function getOpportunities(params: LeadFilterParams) {
     where.OR = [
       { name: { contains: term } },
       { title: { contains: term } },
+      { salesBrief: { contains: term } },
       { company: { name: { contains: term } } },
       { company: { industry: { contains: term } } },
+      { company: { techStack: { contains: term } } },
+      { company: { hiringSignals: { contains: term } } },
       { requirements: { some: { title: { contains: term } } } },
       { requirements: { some: { tags: { contains: term } } } },
+      { requirements: { some: { description: { contains: term } } } },
+      { requirements: { some: { rawEvidence: { contains: term } } } },
     ];
   }
 

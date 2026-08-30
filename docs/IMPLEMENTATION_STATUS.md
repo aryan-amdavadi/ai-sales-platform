@@ -3,89 +3,96 @@
 **Product**: INTENTOS — AI Sales Intelligence  
 **Tagline**: "Turn public buying signals into sales-ready opportunities."  
 **Date**: August 2026  
-**Status**: Task 1 — Foundation, Architecture & Premium Product Shell (COMPLETE)
+**Status**: Task 2 — AI Sales Intelligence Engine (COMPLETE)
 
 ---
 
-## 1. Repository Inspection & Architecture Overview
+## 1. AI Architecture Overview
 
-- **Detected Stack**: Next.js 15+ (App Router), React 19, TypeScript, Tailwind CSS, shadcn/ui, Radix UI Primitives, Lucide React, Recharts.
-- **Data & Storage**: SQLite with Prisma ORM (`dev.db`).
-- **Validation**: Zod schema definitions across filters, onboarding, campaigns, and voice triggers.
-- **Testing**: Vitest (11 unit & integration tests passing), Playwright (7 E2E tests passing across desktop and mobile viewports).
-- **Code Quality**: ESLint (`next/core-web-vitals`), strict TypeScript (`tsc --noEmit` passing with 0 errors).
-- **Environment**: 100% local, zero paid or mandatory external API keys required.
+IntentOS implements a modular, deterministic, multi-stage sales intelligence pipeline operating 100% locally with zero external or paid API dependencies, and an optional Ollama adapter.
 
----
-
-## 2. Database Models & Schema
-
-The following Prisma models and relational entities have been configured in [`prisma/schema.prisma`](file:///Users/aryanamdavadi/Desktop/Machintosh/AI-SALES_PLATFORM/prisma/schema.prisma):
-
-| Model | Purpose |
-| :--- | :--- |
-| **`User`** | Team members, sales reps, and AI agent actors (`Nova AI Voice Agent`). |
-| **`Company`** | 20 enterprise accounts with firmographics, tech stack, hiring signals, funding, and growth data. |
-| **`Product`** | Configured solution offerings and value propositions. |
-| **`Lead`** | 105+ opportunity records with intent scores (0-100), urgency, qualification, pipeline ARR, and sales briefs. |
-| **`Requirement`** | Structured requirement specs with raw public evidence quotes and confidence ratings. |
-| **`CompanyInsight`** | Account-level signals across tech stack, hiring velocity, funding, and expansion. |
-| **`Campaign`** | 10 outbound ICP campaigns with multi-channel target specifications. |
-| **`Call`** | 20 autonomous AI voice call sessions with duration, sentiment, and action items. |
-| **`Transcript`** | Dialogue turns with speaker timestamps and sentiment progression curves. |
-| **`Qualification`** | BANT fit breakdown (Budget, Authority, Need, Timing, Overall fit score). |
-| **`Recommendation`** | Next best action proposals, urgency prioritization, and suggested voice hooks. |
-| **`ActivityLog`** | Real-time audit trail and transaction logs. |
-| **`LeadSource`** | Sourcing platforms: LinkedIn, X, Company Website, Public Directory, Freelance Platform. |
+### Pipeline Flow:
+```
+PUBLIC REQUIREMENT
+       ↓
+REQUIREMENT UNDERSTANDING (Problem, Solution, Scope, Tech, Urgency, Buying Stage, Authority)
+       ↓
+INTENT ANALYSIS (8 Normalized Dimensions: Clarity, Urgency, Timeline, Fit, Decision Maker, Recency, Company Fit, Stage)
+       ↓
+EVIDENCE ENGINE ("Why This Lead?" & "Why Now?" high-velocity signals)
+       ↓
+COMPANY FIT (Capability match, Industry match, Technology match, Location match)
+       ↓
+QUALIFICATION (BANT Fit + Hot/Warm/Potential/Low Classification)
+       ↓
+AI SALES BRIEF (Pre-call brief, Pain points, Objection counter-strategies, Opening statement, Discovery questions)
+       ↓
+NEXT-BEST-ACTION (Autonomous recommendation, Action rationale, Outreach message, Priority)
+```
 
 ---
 
-## 3. Deterministic Demo Seed Dataset
+## 2. AI Providers
 
-- **Hero Record**:
-  - **Company**: ABC Technologies
-  - **Decision Maker**: Marcus Vance (Chief Technology Officer)
-  - **Intent Score**: 94 / 100
-  - **Pipeline Value**: $180,000 ARR
-  - **Requirement**: Enterprise SharePoint implementation partner (SharePoint Online, Microsoft 365, legacy 2016 migration, custom SPFx application development, user training, post-go-live support).
-- **Dataset Metrics**:
-  - 20 Companies across 10+ industries
-  - 105+ Opportunities
-  - 10 Outbound Campaigns
-  - 20 AI Voice Calls with transcripts and speaker timelines
-  - Deterministic reset API: `POST /api/demo/reset`
+- **`AIProvider`**: Standardized interface for requirements analysis, scoring, evidence generation, fit calculation, lead qualification, sales briefs, and next-best actions.
+- **`LocalDemoAIProvider`**: Default deterministic local AI provider utilizing semantic taxonomies, pattern extraction, BANT scoring algorithms, and contextual sales synthesis.
+- **`OllamaProvider`**: Local LLM adapter with automated resilient fallback to `LocalDemoAIProvider` if Ollama is offline.
+- **Provider Resolver**: `getAIProvider()` reads `AI_PROVIDER` (`demo` by default).
 
 ---
 
-## 4. Implemented Routes & Components
+## 3. 8-Dimension Intent Engine
 
-| Route | Functionality |
-| :--- | :--- |
-| **`/`** | Redirects to `/dashboard`. |
-| **`/login`** | Enterprise login shell pre-filled with demo credentials. |
-| **`/onboarding`** | 7-step onboarding wizard (Company &rarr; Domain &rarr; Products &rarr; Industries &rarr; Geographies &rarr; ICP &rarr; Ready). |
-| **`/dashboard`** | 7 KPI metric cards, AI Priority Queue with hero target, and 7-stage Opportunity Funnel. |
-| **`/opportunities`** | Interactive Opportunity Explorer with real-time keyword search, multi-facet filtering (industry, source, status, urgency, min intent), and multi-field sorting. |
-| **`/opportunities/[id]`** | Opportunity detail skeleton with stable test IDs (`opportunity-detail`, `intent-score`, `evidence-panel`, `sales-brief`, `next-best-action`, `call-action`). |
-| **`/discover`** | Public buying requirement search engine simulator with source selectors and intent filtering. |
-| **`/campaigns` & `/[id]`** | Autonomous outbound campaign monitor and campaign enrolled opportunity details. |
-| **`/calls` & `/[id]`** | AI Voice call logs and turn-by-turn conversational transcript viewer with sentiment progression. |
-| **`/intelligence`** | Company firmographic and signal cards for all 20 accounts. |
-| **`/analytics`** | Recharts visualizations: Opportunity funnel, intent distribution histogram, public source pie breakdown, industry distribution. |
-| **`/settings`** | Enterprise configuration tabs: Company, AI models, Voice Synthesizer, Notifications, Data, and Demo reset. |
-| **`/admin`** | Telemetry, uptime, compute latency, voice minutes counter, and audit trail logs. |
+Scores are normalized from 0 to 100 with full transparency:
+
+| Dimension | Formula / Source | Hero Lead (ABC Tech) |
+| :--- | :--- | :--- |
+| **Requirement Clarity** | Sub-requirements count & explicit technical specs | 96 / 100 |
+| **Urgency** | Extracted procurement timeframe & RFP triggers | 91 / 100 |
+| **Timeline** | Normalized deadline (30 days vs 90 days vs immediate) | 89 / 100 |
+| **Solution Fit** | Modernization capability alignment | 97 / 100 |
+| **Decision Maker** | Title authority weight (CTO / VP / CIO) | 82 / 100 |
+| **Recency** | Public signal freshness | 98 / 100 |
+| **Company Fit** | Scale & vertical alignment | 93 / 100 |
+| **Buying Stage** | Procurement phase (Vendor Selection / RFP) | 95 / 100 |
+| **Overall Intent Score** | Normalized weighted score | **94 / 100** |
 
 ---
 
-## 5. Verification & Acceptance Status
+## 4. Opportunity Detail UI (13 Core Sections)
 
-- [x] **Repository Inspected**: Analyzed files and established target directory structure.
-- [x] **Prisma Database**: SQLite database schema pushed and synchronized.
-- [x] **Deterministic Seed**: 105+ opportunities, 20 companies, 10 campaigns, 20 calls, hero record seeded.
-- [x] **Typecheck (`npm run typecheck`)**: 100% strict TypeScript passing (0 errors).
-- [x] **Linting (`npm run lint`)**: 100% ESLint passing (0 errors, 0 warnings).
-- [x] **Unit Tests (`npm run test`)**: 11 Vitest tests passing.
-- [x] **Build (`npm run build`)**: 23 Next.js static & dynamic routes compiled.
-- [x] **E2E Tests (`npm run test:e2e`)**: 7 Playwright tests passing across Desktop and Mobile viewports.
-- [x] **Responsive Layout**: Verified 375px mobile drawer navigation and fluid desktop grid.
-- [x] **No Paid API Dependency**: 100% functional locally with zero external API requirements.
+1. **Lead Profile**: Decision maker info, contact details, company location.
+2. **Intent Score**: Autonomous score gauge (94/100).
+3. **Score Breakdown**: 8 individual dimension ratings.
+4. **Requirement**: Structured problem, requested solution, and extracted component pills.
+5. **Why This Lead?**: Extracted evidence checklist.
+6. **Evidence**: Raw public signal quote and platform metadata.
+7. **Company Intelligence**: Tech stack, hiring velocity, growth signals, funding scale.
+8. **Why Now?**: High-velocity trigger events.
+9. **Qualification**: BANT scores, heat category (HOT), and reasoning.
+10. **AI Sales Brief**: Why decision maker matters, pain points, objection counter-strategies, opening statement, discovery questions, desired outcome.
+11. **Next Best Action**: Priority action, reason bullets, suggested message.
+12. **Source**: Sourcing platform and link.
+13. **Activity**: Event audit trail logging all analysis and brief generations.
+
+Interactive Controls:
+- `[Analyze Opportunity]`: Runs complete pipeline, updates DB, logs activity.
+- `[Generate Sales Brief]`: Regenerates tailored pre-call brief and objection handling.
+- `[Recalculate Score]`: Recomputes intent and fit metrics.
+- `[Launch AI Voice Call]`: Dispatches autonomous voice outreach session.
+
+---
+
+## 5. Verification & Test Results
+
+- [x] **Typecheck (`npm run typecheck`)**: 0 errors in strict TypeScript mode.
+- [x] **Lint (`npm run lint`)**: 0 errors, 0 warnings.
+- [x] **Unit & Integration Tests (`npm run test`)**: 19 / 19 tests passing.
+- [x] **Production Build (`npm run build`)**: 23 static & dynamic routes compiled.
+- [x] **E2E Tests (`npm run test:e2e`)**: 9 / 9 tests passing (Desktop & Mobile 375px).
+- [x] **Deterministic Hero Lead (ABC Technologies)**:
+  - Intent Score: 94 / 100
+  - Solution Fit: 96%
+  - Qualification Score: 92% (HOT)
+  - Urgency: HIGH
+  - Timeline: Next 30 Days
