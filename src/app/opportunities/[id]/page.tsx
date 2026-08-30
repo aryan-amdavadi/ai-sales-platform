@@ -323,7 +323,7 @@ export default function OpportunityDetailPage() {
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-teal-400" />
                 <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
-                  4. Structured Requirement & Public Evidence
+                  4. PUBLIC BUYING REQUIREMENT & EVIDENCE
                 </h3>
               </div>
               <StatusBadge status={opportunity.source?.platform || 'LINKEDIN'} type="source" />

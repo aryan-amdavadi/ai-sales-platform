@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "audit": "node scripts/audit/master-audit.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",

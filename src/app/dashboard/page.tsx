@@ -172,7 +172,7 @@ export default function DashboardPage() {
       {/* Priority Queue + Funnel Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* AI Priority Queue */}
-        <div className="lg:col-span-7 space-y-4">
+        <div className="lg:col-span-7 space-y-4" data-testid="hero-queue">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1 rounded bg-teal-500/10 border border-teal-500/30 text-teal-400">
@@ -244,7 +244,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Opportunity Funnel */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4" data-testid="funnel-visualization">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1 rounded bg-slate-800 border border-slate-700 text-slate-300">

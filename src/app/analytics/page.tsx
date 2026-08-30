@@ -13,9 +13,27 @@ import {
   Cell,
   CartesianGrid,
   Legend,
+  LineChart,
+  Line,
 } from 'recharts';
-import { BarChart3, TrendingUp, PieChart as PieIcon, Layers, Target } from 'lucide-react';
+import {
+  BarChart3,
+  TrendingUp,
+  PieChart as PieIcon,
+  Layers,
+  Target,
+  FileCheck,
+  CheckCircle2,
+  Flame,
+  PhoneCall,
+  UserCheck,
+  Calendar,
+  Sparkles,
+  Award,
+  Zap,
+} from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { MetricCard } from '@/components/shared/metric-card';
 import { TableLoadingSkeleton } from '@/components/shared/loading-skeleton';
 import { ErrorState } from '@/components/shared/error-state';
 
@@ -48,7 +66,9 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">SALES PIPELINE ANALYTICS</h1>
+        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+          Sales Pipeline Analytics
+        </h1>
         <TableLoadingSkeleton rows={6} />
       </div>
     );
@@ -57,14 +77,16 @@ export default function AnalyticsPage() {
   if (error || !data) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">SALES PIPELINE ANALYTICS</h1>
+        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+          Sales Pipeline Analytics
+        </h1>
         <ErrorState message={error || 'No analytics data'} onRetry={fetchAnalytics} />
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 pb-12" data-testid="analytics-page">
+    <div className="space-y-8 pb-16" data-testid="analytics-page">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-5">
         <div>
@@ -72,25 +94,99 @@ export default function AnalyticsPage() {
             <div className="p-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
               <BarChart3 className="w-5 h-5" />
             </div>
-            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
-              CONVERSION & INTENT ANALYTICS
+            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+              Conversion & Pipeline Telemetry
             </h1>
           </div>
-          <p className="text-sm text-slate-400 mt-1">
-            Real-time telemetry across intent score distributions, channel sourcing, and campaign conversions.
+          <p className="text-xs text-slate-400 font-mono mt-1">
+            Real-time analytics across intent scores, multi-channel sourcing, ICP campaign conversions, and qualification velocity.
           </p>
         </div>
       </div>
 
-      {/* Row 1: Funnel & Intent Distribution */}
+      {/* 10 CORE METRICS GRID */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        <MetricCard
+          title="Requirements Analyzed"
+          value={data.requirementsAnalyzed}
+          subtitle="Public Sourcing Signals"
+          icon={FileCheck}
+          variant="default"
+        />
+        <MetricCard
+          title="Relevant Opportunities"
+          value={data.relevantOpportunities}
+          subtitle="Score >= 60"
+          icon={Target}
+          variant="teal"
+        />
+        <MetricCard
+          title="High-Intent Opportunities"
+          value={data.highIntentOpportunities}
+          subtitle="Score >= 80 (HOT)"
+          icon={Flame}
+          variant="indigo"
+        />
+        <MetricCard
+          title="Qualified Leads"
+          value={data.qualifiedLeads}
+          subtitle="BANT Validated"
+          icon={CheckCircle2}
+          variant="emerald"
+        />
+        <MetricCard
+          title="Autonomous Calls"
+          value={data.calls}
+          subtitle="AI Voice Sessions"
+          icon={PhoneCall}
+          variant="amber"
+        />
+        <MetricCard
+          title="Interested Prospects"
+          value={data.interestedProspects}
+          subtitle="Positive Engagement"
+          icon={UserCheck}
+          variant="default"
+        />
+        <MetricCard
+          title="Meetings Booked"
+          value={data.meetings}
+          subtitle="Discovery Scheduled"
+          icon={Calendar}
+          variant="teal"
+        />
+        <MetricCard
+          title="Average Intent"
+          value={`${data.averageIntent}/100`}
+          subtitle="AI Intent Engine"
+          icon={Zap}
+          variant="indigo"
+        />
+        <MetricCard
+          title="Avg Qualification"
+          value={`${data.averageQualification}%`}
+          subtitle="BANT Score Average"
+          icon={Award}
+          variant="emerald"
+        />
+        <MetricCard
+          title="Conversion Rate"
+          value={`${data.conversionRate}%`}
+          subtitle="Meeting Conversion"
+          icon={Sparkles}
+          variant="amber"
+        />
+      </div>
+
+      {/* CHARTS ROW 1: Funnel Conversion & Intent Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Opportunity Funnel */}
         <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-                OPPORTUNITY FUNNEL CONVERSION
+              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+                1. Opportunity Funnel Conversion
               </h3>
             </div>
             <span className="text-xs font-mono text-slate-400">Total: {data.totalOpportunities} Opps</span>
@@ -101,7 +197,7 @@ export default function AnalyticsPage() {
               <BarChart data={data.funnel} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis type="number" stroke="#64748b" textAnchor="end" fontSize={11} />
-                <YAxis dataKey="stage" type="category" stroke="#94a3b8" fontSize={11} width={80} />
+                <YAxis dataKey="stage" type="category" stroke="#94a3b8" fontSize={11} width={85} />
                 <Tooltip
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', fontSize: '12px', fontFamily: 'monospace' }}
                 />
@@ -111,43 +207,43 @@ export default function AnalyticsPage() {
           </div>
         </Card>
 
-        {/* Intent Score Distribution */}
+        {/* Intent Trend & Progression */}
         <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <Target className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-                INTENT SCORE DISTRIBUTION
+              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+                2. Intent Score Progression Trend
               </h3>
             </div>
-            <span className="text-xs font-mono text-slate-400">AI Scoring Range</span>
+            <span className="text-xs font-mono text-slate-400">Average Intent Curve</span>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.intentBuckets} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
+              <LineChart data={data.intentTrend} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="range" stroke="#94a3b8" fontSize={10} angle={-15} textAnchor="end" />
-                <YAxis stroke="#64748b" fontSize={11} />
+                <XAxis dataKey="time" stroke="#94a3b8" fontSize={11} />
+                <YAxis domain={[50, 100]} stroke="#64748b" fontSize={11} />
                 <Tooltip
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', fontSize: '12px', fontFamily: 'monospace' }}
                 />
-                <Bar dataKey="count" fill="#06b6d4" radius={[4, 4, 0, 0]} />
-              </BarChart>
+                <Line type="monotone" dataKey="avgIntent" stroke="#06b6d4" strokeWidth={2.5} dot={{ fill: '#06b6d4' }} />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </Card>
       </div>
 
-      {/* Row 2: Source Distribution & Industry Distribution */}
+      {/* CHARTS ROW 2: Source Distribution & Industry Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Source Platform Distribution */}
         <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <PieIcon className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-                PUBLIC SOURCE BREAKDOWN
+              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+                3. Public Source Breakdown
               </h3>
             </div>
             <span className="text-xs font-mono text-slate-400">Multi-Channel Ingestion</span>
@@ -166,7 +262,7 @@ export default function AnalyticsPage() {
                   dataKey="count"
                   nameKey="source"
                 >
-                  {data.sourceDistribution.map((entry: any, index: number) => (
+                  {data.sourceDistribution?.map((entry: any, index: number) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -184,8 +280,8 @@ export default function AnalyticsPage() {
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-                OPPORTUNITIES BY INDUSTRY
+              <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+                4. Opportunities By Industry
               </h3>
             </div>
             <span className="text-xs font-mono text-slate-400">10 Sector Verticals</span>
@@ -206,6 +302,37 @@ export default function AnalyticsPage() {
           </div>
         </Card>
       </div>
+
+      {/* CHARTS ROW 3: Campaign Performance Breakdown */}
+      <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-teal-400" />
+            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+              5. Campaign Outreach & Conversion Performance
+            </h3>
+          </div>
+          <span className="text-xs font-mono text-slate-400">{data.campaignPerformance?.length || 0} ICP Campaigns</span>
+        </div>
+
+        <div className="h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data.campaignPerformance} margin={{ top: 10, right: 30, left: 0, bottom: 35 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+              <XAxis dataKey="name" stroke="#94a3b8" fontSize={10} angle={-20} textAnchor="end" interval={0} />
+              <YAxis stroke="#64748b" fontSize={11} />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', fontSize: '12px', fontFamily: 'monospace' }}
+              />
+              <Legend wrapperStyle={{ fontSize: '11px', fontFamily: 'monospace', color: '#94a3b8', paddingTop: '10px' }} />
+              <Bar dataKey="leads" name="Total Leads" fill="#64748b" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="contacted" name="Contacted" fill="#6366f1" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="interested" name="Interested" fill="#14b8a6" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="meetings" name="Meetings" fill="#10b981" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
     </div>
   );
 }

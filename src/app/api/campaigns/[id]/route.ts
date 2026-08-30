@@ -34,3 +34,40 @@ export async function GET(
     return NextResponse.json({ error: 'Failed to fetch campaign' }, { status: 500 });
   }
 }
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await req.json();
+    const { name, targetAudience, status, goal, channels } = body;
+
+    const updated = await prisma.campaign.update({
+      where: { id },
+      data: {
+        ...(name && { name }),
+        ...(targetAudience && { targetAudience }),
+        ...(status && { status }),
+        ...(goal && { goal }),
+        ...(channels && { channels }),
+      },
+    });
+
+    await prisma.activityLog.create({
+      data: {
+        action: 'CAMPAIGN_UPDATED',
+        details: `Updated campaign "${updated.name}" (Status: ${updated.status}).`,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      campaign: updated,
+    });
+  } catch (error: any) {
+    console.error('Error updating campaign:', error);
+    return NextResponse.json({ error: error.message || 'Failed to update campaign' }, { status: 500 });
+  }
+}

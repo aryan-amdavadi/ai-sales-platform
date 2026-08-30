@@ -11,6 +11,10 @@ import {
   Activity,
   Server,
   CheckCircle,
+  Search,
+  Filter,
+  User,
+  Bot,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { MetricCard } from '@/components/shared/metric-card';
@@ -21,6 +25,9 @@ export default function AdminPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [searchLog, setSearchLog] = useState('');
+  const [actionFilter, setActionFilter] = useState('ALL');
 
   const fetchAdmin = async () => {
     try {
@@ -44,7 +51,9 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">SYSTEM HEALTH & TELEMETRY</h1>
+        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+          System Observability & Audit Logs
+        </h1>
         <TableLoadingSkeleton rows={6} />
       </div>
     );
@@ -53,11 +62,26 @@ export default function AdminPage() {
   if (error || !data) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">SYSTEM HEALTH & TELEMETRY</h1>
+        <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+          System Observability & Audit Logs
+        </h1>
         <ErrorState message={error || 'No admin data'} onRetry={fetchAdmin} />
       </div>
     );
   }
+
+  // Filter logs
+  const logs = data.recentActivity || [];
+  const filteredLogs = logs.filter((log: any) => {
+    const matchesSearch =
+      !searchLog ||
+      log.action.toLowerCase().includes(searchLog.toLowerCase()) ||
+      log.details.toLowerCase().includes(searchLog.toLowerCase()) ||
+      log.lead?.company?.name?.toLowerCase().includes(searchLog.toLowerCase()) ||
+      log.user?.name?.toLowerCase().includes(searchLog.toLowerCase());
+    const matchesAction = actionFilter === 'ALL' || log.action === actionFilter;
+    return matchesSearch && matchesAction;
+  });
 
   return (
     <div className="space-y-8 pb-16" data-testid="admin-page">
@@ -68,11 +92,11 @@ export default function AdminPage() {
             <div className="p-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100">
-              ADMIN OBSERVABILITY & AUDIT LOGS
+            <h1 className="text-2xl font-bold font-mono tracking-tight text-slate-100 uppercase">
+              Admin Observability & Audit Logs
             </h1>
           </div>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 font-mono mt-1">
             System status, infrastructure health, compute utilization, and transactional activity logs.
           </p>
         </div>
@@ -117,13 +141,13 @@ export default function AdminPage() {
         />
       </div>
 
-      {/* System Health Status */}
+      {/* Subsystem Operational Status */}
       <Card className="p-5 bg-slate-900/80 border-slate-800 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Server className="w-4 h-4 text-teal-400" />
-            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-              SUBSYSTEM OPERATIONAL STATUS
+            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+              Subsystem Operational Telemetry
             </h3>
           </div>
           <span className="text-xs font-mono text-emerald-400 font-medium">All Subsystems Operational</span>
@@ -155,47 +179,91 @@ export default function AdminPage() {
         </div>
       </Card>
 
-      {/* Audit Log Table */}
+      {/* Transactional Audit Log Table */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-teal-400" />
-            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100">
-              SYSTEM ACTIVITY & SIGNAL AUDIT TRAIL
+            <h3 className="text-sm font-bold font-mono tracking-tight text-slate-100 uppercase">
+              Activity Logs & Security Audit Trail
             </h3>
           </div>
-          <span className="text-xs font-mono text-slate-400">Last 20 Events</span>
+
+          <div className="flex items-center gap-2 font-mono text-xs">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+              <Search className="w-3.5 h-3.5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search audit trail..."
+                value={searchLog}
+                onChange={(e) => setSearchLog(e.target.value)}
+                className="bg-transparent text-slate-200 placeholder:text-slate-500 focus:outline-none text-xs w-36 sm:w-48"
+              />
+            </div>
+
+            <select
+              value={actionFilter}
+              onChange={(e) => setActionFilter(e.target.value)}
+              className="bg-slate-900 border border-slate-800 text-slate-200 text-xs p-1 rounded focus:outline-none"
+            >
+              <option value="ALL">All Actions</option>
+              <option value="OPPORTUNITY_ANALYZED">Opportunity Analyzed</option>
+              <option value="CALL_COMPLETED">Call Completed</option>
+              <option value="CRM_PUSH_COMPLETED">CRM Push</option>
+              <option value="HUMAN_HANDOFF_REQUESTED">Human Handoff</option>
+              <option value="CAMPAIGN_CREATED">Campaign Created</option>
+              <option value="SIGNAL_INGESTED">Signal Ingested</option>
+            </select>
+          </div>
         </div>
 
         <Card className="bg-slate-900/90 border-slate-800 overflow-x-auto">
-          <table className="w-full text-left text-xs font-mono">
+          <table className="w-full text-left text-xs font-mono" data-testid="audit-table">
             <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
               <tr>
                 <th className="py-3 px-4">Timestamp</th>
-                <th className="py-3 px-4">Event Action</th>
-                <th className="py-3 px-4">Associated Entity</th>
-                <th className="py-3 px-4">Details</th>
+                <th className="py-3 px-4">Actor</th>
+                <th className="py-3 px-4">Action</th>
+                <th className="py-3 px-4">Entity</th>
+                <th className="py-3 px-4">Result & Details</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 font-sans">
-              {data.recentActivity?.map((act: any) => (
-                <tr key={act.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-3 px-4 whitespace-nowrap text-slate-400 font-mono text-[11px]">
-                    {new Date(act.createdAt).toLocaleString()}
-                  </td>
-                  <td className="py-3 px-4 whitespace-nowrap">
-                    <span className="px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700 font-mono text-[11px]">
-                      {act.action}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-medium">
-                    {act.lead?.company?.name || 'System'}
-                  </td>
-                  <td className="py-3 px-4 text-slate-400 text-xs">
-                    {act.details}
-                  </td>
-                </tr>
-              ))}
+              {filteredLogs.map((act: any) => {
+                const actorName = act.user?.name || (act.action.includes('CALL') || act.action.includes('ANALYZED') ? 'Nova AI Copilot' : 'System Engine');
+                const isAI = actorName.includes('AI') || actorName.includes('Nova');
+
+                return (
+                  <tr key={act.id} className="hover:bg-slate-800/40 transition-colors font-mono">
+                    <td className="py-3 px-4 whitespace-nowrap text-slate-400 text-[11px]">
+                      {new Date(act.createdAt).toLocaleString()}
+                    </td>
+
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] ${
+                        isAI ? 'bg-teal-950/60 text-teal-300 border border-teal-500/30' : 'bg-slate-800 text-slate-200 border border-slate-700'
+                      }`}>
+                        {isAI ? <Bot className="w-3 h-3 text-teal-400" /> : <User className="w-3 h-3 text-slate-400" />}
+                        <span>{actorName}</span>
+                      </span>
+                    </td>
+
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <span className="px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700 text-[11px]">
+                        {act.action}
+                      </span>
+                    </td>
+
+                    <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-semibold font-sans">
+                      {act.lead?.company?.name ? `${act.lead.company.name} (${act.lead.name || 'Lead'})` : 'System Workspace'}
+                    </td>
+
+                    <td className="py-3 px-4 text-slate-300 text-xs font-sans max-w-md">
+                      {act.details}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </Card>
