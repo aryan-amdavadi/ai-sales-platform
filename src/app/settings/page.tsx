@@ -60,19 +60,19 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="space-y-6 pb-16 max-w-[1536px] mx-auto" data-testid="settings-page">
+    <div className="space-y-6 pb-16 max-w-[1536px] w-full mx-auto" data-testid="settings-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D9E2EC] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
+            <div className="p-2 rounded-md bg-[#EAF2FF] text-[#2563EB] border border-[#2563EB]/20">
               <Settings className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#102A43] uppercase">
                 PLATFORM SETTINGS
               </h1>
-              <p className="text-xs text-[#64748B] mt-0.5">
+              <p className="text-xs text-[#627D98] mt-0.5">
                 Configure enterprise workspace, scoring thresholds, AI voice synthesizer, and demo dataset.
               </p>
             </div>
@@ -91,7 +91,7 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Navigation Sidebar */}
-        <div className="md:col-span-4 space-y-1">
+        <div className="md:col-span-3 space-y-1">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -113,7 +113,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Content Panel */}
-        <div className="md:col-span-8">
+        <div className="md:col-span-9">
           <Card className="p-6 bg-white border-[#DCE5EF] space-y-6 rounded-md shadow-sm">
             {activeTab === 'company' && (
               <div className="space-y-4">

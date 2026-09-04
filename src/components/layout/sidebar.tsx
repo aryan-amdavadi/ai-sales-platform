@@ -65,7 +65,7 @@ export function Sidebar({
   const pathname = usePathname();
 
   const navContent = (
-    <div className="flex flex-col h-full bg-[#10233F] border-r border-[#163A5F] text-white select-none">
+    <div className="flex flex-col h-full bg-[#102A43] border-r border-[#163A5F] text-white select-none">
       {/* Brand Header */}
       <div className="h-16 px-5 border-b border-[#163A5F] flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-3 group">
@@ -79,13 +79,13 @@ export function Sidebar({
                 ENTERPRISE
               </span>
             </div>
-            <p className="text-[11px] text-[#94A3B8]">AI Sales Agent Platform</p>
+            <p className="text-[11px] text-[#9FB3C8]">AI Sales Agent Platform</p>
           </div>
         </Link>
         {mobileOpen && (
           <button
             onClick={onMobileClose}
-            className="p-1 rounded-md text-[#94A3B8] hover:text-white lg:hidden"
+            className="p-1 rounded-md text-[#9FB3C8] hover:text-white lg:hidden"
             aria-label="Close navigation"
           >
             <X className="w-5 h-5" />
@@ -94,9 +94,9 @@ export function Sidebar({
       </div>
 
       {/* Primary Navigation - All 7 Required Tabs */}
-      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar">
         <div className="space-y-1">
-          <div className="px-3 pb-2 text-[11px] font-semibold tracking-wider text-[#64748B] uppercase">
+          <div className="px-3 pb-2 text-[11px] font-semibold tracking-wider text-[#627D98] uppercase">
             Core Navigation
           </div>
           {PRIMARY_NAV_ITEMS.map((item) => {
@@ -110,16 +110,16 @@ export function Sidebar({
                 data-testid={item.testId}
                 onClick={onMobileClose}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-md text-xs font-medium transition-colors duration-150',
+                  'flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium transition-colors duration-150',
                   isActive
                     ? 'bg-[#163A5F] text-white font-semibold shadow-sm'
-                    : 'text-[#94A3B8] hover:text-white hover:bg-[#163A5F]/50'
+                    : 'text-[#9FB3C8] hover:text-white hover:bg-[#163A5F]/50'
                 )}
               >
                 <Icon
                   className={cn(
                     'w-4 h-4 flex-shrink-0 transition-colors',
-                    isActive ? 'text-[#2563EB]' : 'text-[#64748B] group-hover:text-white'
+                    isActive ? 'text-[#2563EB]' : 'text-[#627D98] group-hover:text-white'
                   )}
                 />
                 <span className="truncate">{item.label}</span>
@@ -166,7 +166,7 @@ export function Sidebar({
       </div>
 
       {/* Guided Tour & User Profile Footer */}
-      <div className="p-3 border-t border-[#163A5F] bg-[#10233F] space-y-2">
+      <div className="mt-auto p-3 border-t border-[#163A5F] bg-[#10233F] space-y-2">
         {onStartJudgeMode && (
           <Button
             onClick={() => {

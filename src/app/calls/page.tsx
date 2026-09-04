@@ -334,39 +334,39 @@ export default function CallsPage() {
   };
 
   return (
-    <div className="space-y-6 pb-20 max-w-[1536px] mx-auto">
+    <div className="space-y-6 pb-20 max-w-[1536px] w-full mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-md bg-white border border-[#2563EB]/40 text-[#10233F] text-xs flex items-center justify-between shadow-md animate-in fade-in duration-200">
+        <div className="p-3.5 rounded-md bg-white border border-[#2563EB]/40 text-[#102A43] text-xs flex items-center justify-between shadow-md animate-in fade-in duration-200">
           <div className="flex items-center gap-2 font-medium">
             <Sparkles className="w-4 h-4 text-[#2563EB]" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-[#64748B] hover:text-[#10233F] text-sm font-bold">
+          <button onClick={() => setToastMessage(null)} className="text-[#627D98] hover:text-[#102A43] text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Header & Hero Call Launcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCE5EF] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D9E2EC] pb-5">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
+          <h1 className="text-2xl font-bold tracking-tight text-[#102A43] uppercase">
             AI VOICE CALL SESSIONS
           </h1>
-          <p className="text-xs text-[#64748B] mt-1">
+          <p className="text-xs text-[#627D98] mt-1">
             Autonomous outbound voice qualification with real-time signal detection & CRM synchronization.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
           {/* Multilingual Selector */}
-          <div className="flex items-center gap-1.5 bg-white border border-[#DCE5EF] rounded-md px-2.5 py-1.5 text-xs font-medium text-[#10233F]">
+          <div className="flex items-center gap-1.5 bg-white border border-[#D9E2EC] rounded-md px-2.5 py-1.5 text-xs font-medium text-[#102A43]">
             <Globe className="w-3.5 h-3.5 text-[#2563EB]" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
-              className="bg-transparent text-[#10233F] text-xs focus:outline-none pr-1 font-semibold"
+              className="bg-transparent text-[#102A43] text-xs focus:outline-none pr-1 font-semibold"
             >
               <option value="en-US">English (US)</option>
               <option value="hi-IN">Hindi (हिंदी)</option>

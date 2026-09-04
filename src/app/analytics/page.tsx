@@ -87,20 +87,20 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-6 pb-16 max-w-[1536px] mx-auto" data-testid="analytics-page">
+    <div className="space-y-6 pb-16 max-w-[1536px] w-full mx-auto" data-testid="analytics-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D9E2EC] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
+            <div className="p-2 rounded-md bg-[#EAF2FF] text-[#2563EB] border border-[#2563EB]/20">
               <BarChart3 className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#102A43] uppercase">
                 CONVERSION & INTENT ANALYTICS
               </h1>
-              <p className="text-xs text-[#64748B] mt-0.5">
-                Real-time executive performance telemetry across intent scoring, multi-channel sourcing, and conversion velocity.
+              <p className="text-xs text-[#627D98] mt-0.5">
+                Executive intelligence telemetry across signal discovery, intent scoring, voice qualification, and revenue conversion.
               </p>
             </div>
           </div>

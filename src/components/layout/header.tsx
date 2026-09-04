@@ -162,21 +162,21 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 h-16 glass-header bg-white/80 backdrop-blur-md border-b border-[#DCE5EF] flex items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-20 h-16 bg-[#102A43] text-white border-b border-[#163A5F] flex items-center justify-between px-4 sm:px-6">
       {/* Left: Mobile Toggle & Breadcrumb */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMobileMenuToggle}
-          className="p-1.5 rounded-md text-[#475569] hover:text-[#10233F] hover:bg-[#F1F5F9] lg:hidden"
+          className="p-1.5 rounded-md text-[#9FB3C8] hover:text-white hover:bg-[#163A5F] lg:hidden"
           aria-label="Toggle mobile menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-[#64748B] hidden sm:inline">Workspace</span>
-          <span className="text-[#CBD5E1] hidden sm:inline">/</span>
-          <span className="font-semibold text-[#10233F]">{getPageTitle(pathname)}</span>
+          <span className="text-[#627D98] hidden sm:inline">Workspace</span>
+          <span className="text-[#D9E2EC] hidden sm:inline">/</span>
+          <span className="font-semibold text-white">{getPageTitle(pathname)}</span>
         </div>
       </div>
 
@@ -185,11 +185,11 @@ export function Header({
         {/* Quick Search */}
         <Link
           href="/opportunities"
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs text-[#64748B] hover:text-[#10233F] hover:border-[#2563EB]/40 transition-colors"
+          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#163A5F] border border-[#243B53] text-xs text-[#9FB3C8] hover:text-white hover:border-[#2563EB]/40 transition-colors"
         >
-          <Search className="w-3.5 h-3.5 text-[#64748B]" />
+          <Search className="w-3.5 h-3.5 text-[#627D98]" />
           <span>Quick search...</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-white border border-[#DCE5EF] text-[10px] text-[#64748B] font-mono shadow-sm">
+          <kbd className="px-1.5 py-0.5 rounded bg-[#243B53] border border-[#334E68] text-[10px] text-[#9FB3C8] font-mono">
             ⌘K
           </kbd>
         </Link>
@@ -214,7 +214,7 @@ export function Header({
             onClick={onStartGuidedDemo}
             size="sm"
             variant="outline"
-            className="h-8 text-xs font-medium border-[#2563EB]/30 bg-[#EFF6FF] text-[#2563EB] hover:bg-[#2563EB]/10 flex items-center gap-1.5"
+            className="h-8 text-xs font-medium border-[#2563EB]/30 bg-[#EAF2FF] text-[#2563EB] hover:bg-[#2563EB]/10 flex items-center gap-1.5"
             data-testid="guided-demo-btn"
           >
             <PlayCircle className="w-3.5 h-3.5" />
@@ -232,7 +232,7 @@ export function Header({
         <div className="relative" ref={popoverRef}>
           <button
             onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="p-2 rounded-md text-[#475569] hover:text-[#10233F] hover:bg-[#F1F5F9] transition-colors relative"
+            className="p-2 rounded-md text-[#9FB3C8] hover:text-white hover:bg-[#163A5F] transition-colors relative"
             aria-label="Notification center"
             data-testid="notifications-trigger"
           >
@@ -302,9 +302,9 @@ export function Header({
         {/* User Avatar */}
         <Link
           href="/settings"
-          className="flex items-center gap-2 pl-2 border-l border-[#DCE5EF]"
+          className="flex items-center gap-2 pl-2 border-l border-[#243B53]"
         >
-          <div className="w-7 h-7 rounded-full bg-[#10233F] text-white flex items-center justify-center text-xs font-semibold shadow-sm">
+          <div className="w-7 h-7 rounded-full bg-[#163A5F] text-white flex items-center justify-center text-xs font-semibold shadow-sm">
             AM
           </div>
         </Link>

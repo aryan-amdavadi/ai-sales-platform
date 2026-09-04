@@ -83,13 +83,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12 max-w-[1536px] mx-auto" data-testid="dashboard">
+    <div className="space-y-6 pb-12 max-w-[1536px] w-full mx-auto" data-testid="dashboard">
       <div data-testid="dashboard-page" className="contents">
         {/* LEVEL 1: Header & Tagline */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D9E2EC] pb-5">
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-2xl font-bold tracking-tight text-[#10233F]">
+              <h1 className="text-2xl font-bold tracking-tight text-[#102A43]">
                 AI SALES OVERVIEW
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30 flex items-center gap-1.5">
@@ -97,14 +97,14 @@ export default function DashboardPage() {
                 Live Intelligence Telemetry · SALES INTELLIGENCE COMMAND
               </span>
             </div>
-            <p className="text-xs text-[#64748B] mt-1">
+            <p className="text-xs text-[#627D98] mt-1">
               Prioritize the opportunities most likely to become real conversations.
             </p>
           </div>
 
           <div className="flex items-center gap-2.5">
             <Link href="/discover">
-              <Button variant="outline" size="sm" className="text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] font-medium">
+              <Button variant="outline" size="sm" className="text-xs border-[#D9E2EC] bg-white hover:bg-[#F5F7FA] text-[#102A43] font-medium">
                 Run Public Scan
               </Button>
             </Link>
@@ -181,8 +181,8 @@ export default function DashboardPage() {
                 <div className="p-1.5 rounded-md bg-[#EFF6FF] border border-[#2563EB]/20 text-[#2563EB]">
                   <Sparkles className="w-4 h-4" />
                 </div>
-                <h2 className="text-sm font-bold tracking-tight text-[#10233F] uppercase">
-                  AI PRIORITY OPPORTUNITIES
+                <h2 className="text-sm font-bold tracking-tight text-[#102A43] uppercase">
+                  AI PRIORITY QUEUE
                 </h2>
               </div>
               <span className="text-xs text-[#64748B] font-medium">Ranked by Buying Intent Score</span>
@@ -197,7 +197,7 @@ export default function DashboardPage() {
                     className={`p-4 rounded-md border transition-all ${
                       isHero
                         ? 'bg-white border-[#2563EB]/40 shadow-sm ring-1 ring-[#2563EB]/20'
-                        : 'bg-white border-[#DCE5EF] hover:border-[#2563EB]/30'
+                        : 'bg-white border-[#D9E2EC] hover:border-[#2563EB]/30'
                     }`}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -205,7 +205,7 @@ export default function DashboardPage() {
                         <div className="flex items-center gap-2 flex-wrap">
                           <Link
                             href={`/opportunities/${lead.id}`}
-                            className="text-base font-bold text-[#10233F] hover:text-[#2563EB] transition-colors flex items-center gap-1.5 group"
+                            className="text-base font-bold text-[#102A43] hover:text-[#2563EB] transition-colors flex items-center gap-1.5 group"
                           >
                             <span>{lead.companyName}</span>
                             <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-[#2563EB]" />
@@ -219,13 +219,13 @@ export default function DashboardPage() {
                           <StatusBadge status={lead.primarySource} type="source" />
                         </div>
 
-                        <p className="text-xs text-[#475569]">
-                          <span className="text-[#10233F] font-semibold">{lead.contactName}</span> ({lead.contactTitle}) —{' '}
-                          <span className="text-[#475569]">{lead.topRequirement}</span>
+                        <p className="text-xs text-[#627D98]">
+                          <span className="text-[#102A43] font-semibold">{lead.contactName}</span> ({lead.contactTitle}) —{' '}
+                          <span className="text-[#627D98]">{lead.topRequirement}</span>
                         </p>
 
                         {isHero && (
-                          <div className="pt-1 flex items-center gap-3 text-[11px] text-[#64748B]">
+                          <div className="pt-1 flex items-center gap-3 text-[11px] text-[#627D98]">
                             <span className="flex items-center gap-1 text-[#16A34A] font-medium">
                               <CheckCircle2 className="w-3.5 h-3.5" /> Verified RFP Post
                             </span>
@@ -238,7 +238,7 @@ export default function DashboardPage() {
 
                       <div className="flex items-center gap-4 sm:self-center flex-wrap">
                         <div className="text-right">
-                          <div className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">Intent</div>
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-[#627D98]">Intent</div>
                           <div className="text-xl font-extrabold text-[#0F9D9A] font-sans">{lead.intentScore}</div>
                         </div>
 
@@ -259,7 +259,7 @@ export default function DashboardPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="h-8 text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] font-medium"
+                              className="h-8 text-xs border-[#D9E2EC] bg-white hover:bg-[#F5F7FA] text-[#102A43] font-medium"
                               data-testid={isHero ? 'hero-analyze-btn' : undefined}
                             >
                               {isHero ? 'Review Opportunity' : 'Analyze'}
@@ -279,17 +279,17 @@ export default function DashboardPage() {
             <div data-testid="funnel-visualization" className="hidden" />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-[#10233F]">
+                <div className="p-1.5 rounded-md bg-[#F5F7FA] border border-[#D9E2EC] text-[#102A43]">
                   <TrendingUp className="w-4 h-4" />
                 </div>
-                <h2 className="text-sm font-bold tracking-tight text-[#10233F] uppercase">
+                <h2 className="text-sm font-bold tracking-tight text-[#102A43] uppercase">
                   OPPORTUNITY FUNNEL
                 </h2>
               </div>
-              <span className="text-xs text-[#64748B] font-medium">Pipeline Conversion</span>
+              <span className="text-xs text-[#627D98] font-medium">Pipeline Conversion</span>
             </div>
 
-            <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+            <Card className="p-5 bg-white border-[#D9E2EC] space-y-4 rounded-md shadow-sm">
               {data.funnelData.map((stage) => {
                 const maxCount = Math.max(...data.funnelData.map((f) => f.count), 1);
                 const barWidth = Math.max(12, Math.round((stage.count / maxCount) * 100));
@@ -297,13 +297,13 @@ export default function DashboardPage() {
                 return (
                   <div key={stage.stage} className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-[#10233F] font-semibold">{stage.stage.replace(/_/g, ' ')}</span>
+                      <span className="text-[#102A43] font-semibold">{stage.stage.replace(/_/g, ' ')}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#64748B] text-xs">{stage.percentage}%</span>
-                        <span className="font-bold text-[#10233F]">{stage.count}</span>
+                        <span className="text-[#627D98] text-xs">{stage.percentage}%</span>
+                        <span className="font-bold text-[#102A43]">{stage.count}</span>
                       </div>
                     </div>
-                    <div className="w-full h-2 rounded-full bg-[#F1F5F9] overflow-hidden">
+                    <div className="w-full h-2 rounded-full bg-[#F5F7FA] overflow-hidden">
                       <div
                         className="h-full rounded-full bg-[#2563EB] transition-all duration-500"
                         style={{ width: `${barWidth}%` }}
@@ -313,7 +313,7 @@ export default function DashboardPage() {
                 );
               })}
 
-              <div className="pt-3 border-t border-[#DCE5EF] flex items-center justify-between text-xs text-[#64748B]">
+              <div className="pt-3 border-t border-[#D9E2EC] flex items-center justify-between text-xs text-[#627D98]">
                 <span>AI Qualification Match Rate</span>
                 <span className="text-[#0F9D9A] font-bold">94% High Intent Match</span>
               </div>

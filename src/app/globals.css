@@ -3,25 +3,34 @@
 @tailwind utilities;
 
 @layer base {
-    --background: #F7F9FC;
-    --foreground: #10233F;
+  :root {
+    --background: #F5F7FA;
+    --foreground: #102A43;
     --card: #FFFFFF;
-    --border: #DCE5EF;
-    --color-primary-ink: #10233F;
+    --border: #D9E2EC;
+    --color-primary-ink: #102A43;
     --color-deep-navy: #163A5F;
     --color-royal-blue: #2563EB;
+    --color-soft-blue: #EAF2FF;
     --color-teal: #0F9D9A;
     --color-soft-teal: #E8F7F5;
-    --color-ice-blue: #EFF6FF;
-    --color-bg: #F7F9FC;
+    --color-bg: #F5F7FA;
     --color-surface: #FFFFFF;
-    --color-border: #DCE5EF;
-    --color-muted-text: #64748B;
-    --color-primary-text: #10233F;
-    --color-secondary-text: #475569;
+    --color-border: #D9E2EC;
+    --color-muted-text: #627D98;
+    --color-primary-text: #102A43;
+    --color-secondary-text: #627D98;
+    --color-success: #16A34A;
+    --color-warning: #D97706;
+    --color-danger: #DC2626;
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 14px;
+    --spacing-8: 8px;
+    --spacing-12: 12px;
+    --spacing-16: 16px;
+    --spacing-24: 24px;
+    --spacing-32: 32px;
   }
 
   * {
@@ -29,11 +38,12 @@
   }
 
   body {
-    background-color: #F7F9FC;
-    color: #10233F;
+    background-color: #F5F7FA;
+    color: #102A43;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 

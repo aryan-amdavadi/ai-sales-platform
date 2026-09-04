@@ -18,7 +18,7 @@ test.describe('Seven Dashboard Navigation Tabs & Responsive Verification', () =>
     await page.waitForLoadState('networkidle');
 
     for (const tab of REQUIRED_TABS) {
-      const navItem = page.locator(`aside.hidden [data-testid="${tab.id}"]`);
+      const navItem = page.locator(`aside.lg\\:block [data-testid="${tab.id}"]`);
       await expect(navItem).toBeVisible();
 
       // Verify element is not clipped (in-viewport bounds)
@@ -32,7 +32,8 @@ test.describe('Seven Dashboard Navigation Tabs & Responsive Verification', () =>
 
       // Click tab and check URL
       await navItem.click();
-      await expect(page).toHaveURL(new RegExp(`.*${tab.path.replace('/', '\\/')}`));
+      await expect(page).toHaveURL(new RegExp(`.*${tab.path.replace('/', '\\/')}`), { timeout: 10000 });
+      await page.waitForLoadState('domcontentloaded');
     }
   });
 

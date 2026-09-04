@@ -42,9 +42,9 @@ export function MetricCard({
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B] text-slate-400">{title}</p>
-          <h3 className="text-2xl font-bold text-[#10233F] mt-1 tracking-tight font-sans">{value}</h3>
-          {subtitle && <p className="text-xs text-[#64748B] text-slate-400 mt-1">{subtitle}</p>}
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#627D98]">{title}</p>
+          <h3 className="text-xl font-bold text-[#102A43] mt-1 tracking-tight font-sans">{value}</h3>
+          {subtitle && <p className="text-xs text-[#627D98] mt-1">{subtitle}</p>}
           {change && (
             <p
               className={cn(
