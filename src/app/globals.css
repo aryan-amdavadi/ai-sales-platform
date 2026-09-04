@@ -3,50 +3,57 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 8%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 6%;
-
-    --secondary: 217 33% 14%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 33% 12%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 217 33% 18%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217 33% 14%;
-    --input: 217 33% 14%;
-    --ring: 217 91% 60%;
-
-    --radius: 0.5rem;
+    --background: #F7F9FC;
+    --foreground: #10233F;
+    --card: #FFFFFF;
+    --border: #DCE5EF;
+    --color-primary-ink: #10233F;
+    --color-deep-navy: #163A5F;
+    --color-royal-blue: #2563EB;
+    --color-teal: #0F9D9A;
+    --color-soft-teal: #E8F7F5;
+    --color-ice-blue: #EFF6FF;
+    --color-bg: #F7F9FC;
+    --color-surface: #FFFFFF;
+    --color-border: #DCE5EF;
+    --color-muted-text: #64748B;
+    --color-primary-text: #10233F;
+    --color-secondary-text: #475569;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
   }
-}
 
-@layer base {
   * {
-    @apply border-border;
+    border-color: var(--color-border);
   }
+
   body {
-    @apply bg-background text-foreground antialiased selection:bg-blue-500/25 selection:text-blue-100;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #F7F9FC;
+    color: #10233F;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Professional enterprise scrollbar */
+/* Glassmorphism accent utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(220, 229, 239, 0.80);
+  box-shadow: 0 4px 20px rgba(16, 35, 63, 0.04);
+}
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #DCE5EF;
+}
+
+/* Enterprise scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -57,24 +64,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted));
+  background: #CBD5E1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--accent));
-}
-
-/* Utility classes for enterprise elevation */
-.enterprise-card {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.enterprise-card:hover {
-  border-color: hsl(217 33% 22%);
+  background: #94A3B8;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -82,6 +77,6 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted));
+  background: #CBD5E1;
   border-radius: 4px;
 }

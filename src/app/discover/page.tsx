@@ -83,19 +83,19 @@ export default function DiscoveryPage() {
   const locations = ['ALL', 'Austin, TX', 'San Francisco, CA', 'Boston, MA', 'Seattle, WA', 'New York, NY', 'Chicago, IL'];
 
   return (
-    <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="discovery-page">
+    <div className="space-y-6 pb-12 max-w-[1536px] mx-auto" data-testid="discovery-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
               <Compass className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
                 PUBLIC INTENT DISCOVERY ENGINE
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-[#64748B] mt-0.5">
                 Continuously ingest and analyze public procurement signals, RFPs, and executive technology searches.
               </p>
             </div>
@@ -106,7 +106,7 @@ export default function DiscoveryPage() {
           onClick={handleManualScan}
           disabled={scanning}
           size="sm"
-          className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-2 h-8"
+          className="text-xs font-semibold bg-[#2563EB] hover:bg-[#1d4ed8] text-white flex items-center gap-2 h-8 shadow-sm"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${scanning ? 'animate-spin' : ''}`} />
           <span>{scanning ? 'Scanning Public Feeds...' : 'Scan Public Feeds'}</span>
@@ -114,17 +114,17 @@ export default function DiscoveryPage() {
       </div>
 
       {/* Discovery Query Builder */}
-      <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
+      <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           {/* Keyword Search */}
           <div className="md:col-span-6 relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#64748B] absolute left-3 top-1/2 -translate-y-1/2" />
             <Input
               placeholder="Search intent signals by keyword (e.g. 'SharePoint', 'Migration', 'SOC2')..."
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && fetchDiscoveryResults()}
-              className="pl-9 bg-slate-950 border-slate-800 text-slate-200 text-xs placeholder:text-slate-500 focus-visible:ring-blue-500"
+              className="pl-9 bg-white border-[#DCE5EF] text-[#10233F] text-xs placeholder:text-[#64748B] focus-visible:ring-[#2563EB] font-medium"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function DiscoveryPage() {
             <select
               value={source}
               onChange={(e) => setSource(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+              className="w-full bg-white border border-[#DCE5EF] rounded-md px-3 py-2 text-xs text-[#10233F] focus:outline-none focus:border-[#2563EB] font-semibold"
             >
               {sources.map((s) => (
                 <option key={s.key} value={s.key}>
@@ -145,13 +145,13 @@ export default function DiscoveryPage() {
         </div>
 
         {/* Secondary Filters */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800/70 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-[#DCE5EF] text-xs">
           <div>
-            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Industry Focus</label>
+            <label className="text-[#64748B] block mb-1 text-[11px] font-bold">Industry Focus</label>
             <select
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+              className="w-full bg-white border border-[#DCE5EF] rounded-md p-1.5 text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-medium"
             >
               {industries.map((ind) => (
                 <option key={ind} value={ind}>
@@ -162,11 +162,11 @@ export default function DiscoveryPage() {
           </div>
 
           <div>
-            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Geography / Location</label>
+            <label className="text-[#64748B] block mb-1 text-[11px] font-bold">Geography / Location</label>
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-md p-1.5 text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+              className="w-full bg-white border border-[#DCE5EF] rounded-md p-1.5 text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-medium"
             >
               {locations.map((loc) => (
                 <option key={loc} value={loc}>
@@ -177,7 +177,7 @@ export default function DiscoveryPage() {
           </div>
 
           <div>
-            <label className="text-slate-400 block mb-1 text-[11px] font-medium">Min Intent Filter: {minIntent}+</label>
+            <label className="text-[#64748B] block mb-1 text-[11px] font-bold">Min Intent Filter: {minIntent}+</label>
             <input
               type="range"
               min="50"
@@ -185,16 +185,16 @@ export default function DiscoveryPage() {
               step="5"
               value={minIntent}
               onChange={(e) => setMinIntent(Number(e.target.value))}
-              className="w-full accent-blue-500 cursor-pointer"
+              className="w-full accent-[#2563EB] cursor-pointer"
             />
           </div>
         </div>
       </Card>
 
       {/* Discovery Results Count Header */}
-      <div className="flex items-center justify-between text-xs text-slate-400 px-1">
+      <div className="flex items-center justify-between text-xs text-[#64748B] px-1 font-medium">
         <span>Found {results.length} public intent requirements matching ICP</span>
-        <span className="text-blue-400 font-medium">Autonomous Ingestion Queue Active</span>
+        <span className="text-[#0F9D9A] font-bold">Autonomous Ingestion Queue Active</span>
       </div>
 
       {/* Results Cards */}
@@ -224,8 +224,8 @@ export default function DiscoveryPage() {
             return (
               <Card
                 key={item.id}
-                className={`p-5 bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors space-y-3 ${
-                  isHero ? 'border-blue-500/40 bg-blue-950/10' : ''
+                className={`p-5 bg-white border-[#DCE5EF] hover:border-[#2563EB]/40 transition-colors space-y-3 rounded-md shadow-sm ${
+                  isHero ? 'border-[#2563EB]/40 bg-[#EFF6FF]/40 ring-1 ring-[#2563EB]/20' : ''
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -233,49 +233,49 @@ export default function DiscoveryPage() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <Link
                         href={`/opportunities/${item.id}`}
-                        className="font-semibold text-sm text-slate-100 hover:text-blue-400 transition-colors"
+                        className="font-bold text-sm text-[#10233F] hover:text-[#2563EB] transition-colors"
                       >
                         {item.company.name}
                       </Link>
                       {isHero && (
-                        <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30">
                           HERO
                         </span>
                       )}
                       <StatusBadge status={item.source?.platform || 'LINKEDIN'} type="source" />
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-[#64748B] mt-0.5 font-medium">
                       {item.name} &bull; {item.title} &bull; {item.company.industry}
                     </p>
                   </div>
 
                   <div className="text-right flex-shrink-0">
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">INTENT</div>
-                    <div className="text-base font-bold text-blue-400">{item.intentScore}</div>
+                    <div className="text-[10px] text-[#64748B] uppercase font-bold">INTENT</div>
+                    <div className="text-base font-extrabold text-[#0F9D9A]">{item.intentScore}</div>
                   </div>
                 </div>
 
                 {/* Requirement Snippet */}
-                <div className="space-y-1 bg-slate-950/80 p-3 rounded-lg border border-slate-800/80">
-                  <h4 className="text-xs font-semibold text-slate-200">{req?.title}</h4>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                <div className="space-y-1 bg-[#F7F9FC] p-3 rounded-md border border-[#DCE5EF]">
+                  <h4 className="text-xs font-bold text-[#10233F]">{req?.title}</h4>
+                  <p className="text-xs text-[#475569] line-clamp-2 leading-relaxed font-medium">
                     &ldquo;{req?.rawEvidence || req?.description}&rdquo;
                   </p>
                 </div>
 
                 {/* Footer Meta & Actions */}
-                <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 text-xs">
-                  <span className="text-emerald-400 font-semibold">
+                <div className="flex items-center justify-between pt-1 border-t border-[#DCE5EF] text-xs">
+                  <span className="text-[#16A34A] font-bold">
                     ${item.pipelineValue?.toLocaleString()} Pipeline
                   </span>
                   <Link href={`/opportunities/${item.id}`}>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 text-xs border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center gap-1"
+                      className="h-7 text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] flex items-center gap-1 font-semibold"
                     >
                       <span>Review & Qualify</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#2563EB]" />
                     </Button>
                   </Link>
                 </div>
@@ -287,4 +287,3 @@ export default function DiscoveryPage() {
     </div>
   );
 }
-

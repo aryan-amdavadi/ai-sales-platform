@@ -13,7 +13,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   const [judgeModeOpen, setJudgeModeOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen bg-[#F7F9FC] text-[#10233F] flex flex-col antialiased">
       <DemoBanner
         onStartGuidedDemo={() => setGuidedDemoOpen(true)}
         onStartJudgeMode={() => setJudgeModeOpen(true)}
@@ -31,7 +31,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             onStartGuidedDemo={() => setGuidedDemoOpen(true)}
             onStartJudgeMode={() => setJudgeModeOpen(true)}
           />
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+          <main className="flex-1 p-6 lg:p-8 max-w-[1536px] w-full mx-auto space-y-6">
             {children}
           </main>
         </div>

@@ -60,19 +60,19 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="space-y-6 pb-16 max-w-7xl mx-auto" data-testid="settings-page">
+    <div className="space-y-6 pb-16 max-w-[1536px] mx-auto" data-testid="settings-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
               <Settings className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
                 PLATFORM SETTINGS
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-[#64748B] mt-0.5">
                 Configure enterprise workspace, scoring thresholds, AI voice synthesizer, and demo dataset.
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function SettingsPage() {
         <Button
           onClick={handleSave}
           size="sm"
-          className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 h-8"
+          className="text-xs font-semibold bg-[#2563EB] hover:bg-[#1d4ed8] text-white flex items-center gap-1.5 h-8 shadow-sm"
         >
           {saved ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
           <span>{saved ? 'Saved!' : 'Save Configuration'}</span>
@@ -99,13 +99,13 @@ export default function SettingsPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs text-left transition-colors ${
+                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs text-left transition-colors font-semibold ${
                   isActive
-                    ? 'bg-blue-500/15 text-blue-300 font-semibold border border-blue-500/30'
-                    : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200 border border-transparent'
+                    ? 'bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/30'
+                    : 'text-[#64748B] hover:bg-white hover:text-[#10233F] border border-transparent'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-blue-400' : 'text-slate-500'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-[#2563EB]' : 'text-[#64748B]'}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -114,25 +114,25 @@ export default function SettingsPage() {
 
         {/* Content Panel */}
         <div className="md:col-span-8">
-          <Card className="p-6 bg-slate-900/60 border-slate-800 space-y-6">
+          <Card className="p-6 bg-white border-[#DCE5EF] space-y-6 rounded-md shadow-sm">
             {activeTab === 'company' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Enterprise Organization Profile</h3>
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Enterprise Organization Profile</h3>
                 <div className="space-y-3 text-xs">
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">Company Legal Name</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Company Legal Name</label>
                     <Input
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      className="bg-slate-950 border-slate-800 text-slate-200 text-xs"
+                      className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
                     />
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">Corporate Domain / Website</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Corporate Domain / Website</label>
                     <Input
                       value={website}
                       onChange={(e) => setWebsite(e.target.value)}
-                      className="bg-slate-950 border-slate-800 text-slate-200 text-xs"
+                      className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -141,14 +141,14 @@ export default function SettingsPage() {
 
             {activeTab === 'ai' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">AI Scoring & Intent Parameters</h3>
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">AI Scoring & Intent Parameters</h3>
                 <div className="space-y-3 text-xs">
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">Primary LLM Engine</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Primary LLM Engine</label>
                     <select
                       value={aiModel}
                       onChange={(e) => setAiModel(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-md p-2 text-slate-200 text-xs focus:outline-none focus:border-blue-500"
+                      className="w-full bg-white border border-[#DCE5EF] rounded-md p-2 text-[#10233F] text-xs focus:outline-none focus:border-[#2563EB] font-semibold"
                     >
                       <option value="gemini-3.7-flash">Gemini 3.7 Flash (Fast Sub-second Analysis)</option>
                       <option value="gemini-1.5-pro">Gemini 1.5 Pro (Deep RFP Multi-turn Reasoning)</option>
@@ -156,7 +156,7 @@ export default function SettingsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">
+                    <label className="text-[#64748B] block mb-1 font-bold">
                       Minimum Confidence Threshold for Auto-Qualification ({minConfidence}%)
                     </label>
                     <input
@@ -165,7 +165,7 @@ export default function SettingsPage() {
                       max="95"
                       value={minConfidence}
                       onChange={(e) => setMinConfidence(Number(e.target.value))}
-                      className="w-full accent-blue-500 cursor-pointer"
+                      className="w-full accent-[#2563EB] cursor-pointer"
                     />
                   </div>
                 </div>
@@ -174,14 +174,14 @@ export default function SettingsPage() {
 
             {activeTab === 'voice' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Voice AI Outreach Synthesizer</h3>
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Voice AI Outreach Synthesizer</h3>
                 <div className="space-y-3 text-xs">
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">Voice Profile</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Voice Profile</label>
                     <select
                       value={voiceSynthesizer}
                       onChange={(e) => setVoiceSynthesizer(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-md p-2 text-slate-200 text-xs focus:outline-none focus:border-blue-500"
+                      className="w-full bg-white border border-[#DCE5EF] rounded-md p-2 text-[#10233F] text-xs focus:outline-none focus:border-[#2563EB] font-semibold"
                     >
                       <option value="Nova Ultra-Low Latency">Nova (Natural Female - 180ms Latency)</option>
                       <option value="Echo Enterprise Male">Echo (Corporate Male - 200ms Latency)</option>
@@ -189,7 +189,7 @@ export default function SettingsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-1 font-medium">Speaking Rate ({speakingRate}x)</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Speaking Rate ({speakingRate}x)</label>
                     <input
                       type="range"
                       min="0.8"
@@ -197,7 +197,7 @@ export default function SettingsPage() {
                       step="0.05"
                       value={speakingRate}
                       onChange={(e) => setSpeakingRate(Number(e.target.value))}
-                      className="w-full accent-blue-500 cursor-pointer"
+                      className="w-full accent-[#2563EB] cursor-pointer"
                     />
                   </div>
                 </div>
@@ -206,18 +206,18 @@ export default function SettingsPage() {
 
             {activeTab === 'notifications' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Event Alerts & Webhooks</h3>
-                <div className="space-y-2 text-xs text-slate-300">
-                  <label className="flex items-center gap-2 p-2 rounded bg-slate-950 border border-slate-800">
-                    <input type="checkbox" defaultChecked className="accent-blue-500" />
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Event Alerts & Webhooks</h3>
+                <div className="space-y-2 text-xs text-[#10233F]">
+                  <label className="flex items-center gap-2 p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF] font-medium">
+                    <input type="checkbox" defaultChecked className="accent-[#2563EB]" />
                     <span>Real-time alert on high intent signal (Intent &gt;= 85)</span>
                   </label>
-                  <label className="flex items-center gap-2 p-2 rounded bg-slate-950 border border-slate-800">
-                    <input type="checkbox" defaultChecked className="accent-blue-500" />
+                  <label className="flex items-center gap-2 p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF] font-medium">
+                    <input type="checkbox" defaultChecked className="accent-[#2563EB]" />
                     <span>Instant notification when AI Voice Call books meeting</span>
                   </label>
-                  <label className="flex items-center gap-2 p-2 rounded bg-slate-950 border border-slate-800">
-                    <input type="checkbox" defaultChecked className="accent-blue-500" />
+                  <label className="flex items-center gap-2 p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF] font-medium">
+                    <input type="checkbox" defaultChecked className="accent-[#2563EB]" />
                     <span>Daily briefing digest of new public RFP postings</span>
                   </label>
                 </div>
@@ -226,27 +226,27 @@ export default function SettingsPage() {
 
             {activeTab === 'data' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Database & Ingestion Settings</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Database & Ingestion Settings</h3>
+                <p className="text-xs text-[#64748B] font-medium">
                   IntentOS is connected to local SQLite database with zero external API dependencies.
                 </p>
-                <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs space-y-1">
-                  <div className="text-slate-400">DATABASE ENGINE: SQLite with Prisma ORM</div>
-                  <div className="text-emerald-400 font-medium">STATUS: Connected & Synchronized</div>
+                <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs space-y-1 font-semibold">
+                  <div className="text-[#64748B]">DATABASE ENGINE: SQLite with Prisma ORM</div>
+                  <div className="text-[#16A34A]">STATUS: Connected & Synchronized</div>
                 </div>
               </div>
             )}
 
             {activeTab === 'demo' && (
               <div className="space-y-4">
-                <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Deterministic Demo Control Center</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Deterministic Demo Control Center</h3>
+                <p className="text-xs text-[#64748B] leading-relaxed font-medium">
                   Reset the database to the benchmark state containing 105+ opportunities, 20 companies, 10 campaigns,
                   20 completed calls, and the hero record (TechNova Solutions - CTO John Smith).
                 </p>
 
                 {resetMsg && (
-                  <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-800/60 text-xs text-emerald-300">
+                  <div className="p-3.5 rounded-md bg-[#DCFCE7] border border-[#16A34A]/30 text-xs text-[#16A34A] font-bold">
                     {resetMsg}
                   </div>
                 )}
@@ -256,7 +256,7 @@ export default function SettingsPage() {
                   disabled={resetting}
                   variant="outline"
                   size="sm"
-                  className="border-rose-800 bg-rose-950/30 hover:bg-rose-900/40 text-rose-200 text-xs flex items-center gap-2"
+                  className="border-[#DC2626]/30 bg-[#FEF2F2] hover:bg-[#FEF2F2]/80 text-[#DC2626] text-xs flex items-center gap-2 font-bold"
                 >
                   <RotateCcw className={`w-3.5 h-3.5 ${resetting ? 'animate-spin' : ''}`} />
                   <span>{resetting ? 'Resetting Database...' : 'Reset to Deterministic Benchmark'}</span>
@@ -269,4 +269,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-

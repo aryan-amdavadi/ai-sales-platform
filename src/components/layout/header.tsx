@@ -147,36 +147,36 @@ export function Header({
   const getIcon = (type: NotificationItem['type']) => {
     switch (type) {
       case 'HIGH_INTENT':
-        return <Flame className="w-3.5 h-3.5 text-rose-400" />;
+        return <Flame className="w-3.5 h-3.5 text-[#2563EB]" />;
       case 'CALL_COMPLETED':
-        return <PhoneCall className="w-3.5 h-3.5 text-blue-400" />;
+        return <PhoneCall className="w-3.5 h-3.5 text-[#0F9D9A]" />;
       case 'MEETING_RECOMMENDED':
-        return <Sparkles className="w-3.5 h-3.5 text-amber-400" />;
+        return <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />;
       case 'CALLBACK_SCHEDULED':
-        return <Calendar className="w-3.5 h-3.5 text-indigo-400" />;
+        return <Calendar className="w-3.5 h-3.5 text-[#2563EB]" />;
       case 'HUMAN_HANDOFF':
-        return <UserCheck className="w-3.5 h-3.5 text-amber-400" />;
+        return <UserCheck className="w-3.5 h-3.5 text-[#D97706]" />;
       case 'CRM_SYNC':
-        return <Database className="w-3.5 h-3.5 text-emerald-400" />;
+        return <Database className="w-3.5 h-3.5 text-[#16A34A]" />;
     }
   };
 
   return (
-    <header className="sticky top-0 z-20 h-14 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 flex items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-20 h-16 glass-header bg-white/80 backdrop-blur-md border-b border-[#DCE5EF] flex items-center justify-between px-4 sm:px-6">
       {/* Left: Mobile Toggle & Breadcrumb */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMobileMenuToggle}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 lg:hidden"
+          className="p-1.5 rounded-md text-[#475569] hover:text-[#10233F] hover:bg-[#F1F5F9] lg:hidden"
           aria-label="Toggle mobile menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-400 hidden sm:inline">Workspace</span>
-          <span className="text-slate-600 hidden sm:inline">/</span>
-          <span className="font-semibold text-slate-100">{getPageTitle(pathname)}</span>
+          <span className="text-[#64748B] hidden sm:inline">Workspace</span>
+          <span className="text-[#CBD5E1] hidden sm:inline">/</span>
+          <span className="font-semibold text-[#10233F]">{getPageTitle(pathname)}</span>
         </div>
       </div>
 
@@ -185,11 +185,11 @@ export function Header({
         {/* Quick Search */}
         <Link
           href="/opportunities"
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-colors"
+          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs text-[#64748B] hover:text-[#10233F] hover:border-[#2563EB]/40 transition-colors"
         >
-          <Search className="w-3.5 h-3.5" />
+          <Search className="w-3.5 h-3.5 text-[#64748B]" />
           <span>Quick search...</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-400 font-mono">
+          <kbd className="px-1.5 py-0.5 rounded bg-white border border-[#DCE5EF] text-[10px] text-[#64748B] font-mono shadow-sm">
             ⌘K
           </kbd>
         </Link>
@@ -200,10 +200,10 @@ export function Header({
             onClick={onStartJudgeMode}
             size="sm"
             variant="outline"
-            className="h-8 text-xs font-semibold border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 flex items-center gap-1.5"
+            className="h-8 text-xs font-semibold border-[#D97706]/40 bg-[#D97706]/10 text-[#D97706] hover:bg-[#D97706]/20 flex items-center gap-1.5"
             data-testid="judge-mode-trigger"
           >
-            <Gavel className="w-3.5 h-3.5 text-amber-400" />
+            <Gavel className="w-3.5 h-3.5 text-[#D97706]" />
             <span className="hidden sm:inline">Judge Mode</span>
           </Button>
         )}
@@ -214,7 +214,7 @@ export function Header({
             onClick={onStartGuidedDemo}
             size="sm"
             variant="outline"
-            className="h-8 text-xs font-medium border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 flex items-center gap-1.5"
+            className="h-8 text-xs font-medium border-[#2563EB]/30 bg-[#EFF6FF] text-[#2563EB] hover:bg-[#2563EB]/10 flex items-center gap-1.5"
             data-testid="guided-demo-btn"
           >
             <PlayCircle className="w-3.5 h-3.5" />
@@ -223,42 +223,42 @@ export function Header({
         )}
 
         {/* Live Engine Status Badge */}
-        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          <span className="text-[11px] text-slate-300">Nova AI: Ready</span>
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#E8F7F5] border border-[#0F9D9A]/30 text-[#0F9D9A] text-xs">
+          <span className="w-2 h-2 rounded-full bg-[#0F9D9A] animate-pulse-subtle" />
+          <span className="text-[11px] font-medium text-[#0F9D9A]">Nova AI: Active</span>
         </div>
 
         {/* Notification Center */}
         <div className="relative" ref={popoverRef}>
           <button
             onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-900 transition-colors relative"
+            className="p-2 rounded-md text-[#475569] hover:text-[#10233F] hover:bg-[#F1F5F9] transition-colors relative"
             aria-label="Notification center"
             data-testid="notifications-trigger"
           >
-            <Bell className="w-4 h-4" />
+            <Bell className="w-4.5 h-4.5" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-500" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#2563EB]" />
             )}
           </button>
 
           {/* Notifications Dropdown */}
           {notificationsOpen && (
             <div
-              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-slate-900 border border-slate-800 shadow-2xl p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs"
+              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-lg bg-white border border-[#DCE5EF] shadow-lg p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs"
               data-testid="notifications-panel"
             >
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2.5">
                 <div className="flex items-center gap-2">
-                  <Bell className="w-4 h-4 text-blue-400" />
-                  <span className="font-semibold text-slate-100">
+                  <Bell className="w-4 h-4 text-[#2563EB]" />
+                  <span className="font-semibold text-[#10233F]">
                     Notifications ({unreadCount})
                   </span>
                 </div>
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
+                    className="text-[11px] text-[#2563EB] hover:underline font-medium"
                   >
                     Mark read
                   </button>
@@ -276,20 +276,20 @@ export function Header({
                       );
                       setNotificationsOpen(false);
                     }}
-                    className={`block p-2.5 rounded-lg border transition-all ${
+                    className={`block p-2.5 rounded-md border transition-all ${
                       n.read
-                        ? 'bg-slate-950/60 border-slate-800/80 text-slate-400 hover:bg-slate-950 hover:text-slate-200'
-                        : 'bg-blue-950/20 border-blue-500/30 text-slate-200 hover:bg-blue-950/40'
+                        ? 'bg-white border-[#DCE5EF] text-[#64748B] hover:bg-[#F7F9FC]'
+                        : 'bg-[#EFF6FF] border-[#2563EB]/30 text-[#10233F] hover:bg-[#EFF6FF]/80'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <div className="flex items-center gap-1.5 font-semibold text-[11px] text-slate-200">
+                      <div className="flex items-center gap-1.5 font-semibold text-[11px] text-[#10233F]">
                         {getIcon(n.type)}
                         <span>{n.title}</span>
                       </div>
-                      <span className="text-[10px] text-slate-500">{n.timestamp}</span>
+                      <span className="text-[10px] text-[#64748B]">{n.timestamp}</span>
                     </div>
-                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                    <p className="text-[11px] text-[#475569] leading-relaxed">
                       {n.message}
                     </p>
                   </Link>
@@ -302,9 +302,9 @@ export function Header({
         {/* User Avatar */}
         <Link
           href="/settings"
-          className="flex items-center gap-2 pl-2 border-l border-slate-800"
+          className="flex items-center gap-2 pl-2 border-l border-[#DCE5EF]"
         >
-          <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-semibold text-slate-200">
+          <div className="w-7 h-7 rounded-full bg-[#10233F] text-white flex items-center justify-center text-xs font-semibold shadow-sm">
             AM
           </div>
         </Link>

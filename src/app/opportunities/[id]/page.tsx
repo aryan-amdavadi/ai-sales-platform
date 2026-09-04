@@ -25,7 +25,6 @@ import {
   Flame,
   MessageSquare,
   Clock,
-  Briefcase,
   ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -129,10 +128,10 @@ export default function OpportunityDetailPage() {
 
   if (error || !opportunity) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="space-y-6 max-w-[1536px] mx-auto">
         <Link
           href="/opportunities"
-          className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1.5 font-medium"
+          className="text-xs text-[#64748B] hover:text-[#10233F] flex items-center gap-1.5 font-medium"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Opportunities
         </Link>
@@ -192,54 +191,53 @@ export default function OpportunityDetailPage() {
   const heatCategory = qualScore >= 85 ? 'HOT' : qualScore >= 65 ? 'WARM' : qualScore >= 40 ? 'POTENTIAL' : 'LOW';
 
   return (
-    <div className="space-y-6 pb-20 max-w-7xl mx-auto" data-testid="opportunity-detail">
+    <div className="space-y-6 pb-20 max-w-[1536px] mx-auto" data-testid="opportunity-detail">
       {/* Toast Banner */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-lg animate-in fade-in duration-200">
+        <div className="p-3.5 rounded-md bg-white border border-[#2563EB]/40 text-[#10233F] text-xs flex items-center justify-between shadow-md animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-blue-400" />
-            <span>{toastMessage}</span>
+            <Sparkles className="w-4 h-4 text-[#2563EB]" />
+            <span className="font-medium">{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
+          <button onClick={() => setToastMessage(null)} className="text-[#64748B] hover:text-[#10233F] text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Top Header & Actions Bar */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div className="flex items-start sm:items-center gap-3">
           <Link
             href="/opportunities"
-            className="p-2 rounded-md text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-slate-800 transition-colors mt-0.5 sm:mt-0"
+            className="p-2 rounded-md text-[#64748B] hover:text-[#10233F] hover:bg-[#F7F9FC] border border-[#DCE5EF] transition-colors mt-0.5 sm:mt-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl font-bold tracking-tight text-slate-100">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F]">
                 {opportunity.company?.name}
               </h1>
               {isHero && (
-                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30">
                   HERO TARGET
                 </span>
               )}
               <StatusBadge status={opportunity.status} type="status" />
               <StatusBadge status={opportunity.urgency} type="urgency" />
               <span
-                className={`px-2 py-0.5 rounded text-xs font-semibold border ${
+                className={`px-2.5 py-0.5 rounded text-xs font-bold border ${
                   heatCategory === 'HOT'
-                    ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                    : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                    ? 'bg-[#FEF2F2] text-[#DC2626] border-[#DC2626]/30'
+                    : 'bg-[#FEF3C7] text-[#D97706] border-[#D97706]/30'
                 }`}
               >
                 {heatCategory} QUALIFIED
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1">
-              Decision Maker: <span className="text-slate-200 font-medium">{opportunity.name}</span> &bull;{' '}
-              {opportunity.title} &bull; Discovered{' '}
+            <p className="text-xs text-[#64748B] mt-1">
+              Prospect: <span className="text-[#10233F] font-semibold">{opportunity.name}</span> ({opportunity.title}) &bull; Discovered{' '}
               {new Date(opportunity.discoveredAt).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
@@ -256,10 +254,10 @@ export default function OpportunityDetailPage() {
             disabled={recalculating || analyzing}
             variant="outline"
             size="sm"
-            className="h-8 text-xs border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300 flex items-center gap-1.5"
+            className="h-8 text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] flex items-center gap-1.5 font-medium"
             data-testid="recalculate-score-btn"
           >
-            <RotateCw className={`w-3.5 h-3.5 ${recalculating ? 'animate-spin text-blue-400' : 'text-slate-400'}`} />
+            <RotateCw className={`w-3.5 h-3.5 ${recalculating ? 'animate-spin text-[#2563EB]' : 'text-[#64748B]'}`} />
             <span>{recalculating ? 'Recalculating...' : 'Recalculate Score'}</span>
           </Button>
 
@@ -268,10 +266,10 @@ export default function OpportunityDetailPage() {
             disabled={generatingBrief || analyzing}
             variant="outline"
             size="sm"
-            className="h-8 text-xs border-slate-700 bg-slate-900 hover:bg-slate-800 text-blue-300 flex items-center gap-1.5"
+            className="h-8 text-xs border-[#2563EB]/30 bg-[#EFF6FF] hover:bg-[#2563EB]/10 text-[#2563EB] flex items-center gap-1.5 font-semibold"
             data-testid="generate-brief-btn"
           >
-            <Sparkles className={`w-3.5 h-3.5 ${generatingBrief ? 'animate-spin text-blue-400' : 'text-blue-400'}`} />
+            <Sparkles className={`w-3.5 h-3.5 ${generatingBrief ? 'animate-spin text-[#2563EB]' : 'text-[#2563EB]'}`} />
             <span>{generatingBrief ? 'Synthesizing...' : 'Generate Sales Brief'}</span>
           </Button>
 
@@ -279,10 +277,10 @@ export default function OpportunityDetailPage() {
             onClick={handleAnalyzeOpportunity}
             disabled={analyzing}
             size="sm"
-            className="h-8 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex items-center gap-1.5"
+            className="h-8 text-xs font-semibold bg-[#10233F] hover:bg-[#163A5F] text-white flex items-center gap-1.5"
             data-testid="analyze-btn"
           >
-            <Zap className={`w-3.5 h-3.5 ${analyzing ? 'animate-pulse text-blue-400' : 'text-blue-400'}`} />
+            <Zap className={`w-3.5 h-3.5 ${analyzing ? 'animate-pulse text-[#0F9D9A]' : 'text-[#0F9D9A]'}`} />
             <span>{analyzing ? 'Analyzing...' : 'Analyze Opportunity'}</span>
           </Button>
 
@@ -290,7 +288,7 @@ export default function OpportunityDetailPage() {
             onClick={handleTriggerCall}
             disabled={callingState !== 'idle'}
             size="sm"
-            className="h-8 text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 flex items-center gap-1.5 shadow-sm"
+            className="h-8 text-xs font-semibold bg-[#2563EB] hover:bg-[#1d4ed8] text-white px-3.5 flex items-center gap-1.5 shadow-sm"
             data-testid="call-action"
           >
             <PhoneCall className={`w-3.5 h-3.5 ${callingState === 'calling' ? 'animate-bounce' : ''}`} />
@@ -310,11 +308,11 @@ export default function OpportunityDetailPage() {
         {/* LEFT COLUMN: Core Analysis, Evidence, Company Intelligence & Sales Brief */}
         <div className="lg:col-span-8 space-y-6">
           {/* Public Requirement & Evidence Panel */}
-          <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4" data-testid="evidence-panel">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm" data-testid="evidence-panel">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
               <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-blue-400" />
-                <h3 className="text-xs font-bold tracking-tight text-slate-100 uppercase">
+                <FileText className="w-4 h-4 text-[#2563EB]" />
+                <h3 className="text-xs font-bold tracking-tight text-[#10233F] uppercase">
                   PUBLIC BUYING REQUIREMENT & EVIDENCE
                 </h3>
               </div>
@@ -323,25 +321,25 @@ export default function OpportunityDetailPage() {
 
             <div className="space-y-4">
               <div>
-                <h4 className="text-sm font-semibold text-slate-100">
-                  {req.title || 'Enterprise Technical Modernization Specification'}
+                <h4 className="text-base font-bold text-[#10233F]">
+                  {req.title || 'Microsoft 365 / SharePoint Implementation Partner'}
                 </h4>
-                <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">{req.description}</p>
+                <p className="text-xs text-[#475569] mt-1.5 leading-relaxed">{req.description}</p>
               </div>
 
               {/* Sub-requirements Pills */}
               {tags.length > 0 && (
                 <div>
-                  <span className="text-[11px] font-semibold text-slate-400 block mb-1.5 uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-[#64748B] block mb-1.5 uppercase tracking-wider">
                     Extracted Scope Components ({tags.length})
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {tags.map((t, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 rounded-md text-xs bg-slate-950 text-slate-200 border border-slate-800 flex items-center gap-1.5"
+                        className="px-2.5 py-1 rounded-md text-xs bg-[#F7F9FC] text-[#10233F] border border-[#DCE5EF] flex items-center gap-1.5 font-medium"
                       >
-                        <Check className="w-3 h-3 text-blue-400" />
+                        <Check className="w-3.5 h-3.5 text-[#0F9D9A]" />
                         <span>{t}</span>
                       </span>
                     ))}
@@ -350,48 +348,48 @@ export default function OpportunityDetailPage() {
               )}
 
               {/* "Why This Lead?" Evidence Checklist */}
-              <div className="p-4 rounded-lg bg-slate-950/80 border border-slate-800 space-y-3">
-                <div className="flex items-center justify-between text-xs font-semibold text-blue-400 uppercase tracking-wide">
+              <div className="p-4 rounded-md bg-[#E8F7F5]/50 border border-[#0F9D9A]/30 space-y-3">
+                <div className="flex items-center justify-between text-xs font-bold text-[#0F9D9A] uppercase tracking-wide">
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                    <CheckCircle2 className="w-4 h-4 text-[#0F9D9A]" />
                     <span>Why This Lead? (Extracted Evidence)</span>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-normal">Confidence: {req.confidenceScore || 96}%</span>
+                  <span className="text-[11px] text-[#64748B] font-semibold">Confidence: {req.confidenceScore || 96}%</span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#10233F]">
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Explicit vendor search for {req.category || 'SharePoint Implementation'}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Requirement clearly defined ({tags.length} core specifications)</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Verified high-authority decision maker ({opportunity.title})</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Urgent timeline target ({req.timeframe || 'Next 30 Days'})</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Active procurement stage: Vendor Selection</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-400 font-bold">✓</span>
+                    <span className="text-[#0F9D9A] font-bold">✓</span>
                     <span>Strong architectural & capability solution fit (96%)</span>
                   </div>
                 </div>
 
                 {/* Raw Quote */}
-                <div className="mt-3 pt-2.5 border-t border-slate-800">
-                  <span className="text-[10px] uppercase font-semibold text-slate-400 block mb-1">
+                <div className="mt-3 pt-2.5 border-t border-[#0F9D9A]/20">
+                  <span className="text-[10px] uppercase font-bold text-[#64748B] block mb-1">
                     Raw Public Signal Excerpt
                   </span>
-                  <blockquote className="text-xs text-slate-300 italic border-l-2 border-blue-500/60 pl-3 py-1">
+                  <blockquote className="text-xs text-[#10233F] italic border-l-2 border-[#0F9D9A] pl-3 py-1 bg-white/60 rounded-r">
                     "{req.rawEvidence || 'Looking for an experienced implementation partner to handle enterprise modernization and zero-downtime cutover.'}"
                   </blockquote>
                 </div>
@@ -399,55 +397,55 @@ export default function OpportunityDetailPage() {
 
               {/* Requirement Budget & Pipeline Metrics */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-2.5 rounded-md bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 block text-[10px] font-semibold uppercase">BUDGET ESTIMATE</span>
-                  <span className="font-bold text-slate-200 mt-0.5 block">{req.budgetEstimate || '$150k - $250k'}</span>
+                <div className="p-3 rounded-md bg-[#F7F9FC] border border-[#DCE5EF]">
+                  <span className="text-[#64748B] block text-[10px] font-semibold uppercase">BUDGET ESTIMATE</span>
+                  <span className="font-bold text-[#10233F] mt-0.5 block">{req.budgetEstimate || '$150,000 ARR'}</span>
                 </div>
-                <div className="p-2.5 rounded-md bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 block text-[10px] font-semibold uppercase">TIMELINE DEADLINE</span>
-                  <span className="font-bold text-slate-200 mt-0.5 block">{req.timeframe || 'Next 30 Days'}</span>
+                <div className="p-3 rounded-md bg-[#F7F9FC] border border-[#DCE5EF]">
+                  <span className="text-[#64748B] block text-[10px] font-semibold uppercase">TIMELINE DEADLINE</span>
+                  <span className="font-bold text-[#10233F] mt-0.5 block">{req.timeframe || 'Next 30 Days'}</span>
                 </div>
-                <div className="p-2.5 rounded-md bg-slate-950 border border-slate-800 col-span-2 sm:col-span-1">
-                  <span className="text-slate-400 block text-[10px] font-semibold uppercase">PIPELINE ARR VALUE</span>
-                  <span className="font-bold text-emerald-400 mt-0.5 block">${opportunity.pipelineValue?.toLocaleString()}</span>
+                <div className="p-3 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] col-span-2 sm:col-span-1">
+                  <span className="text-[#64748B] block text-[10px] font-semibold uppercase">PIPELINE ARR VALUE</span>
+                  <span className="font-bold text-[#16A34A] mt-0.5 block">${opportunity.pipelineValue?.toLocaleString()}</span>
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Company Intelligence & "Why Now?" */}
-          <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
               <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-blue-400" />
-                <h3 className="text-xs font-bold tracking-tight text-slate-100 uppercase">
+                <Building2 className="w-4 h-4 text-[#2563EB]" />
+                <h3 className="text-xs font-bold tracking-tight text-[#10233F] uppercase">
                   COMPANY INTELLIGENCE & "WHY NOW?" SIGNALS
                 </h3>
               </div>
-              <span className="text-xs text-slate-400 font-medium">{opportunity.company?.industry}</span>
+              <span className="text-xs text-[#64748B] font-medium">{opportunity.company?.industry}</span>
             </div>
 
             {/* "Why Now?" Signals Box */}
-            <div className="p-4 rounded-lg bg-blue-950/20 border border-blue-500/20 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-blue-400 uppercase tracking-wide">
-                <Flame className="w-4 h-4 text-blue-400" />
+            <div className="p-4 rounded-md bg-[#EFF6FF] border border-[#2563EB]/30 space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#2563EB] uppercase tracking-wide">
+                <Flame className="w-4 h-4 text-[#2563EB]" />
                 <span>WHY NOW? (High-Velocity Trigger Events)</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#10233F] pt-1 font-medium">
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-400 font-bold">✓</span>
+                  <span className="text-[#2563EB] font-bold">✓</span>
                   <span>Requirement posted 3 hours ago in active procurement cycle</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-400 font-bold">✓</span>
+                  <span className="text-[#2563EB] font-bold">✓</span>
                   <span>Company is actively hiring +8 engineering roles</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-400 font-bold">✓</span>
+                  <span className="text-[#2563EB] font-bold">✓</span>
                   <span>Technology match: Microsoft 365, SPFx, Cloud Core</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-400 font-bold">✓</span>
+                  <span className="text-[#2563EB] font-bold">✓</span>
                   <span>Vendor selection active — recommended contact within 4h</span>
                 </div>
               </div>
@@ -455,38 +453,38 @@ export default function OpportunityDetailPage() {
 
             {/* Firmographic Signals 4-Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-blue-400 text-[11px] font-semibold flex items-center gap-1">
+              <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                <span className="text-[#2563EB] text-[11px] font-bold flex items-center gap-1">
                   <Cpu className="w-3.5 h-3.5" /> Technology Stack
                 </span>
-                <p className="text-slate-300">
+                <p className="text-[#475569]">
                   {opportunity.company?.techStack || 'Microsoft 365, SharePoint 2016 Server, Azure, React, SPFx'}
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-indigo-400 text-[11px] font-semibold flex items-center gap-1">
+              <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                <span className="text-[#10233F] text-[11px] font-bold flex items-center gap-1">
                   <TrendingUp className="w-3.5 h-3.5" /> Hiring Velocity
                 </span>
-                <p className="text-slate-300">
+                <p className="text-[#475569]">
                   {opportunity.company?.hiringSignals || 'Actively hiring Lead SharePoint Architects and Cloud Integration Engineers.'}
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-emerald-400 text-[11px] font-semibold flex items-center gap-1">
+              <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                <span className="text-[#16A34A] text-[11px] font-bold flex items-center gap-1">
                   <Award className="w-3.5 h-3.5" /> Growth Trajectory
                 </span>
-                <p className="text-slate-300">
+                <p className="text-[#475569]">
                   {opportunity.company?.growthSignals || '+18% headcount YoY across enterprise IT and digital modernization.'}
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-amber-400 text-[11px] font-semibold flex items-center gap-1">
+              <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                <span className="text-[#D97706] text-[11px] font-bold flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" /> Funding & Scale
                 </span>
-                <p className="text-slate-300">
+                <p className="text-[#475569]">
                   {opportunity.company?.fundingSignals || 'Series C ($48M) backed; $120M annual revenue scale.'}
                 </p>
               </div>
@@ -494,37 +492,37 @@ export default function OpportunityDetailPage() {
           </Card>
 
           {/* AI Sales Brief ("PRE-CALL BRIEF") */}
-          <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-5" data-testid="sales-brief">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <Card className="p-5 bg-white border-[#DCE5EF] space-y-5 rounded-md shadow-sm" data-testid="sales-brief">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-400" />
-                <h3 className="text-xs font-bold tracking-tight text-slate-100 uppercase">
+                <Sparkles className="w-4 h-4 text-[#2563EB]" />
+                <h3 className="text-xs font-bold tracking-tight text-[#10233F] uppercase">
                   AI PRE-CALL SALES BRIEF & STRATEGY
                 </h3>
               </div>
-              <span className="text-xs text-blue-400 font-medium">Context-Specific Playbook</span>
+              <span className="text-xs text-[#2563EB] font-semibold">Context-Specific Playbook</span>
             </div>
 
             {structuredBrief ? (
               <div className="space-y-4 text-xs">
                 {/* Why They Matter */}
-                <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="text-[11px] uppercase text-blue-400 font-bold block">
+                <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                  <span className="text-[11px] uppercase text-[#2563EB] font-bold block">
                     Why Decision Maker Matters
                   </span>
-                  <p className="text-slate-200 leading-relaxed">{structuredBrief.whyTheyMatter}</p>
+                  <p className="text-[#10233F] leading-relaxed font-medium">{structuredBrief.whyTheyMatter}</p>
                 </div>
 
                 {/* Pain Points */}
                 {structuredBrief.painPoints?.length > 0 && (
                   <div className="space-y-1.5">
-                    <span className="text-[11px] uppercase text-slate-400 font-semibold block">
+                    <span className="text-[11px] uppercase text-[#64748B] font-bold block">
                       Core Pain Points & Friction Points
                     </span>
                     <ul className="space-y-1.5">
                       {structuredBrief.painPoints.map((pain: string, idx: number) => (
-                        <li key={idx} className="flex items-start gap-2 text-slate-300">
-                          <span className="text-rose-400 font-bold mt-0.5">&bull;</span>
+                        <li key={idx} className="flex items-start gap-2 text-[#10233F] font-medium">
+                          <span className="text-[#DC2626] font-bold mt-0.5">&bull;</span>
                           <span>{pain}</span>
                         </li>
                       ))}
@@ -534,19 +532,19 @@ export default function OpportunityDetailPage() {
 
                 {/* Objections & Counter-strategies */}
                 {structuredBrief.likelyObjections?.length > 0 && (
-                  <div className="space-y-2 pt-2 border-t border-slate-800">
-                    <span className="text-[11px] uppercase text-slate-400 font-semibold block">
+                  <div className="space-y-2 pt-2 border-t border-[#DCE5EF]">
+                    <span className="text-[11px] uppercase text-[#64748B] font-bold block">
                       Anticipated Objections & Counter-Strategies
                     </span>
                     <div className="space-y-2">
                       {structuredBrief.likelyObjections.map((item: any, idx: number) => (
-                        <div key={idx} className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                          <div className="text-amber-400 text-xs font-semibold flex items-start gap-1.5">
+                        <div key={idx} className="p-3.5 rounded-md bg-[#FEF3C7]/40 border border-[#D97706]/30 space-y-1">
+                          <div className="text-[#D97706] text-xs font-bold flex items-start gap-1.5">
                             <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
                             <span>Objection: "{item.objection}"</span>
                           </div>
-                          <div className="text-slate-300 text-xs pl-5 pt-0.5 leading-relaxed">
-                            <strong className="text-blue-400">Strategy: </strong>
+                          <div className="text-[#10233F] text-xs pl-5 pt-0.5 leading-relaxed font-medium">
+                            <strong className="text-[#2563EB]">Strategy: </strong>
                             {item.counterStrategy}
                           </div>
                         </div>
@@ -556,53 +554,53 @@ export default function OpportunityDetailPage() {
                 )}
 
                 {/* Recommended Positioning & Opening Statement */}
-                <div className="space-y-3 pt-2 border-t border-slate-800">
-                  <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                    <span className="text-[11px] uppercase text-blue-400 font-semibold block">
+                <div className="space-y-3 pt-2 border-t border-[#DCE5EF]">
+                  <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1">
+                    <span className="text-[11px] uppercase text-[#2563EB] font-bold block">
                       Recommended Positioning
                     </span>
-                    <p className="text-slate-200 leading-relaxed">{structuredBrief.recommendedPositioning}</p>
+                    <p className="text-[#10233F] leading-relaxed font-medium">{structuredBrief.recommendedPositioning}</p>
                   </div>
 
-                  <div className="p-3.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1">
-                    <span className="text-[11px] uppercase text-blue-300 font-semibold flex items-center gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
+                  <div className="p-4 rounded-md bg-[#EFF6FF] border border-[#2563EB]/30 space-y-1">
+                    <span className="text-[11px] uppercase text-[#2563EB] font-bold flex items-center gap-1.5">
+                      <MessageSquare className="w-3.5 h-3.5 text-[#2563EB]" />
                       Suggested Opening Statement
                     </span>
-                    <p className="text-slate-200 italic text-xs leading-relaxed">
+                    <p className="text-[#10233F] italic text-xs leading-relaxed font-semibold">
                       "{structuredBrief.openingStatement}"
                     </p>
                   </div>
                 </div>
 
                 {/* Discovery Questions & Desired Outcome */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
-                  <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
-                    <span className="text-[11px] uppercase text-slate-400 font-semibold block">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#DCE5EF]">
+                  <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] space-y-1.5">
+                    <span className="text-[11px] uppercase text-[#64748B] font-bold block">
                       Key Questions to Ask
                     </span>
-                    <ul className="space-y-1 text-slate-300 text-xs">
+                    <ul className="space-y-1.5 text-[#10233F] text-xs font-medium">
                       {structuredBrief.questionsToAsk?.map((q: string, i: number) => (
                         <li key={i} className="flex items-start gap-1.5">
-                          <HelpCircle className="w-3 h-3 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <HelpCircle className="w-3.5 h-3.5 text-[#2563EB] mt-0.5 flex-shrink-0" />
                           <span>{q}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
-                    <span className="text-[11px] uppercase text-slate-400 font-semibold block">
+                  <div className="p-3.5 rounded-md bg-[#E8F7F5] border border-[#0F9D9A]/30 space-y-1.5">
+                    <span className="text-[11px] uppercase text-[#0F9D9A] font-bold block">
                       Desired Call Outcome
                     </span>
-                    <p className="text-emerald-400 text-xs font-semibold leading-relaxed">
+                    <p className="text-[#0F9D9A] text-xs font-bold leading-relaxed">
                       {structuredBrief.desiredOutcome}
                     </p>
                   </div>
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-[#475569] leading-relaxed">
                 {opportunity.salesBrief || 'Click "Generate Sales Brief" above to create an AI pre-call brief.'}
               </p>
             )}
@@ -612,16 +610,16 @@ export default function OpportunityDetailPage() {
         {/* RIGHT COLUMN: Intent Score Breakdown, Company Fit, Qualification, Next Best Action & Activity */}
         <div className="lg:col-span-4 space-y-6">
           {/* Intent Score & 8-Dimension Breakdown */}
-          <Card className="p-5 bg-slate-900/60 border-slate-800 text-center space-y-4" data-testid="intent-score">
+          <Card className="p-5 bg-white border-[#DCE5EF] text-center space-y-4 rounded-md shadow-sm" data-testid="intent-score">
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#64748B] block">
                 Autonomous Intent Score
               </span>
-              <div className="text-4xl font-extrabold text-blue-400 py-1 font-sans">
+              <div className="text-4xl font-extrabold text-[#0F9D9A] py-1 font-sans">
                 {opportunity.intentScore}
-                <span className="text-sm text-slate-500 font-normal"> / 100</span>
+                <span className="text-sm text-[#64748B] font-normal"> / 100</span>
               </div>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-[#475569] font-medium">
                 {opportunity.intentScore >= 85
                   ? 'Critically high intent verified across explicit vendor search.'
                   : 'Solid buying signal with active requirement exploration.'}
@@ -629,21 +627,21 @@ export default function OpportunityDetailPage() {
             </div>
 
             {/* 8 Dimensions Breakdown */}
-            <div className="pt-3 border-t border-slate-800 text-left space-y-2 text-xs">
-              <span className="text-[11px] uppercase text-slate-400 block font-semibold">
+            <div className="pt-3 border-t border-[#DCE5EF] text-left space-y-2.5 text-xs">
+              <span className="text-[11px] uppercase text-[#64748B] block font-bold">
                 Intent Dimensions Breakdown
               </span>
 
               <div className="space-y-2 text-[11px]">
                 {intentBreakdown.map((item) => (
-                  <div key={item.label} className="space-y-0.5">
-                    <div className="flex justify-between text-slate-300">
+                  <div key={item.label} className="space-y-1">
+                    <div className="flex justify-between text-[#10233F] font-semibold">
                       <span>{item.label}:</span>
-                      <span className="text-blue-400 font-semibold">{item.value}</span>
+                      <span className="text-[#0F9D9A] font-bold">{item.value}</span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-[#F1F5F9] overflow-hidden">
                       <div
-                        className="h-full bg-blue-500 rounded-full"
+                        className="h-full bg-[#0F9D9A] rounded-full"
                         style={{ width: `${item.value}%` }}
                       />
                     </div>
@@ -654,45 +652,45 @@ export default function OpportunityDetailPage() {
           </Card>
 
           {/* Solution & Company Fit Score Card */}
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-xs uppercase font-semibold text-slate-300">
+          <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2">
+              <span className="text-xs uppercase font-bold text-[#10233F]">
                 Solution & Company Fit
               </span>
-              <span className="text-sm font-bold text-emerald-400">
+              <span className="text-sm font-extrabold text-[#16A34A]">
                 {fitBreakdown.overallFitScore}% Fit
               </span>
             </div>
 
-            <div className="space-y-1.5 text-xs">
+            <div className="space-y-1.5 text-xs font-medium">
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Capability Match:</span>
-                <span className="text-slate-200">{fitBreakdown.capabilityMatch}%</span>
+                <span className="text-[#64748B]">Capability Match:</span>
+                <span className="text-[#10233F] font-bold">{fitBreakdown.capabilityMatch}%</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Industry Match:</span>
-                <span className="text-slate-200">{fitBreakdown.industryMatch}%</span>
+                <span className="text-[#64748B]">Industry Match:</span>
+                <span className="text-[#10233F] font-bold">{fitBreakdown.industryMatch}%</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Technology Match:</span>
-                <span className="text-slate-200">{fitBreakdown.technologyMatch}%</span>
+                <span className="text-[#64748B]">Technology Match:</span>
+                <span className="text-[#10233F] font-bold">{fitBreakdown.technologyMatch}%</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Location Match:</span>
-                <span className="text-slate-200">{fitBreakdown.locationMatch}%</span>
+                <span className="text-[#64748B]">Location Match:</span>
+                <span className="text-[#10233F] font-bold">{fitBreakdown.locationMatch}%</span>
               </div>
             </div>
           </Card>
 
           {/* Qualification Engine (BANT & Heat Classification) */}
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3" data-testid="qualification">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-xs uppercase font-semibold text-slate-300">
+          <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm" data-testid="qualification">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2">
+              <span className="text-xs uppercase font-bold text-[#10233F]">
                 BANT Qualification Engine
               </span>
               <span
-                className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
-                  heatCategory === 'HOT' ? 'bg-rose-500/20 text-rose-400' : 'bg-amber-500/20 text-amber-400'
+                className={`px-2 py-0.5 rounded text-[11px] font-bold ${
+                  heatCategory === 'HOT' ? 'bg-[#FEF2F2] text-[#DC2626]' : 'bg-[#FEF3C7] text-[#D97706]'
                 }`}
               >
                 {heatCategory} ({qualScore}%)
@@ -700,102 +698,102 @@ export default function OpportunityDetailPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block uppercase font-semibold">NEED</span>
-                <span className="font-bold text-blue-400">{qual.needFit || 95}%</span>
+              <div className="p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF]">
+                <span className="text-[#64748B] text-[10px] block uppercase font-bold">NEED</span>
+                <span className="font-extrabold text-[#2563EB]">{qual.needFit || 95}%</span>
               </div>
-              <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block uppercase font-semibold">FIT</span>
-                <span className="font-bold text-blue-400">{qual.budgetFit || 96}%</span>
+              <div className="p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF]">
+                <span className="text-[#64748B] text-[10px] block uppercase font-bold">FIT</span>
+                <span className="font-extrabold text-[#2563EB]">{qual.budgetFit || 96}%</span>
               </div>
-              <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block uppercase font-semibold">AUTHORITY</span>
-                <span className="font-bold text-blue-400">{qual.authorityFit || 90}%</span>
+              <div className="p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF]">
+                <span className="text-[#64748B] text-[10px] block uppercase font-bold">AUTHORITY</span>
+                <span className="font-extrabold text-[#2563EB]">{qual.authorityFit || 90}%</span>
               </div>
-              <div className="p-2 rounded bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 text-[10px] block uppercase font-semibold">TIMING</span>
-                <span className="font-bold text-blue-400">{qual.timingFit || 89}%</span>
+              <div className="p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF]">
+                <span className="text-[#64748B] text-[10px] block uppercase font-bold">TIMING</span>
+                <span className="font-extrabold text-[#2563EB]">{qual.timingFit || 89}%</span>
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-400 leading-relaxed pt-1">
+            <p className="text-[11px] text-[#475569] leading-relaxed pt-1 font-medium">
               {qual.reasoning ||
                 `Qualified based on explicit requirement need (${req.title}) and confirmed decision maker (${opportunity.name}).`}
             </p>
           </Card>
 
           {/* Next Best Action Card */}
-          <Card className="p-4 bg-slate-900/90 border-blue-500/30 space-y-3" data-testid="next-best-action">
-            <div className="flex items-center justify-between text-blue-400 border-b border-blue-500/20 pb-2">
+          <Card className="p-4 bg-white border-[#2563EB]/40 space-y-3 rounded-md shadow-sm ring-1 ring-[#2563EB]/20" data-testid="next-best-action">
+            <div className="flex items-center justify-between text-[#2563EB] border-b border-[#2563EB]/20 pb-2">
               <div className="flex items-center gap-1.5 font-bold text-xs uppercase">
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-[#2563EB]" />
                 <span>Next Best Action</span>
               </div>
-              <span className="px-1.5 py-0.2 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold">
+              <span className="px-2 py-0.5 rounded text-[10px] bg-[#EFF6FF] text-[#2563EB] font-bold">
                 {rec.priority || 'HIGH'} PRIORITY
               </span>
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-slate-100">
+              <p className="text-sm font-bold text-[#10233F]">
                 {rec.title || 'Schedule Technical Discovery Session'}
               </p>
-              <p className="text-xs text-slate-300 mt-1">{rec.rationale}</p>
+              <p className="text-xs text-[#475569] mt-1 font-medium">{rec.rationale}</p>
             </div>
 
             {/* Why Action Bullets */}
-            <div className="space-y-1 text-xs text-slate-300 pt-1">
-              <span className="text-[10px] uppercase text-slate-400 block font-semibold">Action Rationale:</span>
-              <div className="space-y-1 text-[11px]">
+            <div className="space-y-1 text-xs text-[#10233F] pt-1">
+              <span className="text-[10px] uppercase text-[#64748B] block font-bold">Action Rationale:</span>
+              <div className="space-y-1 text-[11px] font-medium">
                 <div className="flex items-start gap-1.5">
-                  <span className="text-blue-400 font-bold">&bull;</span>
-                  <span>Active requirement for {req.title || 'SharePoint Migration'}</span>
+                  <span className="text-[#2563EB] font-bold">&bull;</span>
+                  <span>Active requirement for {req.title || 'Microsoft 365 Implementation'}</span>
                 </div>
                 <div className="flex items-start gap-1.5">
-                  <span className="text-blue-400 font-bold">&bull;</span>
+                  <span className="text-[#2563EB] font-bold">&bull;</span>
                   <span>Vendor selection stage with {opportunity.urgency} urgency</span>
                 </div>
                 <div className="flex items-start gap-1.5">
-                  <span className="text-blue-400 font-bold">&bull;</span>
+                  <span className="text-[#2563EB] font-bold">&bull;</span>
                   <span>High solution fit (96%) and 30-day timeline</span>
                 </div>
                 <div className="flex items-start gap-1.5">
-                  <span className="text-blue-400 font-bold">&bull;</span>
+                  <span className="text-[#2563EB] font-bold">&bull;</span>
                   <span>Decision maker {opportunity.name} ({opportunity.title})</span>
                 </div>
               </div>
             </div>
 
             {rec.suggestedMessage && (
-              <div className="p-2.5 rounded bg-slate-950 border border-slate-800 text-xs text-slate-300">
+              <div className="p-2.5 rounded bg-[#F7F9FC] border border-[#DCE5EF] text-xs text-[#10233F] font-medium">
                 "{rec.suggestedMessage}"
               </div>
             )}
           </Card>
 
           {/* Lead Profile & Source Info */}
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+          <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
+            <h4 className="text-xs font-bold uppercase tracking-wide text-[#64748B]">
               Decision Maker Profile
             </h4>
             <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-slate-200">
-                <User className="w-3.5 h-3.5 text-slate-400" />
-                <span className="font-semibold">{opportunity.name}</span>
+              <div className="flex items-center gap-2 text-[#10233F]">
+                <User className="w-3.5 h-3.5 text-[#64748B]" />
+                <span className="font-bold">{opportunity.name}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <Mail className="w-3.5 h-3.5 text-slate-400" />
-                <span>{opportunity.email || 'cto@abctechnologies.com'}</span>
+              <div className="flex items-center gap-2 text-[#475569]">
+                <Mail className="w-3.5 h-3.5 text-[#64748B]" />
+                <span>{opportunity.email || 'john.smith@technova.com'}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <Phone className="w-3.5 h-3.5 text-slate-400" />
-                <span>{opportunity.phone || '+1 (512) 893-4102'}</span>
+              <div className="flex items-center gap-2 text-[#475569]">
+                <Phone className="w-3.5 h-3.5 text-[#64748B]" />
+                <span>{opportunity.phone || '+1 (555) 123-4567'}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <Globe className="w-3.5 h-3.5 text-slate-400" />
+              <div className="flex items-center gap-2 text-[#475569]">
+                <Globe className="w-3.5 h-3.5 text-[#64748B]" />
                 <span>{opportunity.company?.location || 'Austin, TX'}</span>
               </div>
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-2 border-t border-[#DCE5EF] flex items-center justify-between text-xs text-[#64748B]">
                 <span>Source:</span>
                 <StatusBadge status={opportunity.source?.platform || 'LINKEDIN'} type="source" />
               </div>
@@ -803,12 +801,12 @@ export default function OpportunityDetailPage() {
           </Card>
 
           {/* Signal & Activity Log Timeline */}
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+          <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wide text-[#64748B]">
                 Activity & Intelligence Log
               </h4>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-[#64748B] font-semibold">
                 {opportunity.activityLogs?.length || 1} Events
               </span>
             </div>
@@ -818,20 +816,20 @@ export default function OpportunityDetailPage() {
                 opportunity.activityLogs.map((log: any) => (
                   <div
                     key={log.id}
-                    className="flex items-start gap-2.5 pb-2 border-b border-slate-800/60 last:border-0 last:pb-0"
+                    className="flex items-start gap-2.5 pb-2 border-b border-[#DCE5EF] last:border-0 last:pb-0"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB] mt-0.5 flex-shrink-0" />
                     <div className="space-y-0.5">
-                      <p className="text-slate-200 font-semibold">{log.action.replace(/_/g, ' ')}</p>
-                      <p className="text-[11px] text-slate-400">{log.details}</p>
-                      <span className="text-[10px] text-slate-500 block">
+                      <p className="text-[#10233F] font-bold">{log.action.replace(/_/g, ' ')}</p>
+                      <p className="text-[11px] text-[#475569]">{log.details}</p>
+                      <span className="text-[10px] text-[#64748B] block">
                         {new Date(log.createdAt).toLocaleString()}
                       </span>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="text-slate-400 text-xs">Signal ingested and scored via autonomous pipeline.</div>
+                <div className="text-[#64748B] text-xs">Signal ingested and scored via autonomous pipeline.</div>
               )}
             </div>
           </Card>
@@ -840,4 +838,3 @@ export default function OpportunityDetailPage() {
     </div>
   );
 }
-

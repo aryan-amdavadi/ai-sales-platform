@@ -10,16 +10,16 @@ import {
   User,
   Sparkles,
   Clock,
-  CheckCircle2,
   Calendar,
   ArrowRight,
   Database,
   Globe,
   UserCheck,
-  Zap,
   Activity,
   Flame,
   MessageSquare,
+  Building2,
+  CheckCircle2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -334,105 +334,99 @@ export default function CallsPage() {
   };
 
   return (
-    <div className="space-y-6 pb-20 max-w-7xl mx-auto">
+    <div className="space-y-6 pb-20 max-w-[1536px] mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-xl animate-in fade-in duration-200">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-blue-400" />
+        <div className="p-3.5 rounded-md bg-white border border-[#2563EB]/40 text-[#10233F] text-xs flex items-center justify-between shadow-md animate-in fade-in duration-200">
+          <div className="flex items-center gap-2 font-medium">
+            <Sparkles className="w-4 h-4 text-[#2563EB]" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
+          <button onClick={() => setToastMessage(null)} className="text-[#64748B] hover:text-[#10233F] text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Header & Hero Call Launcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+          <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
             AI VOICE CALL SESSIONS
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#64748B] mt-1">
             Autonomous outbound voice qualification with real-time signal detection & CRM synchronization.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2.5 flex-wrap">
           {/* Multilingual Selector */}
-          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-800 rounded-md px-2 py-1 text-xs">
-            <Globe className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-1.5 bg-white border border-[#DCE5EF] rounded-md px-2.5 py-1.5 text-xs font-medium text-[#10233F]">
+            <Globe className="w-3.5 h-3.5 text-[#2563EB]" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
-              className="bg-transparent text-slate-200 text-xs focus:outline-none pr-1"
+              className="bg-transparent text-[#10233F] text-xs focus:outline-none pr-1 font-semibold"
             >
-              <option value="en-US" className="bg-slate-900 text-slate-200">
-                English (US)
-              </option>
-              <option value="hi-IN" className="bg-slate-900 text-slate-200">
-                Hindi (हिंदी)
-              </option>
-              <option value="gu-IN" className="bg-slate-900 text-slate-200">
-                Gujarati (ગુજરાતી)
-              </option>
+              <option value="en-US">English (US)</option>
+              <option value="hi-IN">Hindi (हिंदी)</option>
+              <option value="gu-IN">Gujarati (ગુજરાતી)</option>
             </select>
           </div>
 
           <Button
             onClick={() => handleStartHeroCall(language)}
             size="sm"
-            className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs px-3.5 flex items-center gap-2 shadow-sm"
+            className="h-9 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs px-4 flex items-center gap-2 shadow-sm"
             data-testid="launch-hero-call"
           >
-            <PhoneCall className="w-3.5 h-3.5" />
+            <PhoneCall className="w-4 h-4" />
             <span>Launch Hero Call</span>
           </Button>
         </div>
       </div>
 
-      {/* AI SALES COCKPIT MODAL / PANEL */}
+      {/* AI SALES COMMUNICATIONS COCKPIT (Professional Software Style) */}
       {activeCallModal && (
         <Card
-          className="p-5 bg-slate-950 border border-blue-500/40 shadow-2xl space-y-5 animate-in fade-in duration-200"
+          className="p-6 bg-white border border-[#DCE5EF] shadow-lg space-y-6 rounded-md animate-in fade-in duration-200"
           data-testid="call-cockpit"
         >
           {/* Cockpit Top Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCE5EF] pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400 border border-blue-500/30">
+              <div className="p-2.5 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
                 <PhoneCall className="w-5 h-5" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold text-slate-100">
-                    AI SALES CALL &bull; {activeLead?.company?.name || 'TechNova Solutions'}
+                <div className="flex items-center gap-2.5">
+                  <h2 className="text-lg font-bold text-[#10233F]">
+                    AI VOICE SESSION &bull; {activeLead?.company?.name || 'TechNova Solutions'}
                   </h2>
                   <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                    className={`px-2.5 py-0.5 rounded text-[11px] font-bold ${
                       callStatus === 'IN_PROGRESS'
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        ? 'bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30'
                         : callStatus === 'DIALING'
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                        : 'bg-slate-800 text-slate-300'
+                        ? 'bg-[#FEF3C7] text-[#D97706] border border-[#D97706]/30'
+                        : 'bg-[#F1F5F9] text-[#64748B]'
                     }`}
                     data-testid="call-status"
                   >
                     STATUS: {callStatus}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Target: <span className="text-slate-200 font-semibold">{activeLead?.name}</span> ({activeLead?.title}) &bull;{' '}
-                  Requirement: <span className="text-blue-400">SharePoint Online Modernization</span>
+                <p className="text-xs text-[#64748B] mt-0.5">
+                  Target: <span className="text-[#10233F] font-bold">{activeLead?.name}</span> ({activeLead?.title}) &bull;{' '}
+                  Requirement: <span className="text-[#2563EB] font-semibold">Microsoft 365 & SharePoint Modernization</span>
                 </p>
               </div>
             </div>
 
             {/* Timer & Controls */}
             <div className="flex items-center gap-2.5">
-              <div className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs text-blue-300 flex items-center gap-1.5 font-medium">
-                <Clock className="w-3.5 h-3.5 text-blue-400" />
+              <div className="px-3 py-1.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs text-[#10233F] flex items-center gap-1.5 font-bold font-mono">
+                <Clock className="w-3.5 h-3.5 text-[#2563EB]" />
                 <span>{formatDuration(callDuration)}</span>
               </div>
 
@@ -443,7 +437,7 @@ export default function CallsPage() {
                     variant="outline"
                     size="sm"
                     className={`h-8 text-xs ${
-                      isMuted ? 'border-rose-500/50 bg-rose-950/50 text-rose-300' : 'border-slate-800 bg-slate-900 text-slate-300'
+                      isMuted ? 'border-[#DC2626]/50 bg-[#FEF2F2] text-[#DC2626]' : 'border-[#DCE5EF] bg-white text-[#10233F]'
                     }`}
                   >
                     {isMuted ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
@@ -454,10 +448,10 @@ export default function CallsPage() {
                     onClick={() => setMode(mode === 'VOICE' ? 'TEXT' : 'VOICE')}
                     variant="outline"
                     size="sm"
-                    className="h-8 text-xs border-slate-800 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+                    className="h-8 text-xs border-[#DCE5EF] bg-white text-[#10233F] flex items-center gap-1.5 font-medium"
                     data-testid="switch-mode-btn"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
+                    <MessageSquare className="w-3.5 h-3.5 text-[#2563EB]" />
                     <span>{mode === 'VOICE' ? 'Text' : 'Voice'}</span>
                   </Button>
 
@@ -465,17 +459,17 @@ export default function CallsPage() {
                     onClick={handleHumanHandoff}
                     variant="outline"
                     size="sm"
-                    className="h-8 text-xs border-amber-500/40 bg-amber-950/20 text-amber-300 hover:bg-amber-950/40 flex items-center gap-1.5"
+                    className="h-8 text-xs border-[#D97706]/40 bg-[#FEF3C7]/50 text-[#D97706] hover:bg-[#FEF3C7] flex items-center gap-1.5 font-bold"
                     data-testid="human-handoff"
                   >
-                    <UserCheck className="w-3.5 h-3.5 text-amber-400" />
+                    <UserCheck className="w-3.5 h-3.5 text-[#D97706]" />
                     <span>Human Handoff</span>
                   </Button>
 
                   <Button
                     onClick={() => handleEndCall()}
                     size="sm"
-                    className="h-8 bg-rose-600 hover:bg-rose-500 text-white text-xs px-3 flex items-center gap-1.5"
+                    className="h-8 bg-[#DC2626] hover:bg-[#b91c1c] text-white text-xs px-3.5 font-semibold flex items-center gap-1.5"
                     data-testid="end-call"
                   >
                     <PhoneOff className="w-3.5 h-3.5" />
@@ -489,7 +483,7 @@ export default function CallsPage() {
                   onClick={() => setActiveCallModal(false)}
                   variant="outline"
                   size="sm"
-                  className="h-8 border-slate-800 bg-slate-900 text-slate-300 text-xs"
+                  className="h-8 border-[#DCE5EF] bg-white text-[#10233F] text-xs font-semibold"
                 >
                   Close Cockpit
                 </Button>
@@ -497,62 +491,90 @@ export default function CallsPage() {
             </div>
           </div>
 
-          {/* Cockpit Split View: Live Conversation & Live Signal Detection */}
+          {/* Cockpit 3-Panel Executive Communications Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-            {/* LEFT: Live Conversation Stream */}
-            <div className="lg:col-span-7 space-y-3" data-testid="conversation">
-              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
-                <span className="uppercase font-semibold text-slate-300 flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-blue-400" />
+            {/* LEFT (Col 3): Prospect Information */}
+            <div className="lg:col-span-3 space-y-3.5 p-4 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs">
+              <div className="flex items-center gap-2 border-b border-[#DCE5EF] pb-2">
+                <Building2 className="w-4 h-4 text-[#2563EB]" />
+                <span className="font-bold text-[#10233F] uppercase">Prospect Target</span>
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <span className="text-[#64748B] text-[10px] uppercase font-bold block">COMPANY</span>
+                  <span className="font-bold text-[#10233F] text-sm">{activeLead?.company?.name || 'TechNova Solutions'}</span>
+                </div>
+                <div>
+                  <span className="text-[#64748B] text-[10px] uppercase font-bold block">CONTACT</span>
+                  <span className="font-semibold text-[#10233F]">{activeLead?.name || 'John Smith'}</span>
+                  <span className="text-[#64748B] block text-[11px]">{activeLead?.title || 'CTO'}</span>
+                </div>
+                <div>
+                  <span className="text-[#64748B] text-[10px] uppercase font-bold block">TOP REQUIREMENT</span>
+                  <span className="font-semibold text-[#2563EB]">Microsoft 365 & SharePoint Implementation</span>
+                </div>
+                <div className="pt-2 border-t border-[#DCE5EF] space-y-1">
+                  <span className="text-[#64748B] text-[10px] uppercase font-bold block">FIRMOGRAPHICS</span>
+                  <span className="text-[#475569] block">51-200 Employees &bull; IT Services</span>
+                  <span className="text-[#475569] block">$150,000 ARR Pipeline</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CENTER (Col 5): Live Conversation Stream */}
+            <div className="lg:col-span-5 space-y-3" data-testid="conversation">
+              <div className="flex items-center justify-between text-xs text-[#64748B] border-b border-[#DCE5EF] pb-2">
+                <span className="uppercase font-bold text-[#10233F] flex items-center gap-1.5">
+                  <Activity className="w-3.5 h-3.5 text-[#2563EB]" />
                   Live Conversational Turns
                 </span>
-                <span className="text-[11px] text-blue-400 font-medium">
+                <span className="text-[11px] text-[#2563EB] font-bold">
                   {transcriptTurns.length} Turns Ingested
                 </span>
               </div>
 
               {/* Turns Display */}
               <div
-                className="space-y-2.5 max-h-[340px] overflow-y-auto pr-2 custom-scrollbar"
+                className="space-y-3 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar"
                 data-testid="transcript"
               >
                 {transcriptTurns.map((turn, i) => (
                   <div
                     key={turn.id || i}
-                    className={`p-3 rounded-lg border text-xs space-y-1 ${
+                    className={`p-3.5 rounded-md border text-xs space-y-1 ${
                       turn.speaker === 'AI'
-                        ? 'bg-slate-900/90 border-slate-800 text-slate-200'
-                        : 'bg-blue-950/20 border-blue-500/20 text-slate-200'
+                        ? 'bg-[#F7F9FC] border-[#DCE5EF] text-[#10233F]'
+                        : 'bg-[#EFF6FF] border-[#2563EB]/30 text-[#10233F]'
                     }`}
                   >
                     <div className="flex items-center justify-between text-[11px]">
                       <span
-                        className={`font-semibold flex items-center gap-1.5 ${
-                          turn.speaker === 'AI' ? 'text-blue-400' : 'text-emerald-400'
+                        className={`font-bold flex items-center gap-1.5 ${
+                          turn.speaker === 'AI' ? 'text-[#2563EB]' : 'text-[#0F9D9A]'
                         }`}
                       >
                         {turn.speaker === 'AI' ? (
                           <>
-                            <Sparkles className="w-3 h-3" />
-                            AI sales assistant (IntentOS)
+                            <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
+                            AI Sales Assistant (IntentOS)
                           </>
                         ) : (
                           <>
-                            <User className="w-3 h-3" />
+                            <User className="w-3.5 h-3.5 text-[#0F9D9A]" />
                             {activeLead?.name || 'John Smith'} (CTO)
                           </>
                         )}
                       </span>
-                      <span className="text-slate-500 text-[10px]">{turn.timestamp}</span>
+                      <span className="text-[#64748B] text-[10px] font-medium">{turn.timestamp}</span>
                     </div>
-                    <p className="leading-relaxed">{turn.text}</p>
+                    <p className="leading-relaxed font-medium">{turn.text}</p>
 
                     {turn.detectedSignals && turn.detectedSignals.length > 0 && (
                       <div className="flex gap-1.5 pt-1 flex-wrap">
                         {turn.detectedSignals.map((sig, idx) => (
                           <span
                             key={idx}
-                            className="px-1.5 py-0.2 rounded text-[10px] bg-slate-950 text-blue-300 border border-blue-500/20"
+                            className="px-2 py-0.5 rounded text-[10px] bg-white text-[#2563EB] border border-[#2563EB]/20 font-semibold shadow-sm"
                           >
                             Signal: {sig}
                           </span>
@@ -563,58 +585,58 @@ export default function CallsPage() {
                 ))}
 
                 {callStatus === 'DIALING' && (
-                  <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-800 text-xs text-slate-400 flex items-center gap-2">
-                    <PhoneCall className="w-4 h-4 text-blue-400 animate-bounce" />
+                  <div className="p-4 rounded-md bg-[#EFF6FF] border border-[#2563EB]/30 text-xs text-[#2563EB] flex items-center gap-2 font-medium">
+                    <PhoneCall className="w-4 h-4 text-[#2563EB] animate-bounce" />
                     <span>Connecting autonomous voice session to {activeLead?.name || 'John Smith'} (CTO)...</span>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* RIGHT: Live Signal Detection Engine */}
-            <div className="lg:col-span-5 space-y-3" data-testid="live-signals">
-              <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
-                <span className="uppercase font-semibold text-slate-300 flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5 text-blue-400" />
-                  Live Signal Detection
+            {/* RIGHT (Col 4): Selective Glassmorphism Live Intelligence Panel */}
+            <div className="lg:col-span-4 space-y-3 glass-panel p-4 rounded-md" data-testid="live-signals">
+              <div className="flex items-center justify-between text-xs border-b border-[#DCE5EF] pb-2">
+                <span className="uppercase font-bold text-[#10233F] flex items-center gap-1.5">
+                  <Flame className="w-3.5 h-3.5 text-[#0F9D9A]" />
+                  Live AI Intelligence Panel
                 </span>
-                <span className="text-[11px] font-semibold text-blue-400">Active Extraction</span>
+                <span className="text-[11px] font-bold text-[#0F9D9A]">Active Extraction</span>
               </div>
 
               <div className="space-y-2.5 text-xs">
                 {/* Intent & Interest Gauges */}
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">INTENT SCORE</span>
-                    <span className="text-lg font-bold text-blue-400">{liveSignals.intent}/100</span>
+                  <div className="p-2.5 rounded-md bg-white border border-[#DCE5EF]">
+                    <span className="text-[#64748B] text-[10px] uppercase font-bold block">INTENT SCORE</span>
+                    <span className="text-xl font-extrabold text-[#0F9D9A]">{liveSignals.intent}/100</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                    <span className="text-slate-400 text-[10px] uppercase font-semibold block">INTEREST LEVEL</span>
-                    <span className="text-lg font-bold text-emerald-400">{liveSignals.interest}</span>
+                  <div className="p-2.5 rounded-md bg-white border border-[#DCE5EF]">
+                    <span className="text-[#64748B] text-[10px] uppercase font-bold block">INTEREST LEVEL</span>
+                    <span className="text-xl font-extrabold text-[#16A34A]">{liveSignals.interest}</span>
                   </div>
                 </div>
 
-                {/* Detected Signals */}
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2 text-[11px]">
-                  <div className="flex justify-between border-b border-slate-800/80 pb-1">
-                    <span className="text-slate-400">Buying Stage:</span>
-                    <span className="text-slate-200 font-medium">{liveSignals.buyingStage}</span>
+                {/* Live Extracted Signals */}
+                <div className="p-3 rounded-md bg-white border border-[#DCE5EF] space-y-2 text-[11px]">
+                  <div className="flex justify-between border-b border-[#DCE5EF] pb-1">
+                    <span className="text-[#64748B]">Buying Stage:</span>
+                    <span className="text-[#10233F] font-bold">{liveSignals.buyingStage}</span>
                   </div>
-                  <div className="flex justify-between border-b border-slate-800/80 pb-1">
-                    <span className="text-slate-400">Timeline:</span>
-                    <span className="text-slate-200 font-medium">{liveSignals.timeline}</span>
+                  <div className="flex justify-between border-b border-[#DCE5EF] pb-1">
+                    <span className="text-[#64748B]">Timeline:</span>
+                    <span className="text-[#10233F] font-bold">{liveSignals.timeline}</span>
                   </div>
-                  <div className="flex justify-between border-b border-slate-800/80 pb-1">
-                    <span className="text-slate-400">Core Pain Point:</span>
-                    <span className="text-rose-300 font-medium">{liveSignals.painPoint}</span>
+                  <div className="flex justify-between border-b border-[#DCE5EF] pb-1">
+                    <span className="text-[#64748B]">Core Pain Point:</span>
+                    <span className="text-[#DC2626] font-bold">{liveSignals.painPoint}</span>
                   </div>
-                  <div className="flex justify-between border-b border-slate-800/80 pb-1">
-                    <span className="text-slate-400">Detected Objection:</span>
-                    <span className="text-amber-300 font-medium">{liveSignals.objection}</span>
+                  <div className="flex justify-between border-b border-[#DCE5EF] pb-1">
+                    <span className="text-[#64748B]">Detected Objection:</span>
+                    <span className="text-[#D97706] font-bold">{liveSignals.objection}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Decision Maker:</span>
-                    <span className="text-blue-300 font-medium">{liveSignals.decisionMaker}</span>
+                    <span className="text-[#64748B]">Decision Maker:</span>
+                    <span className="text-[#2563EB] font-bold">{liveSignals.decisionMaker}</span>
                   </div>
                 </div>
               </div>
@@ -623,13 +645,13 @@ export default function CallsPage() {
 
           {/* POST-CALL CONVERSATION INTELLIGENCE & NEXT BEST ACTION */}
           {callStatus === 'COMPLETED' && postCallAnalysis && (
-            <div className="border-t border-slate-800 pt-5 space-y-4 animate-in fade-in duration-300">
+            <div className="border-t border-[#DCE5EF] pt-5 space-y-4 animate-in fade-in duration-300">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-wide flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
+                <h3 className="text-xs font-bold text-[#2563EB] uppercase tracking-wide flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#2563EB]" />
                   Post-Call Conversation Intelligence & Next Action
                 </h3>
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/40">
+                <span className="px-2.5 py-0.5 rounded text-xs font-bold bg-[#FEF2F2] text-[#DC2626] border border-[#DC2626]/30">
                   HOT QUALIFIED (92%)
                 </span>
               </div>
@@ -637,21 +659,21 @@ export default function CallsPage() {
               {/* Call Summary & Strategy */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-7 space-y-3">
-                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1">
-                    <span className="text-slate-400 font-semibold uppercase text-[10px] block">
+                  <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs space-y-1">
+                    <span className="text-[#64748B] font-bold uppercase text-[10px] block">
                       Call Executive Summary
                     </span>
-                    <p className="text-slate-200 leading-relaxed">{postCallAnalysis.summary}</p>
+                    <p className="text-[#10233F] leading-relaxed font-medium">{postCallAnalysis.summary}</p>
                   </div>
 
-                  <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-xs space-y-1">
-                    <span className="text-slate-400 font-semibold uppercase text-[10px] block">
+                  <div className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-xs space-y-1">
+                    <span className="text-[#64748B] font-bold uppercase text-[10px] block">
                       Confirmed Pain Points & Objections
                     </span>
-                    <ul className="space-y-1 text-slate-300">
+                    <ul className="space-y-1 text-[#10233F] font-medium">
                       {postCallAnalysis.painPoints?.map((p: string, idx: number) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-rose-400 font-bold">&bull;</span>
+                          <span className="text-[#DC2626] font-bold">&bull;</span>
                           <span>{p}</span>
                         </li>
                       ))}
@@ -661,15 +683,15 @@ export default function CallsPage() {
 
                 <div className="lg:col-span-5 space-y-3">
                   {/* NEXT BEST ACTION CARD */}
-                  <div className="p-4 rounded-lg bg-slate-900/90 border border-blue-500/30 space-y-3">
+                  <div className="p-4 rounded-md bg-white border border-[#2563EB]/40 space-y-3 shadow-sm ring-1 ring-[#2563EB]/20">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-blue-300 uppercase">NEXT BEST ACTION</span>
-                      <span className="px-1.5 py-0.2 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold">
+                      <span className="font-bold text-[#2563EB] uppercase">NEXT BEST ACTION</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] bg-[#EFF6FF] text-[#2563EB] font-bold">
                         HIGH PRIORITY
                       </span>
                     </div>
 
-                    <p className="text-sm font-semibold text-slate-100">
+                    <p className="text-sm font-bold text-[#10233F]">
                       {postCallAnalysis.nextBestAction || 'Schedule technical scoping call for Thursday 2 PM, send calendar invite, attach SharePoint migration case study'}
                     </p>
 
@@ -679,7 +701,7 @@ export default function CallsPage() {
                         onClick={handlePushToCRM}
                         disabled={crmPushing || crmSynced}
                         size="sm"
-                        className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-1.5"
+                        className="h-8 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm"
                         data-testid="push-crm-btn"
                       >
                         <Database className="w-3.5 h-3.5" />
@@ -690,7 +712,7 @@ export default function CallsPage() {
                         onClick={() => setShowCallbackModal(true)}
                         variant="outline"
                         size="sm"
-                        className="h-8 border-slate-800 bg-slate-900 text-slate-300 text-xs flex items-center gap-1.5"
+                        className="h-8 border-[#DCE5EF] bg-white text-[#10233F] text-xs flex items-center gap-1.5 font-medium"
                         data-testid="schedule-callback-btn"
                       >
                         <Calendar className="w-3.5 h-3.5" />
@@ -707,43 +729,43 @@ export default function CallsPage() {
 
       {/* SCHEDULE CALLBACK MODAL */}
       {showCallbackModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-          <Card className="p-5 bg-slate-900 border border-slate-800 max-w-md w-full space-y-4">
-            <h3 className="text-sm font-bold text-slate-100 uppercase">Schedule Follow-Up Callback</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#10233F]/70 backdrop-blur-sm p-4">
+          <Card className="p-5 bg-white border border-[#DCE5EF] max-w-md w-full space-y-4 rounded-md shadow-2xl">
+            <h3 className="text-sm font-bold text-[#10233F] uppercase">Schedule Follow-Up Callback</h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-slate-400 block mb-1">Target Prospect</label>
+                <label className="text-[#64748B] block mb-1 font-semibold">Target Prospect</label>
                 <input
                   type="text"
                   disabled
                   value={`${activeLead?.name || 'John Smith'} (${activeLead?.company?.name || 'TechNova Solutions'})`}
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-[#F7F9FC] border border-[#DCE5EF] p-2 rounded text-[#10233F] font-semibold"
                 />
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-slate-400 block mb-1">Date</label>
+                  <label className="text-[#64748B] block mb-1 font-semibold">Date</label>
                   <input
                     type="date"
                     defaultValue="2026-09-02"
-                    className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                    className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] font-semibold"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">Time</label>
+                  <label className="text-[#64748B] block mb-1 font-semibold">Time</label>
                   <input
                     type="text"
                     defaultValue="14:00 EST"
-                    className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                    className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] font-semibold"
                   />
                 </div>
               </div>
               <div>
-                <label className="text-slate-400 block mb-1">Reason</label>
+                <label className="text-[#64748B] block mb-1 font-semibold">Reason</label>
                 <input
                   type="text"
                   defaultValue="Technical architecture discovery follow-up"
-                  className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
+                  className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] font-semibold"
                 />
               </div>
             </div>
@@ -753,7 +775,7 @@ export default function CallsPage() {
                 onClick={() => setShowCallbackModal(false)}
                 variant="outline"
                 size="sm"
-                className="border-slate-800 bg-slate-950 text-slate-400 text-xs"
+                className="border-[#DCE5EF] bg-white text-[#64748B] text-xs font-medium"
               >
                 Cancel
               </Button>
@@ -776,7 +798,7 @@ export default function CallsPage() {
                   fetchCallsData();
                 }}
                 size="sm"
-                className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs"
+                className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs"
               >
                 Confirm Callback
               </Button>
@@ -794,32 +816,32 @@ export default function CallsPage() {
         <div className="space-y-6">
           {/* Upcoming Scheduled Callbacks */}
           {callbacks.length > 0 && (
-            <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+            <Card className="p-5 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
+              <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2.5">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-blue-400" />
-                  <h3 className="text-xs font-semibold text-slate-200 uppercase">
+                  <Calendar className="w-4 h-4 text-[#2563EB]" />
+                  <h3 className="text-xs font-bold text-[#10233F] uppercase">
                     Upcoming Scheduled Callbacks ({callbacks.length})
                   </h3>
                 </div>
-                <span className="text-[11px] text-slate-400">Autonomous Queue</span>
+                <span className="text-[11px] text-[#64748B] font-medium">Autonomous Queue</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {callbacks.map((cb) => (
                   <div
                     key={cb.id}
-                    className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs"
+                    className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] flex items-center justify-between text-xs"
                   >
                     <div>
-                      <span className="font-semibold text-slate-200 block">{cb.companyName}</span>
-                      <span className="text-slate-400 text-[11px]">
+                      <span className="font-bold text-[#10233F] block">{cb.companyName}</span>
+                      <span className="text-[#475569] text-[11px]">
                         {cb.leadName} &bull; {cb.reason}
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-blue-400 font-semibold block">{cb.scheduledDate}</span>
-                      <span className="text-slate-500 text-[10px]">{cb.scheduledTime}</span>
+                      <span className="text-[#2563EB] font-bold block">{cb.scheduledDate}</span>
+                      <span className="text-[#64748B] text-[10px]">{cb.scheduledTime}</span>
                     </div>
                   </div>
                 ))}
@@ -829,7 +851,7 @@ export default function CallsPage() {
 
           {/* Completed Call History List */}
           <div className="space-y-3.5">
-            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+            <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wide">
               Completed Call Sessions & Transcripts ({calls.length})
             </h3>
 
@@ -841,30 +863,30 @@ export default function CallsPage() {
                 return (
                   <Card
                     key={call.id}
-                    className="p-4 bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className="p-4.5 bg-white border-[#DCE5EF] hover:border-[#2563EB]/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-md shadow-sm"
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="font-semibold text-sm text-slate-100">
+                        <span className="font-bold text-base text-[#10233F]">
                           {companyName}
                         </span>
                         <StatusBadge status={call.status} type="status" />
-                        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                        <span className="px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30">
                           {call.sentiment || 'POSITIVE'} SENTIMENT
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[11px] bg-slate-950 text-slate-400 border border-slate-800">
+                        <span className="px-2.5 py-0.5 rounded text-[11px] bg-[#F7F9FC] text-[#64748B] border border-[#DCE5EF] font-medium">
                           {call.durationSeconds}s DURATION
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-300 line-clamp-2">
+                      <p className="text-xs text-[#475569] line-clamp-2 font-medium">
                         {call.summary || 'AI qualification call completed with positive sentiment.'}
                       </p>
 
-                      <div className="flex items-center gap-3 text-xs text-slate-400 pt-1">
-                        <span>Decision Maker: <strong className="text-slate-200">{leadName}</strong></span>
+                      <div className="flex items-center gap-3 text-xs text-[#64748B] pt-1">
+                        <span>Decision Maker: <strong className="text-[#10233F] font-bold">{leadName}</strong></span>
                         <span>&bull;</span>
-                        <span>Next Step: <strong className="text-blue-400">{call.nextStep || 'Technical Meeting'}</strong></span>
+                        <span>Next Step: <strong className="text-[#2563EB] font-bold">{call.nextStep || 'Technical Meeting'}</strong></span>
                       </div>
                     </div>
 
@@ -873,10 +895,10 @@ export default function CallsPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+                          className="h-8 text-xs border-[#DCE5EF] bg-white text-[#10233F] hover:bg-[#F7F9FC] flex items-center gap-1.5 font-semibold"
                         >
                           <span>View Transcript & Analysis</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <ArrowRight className="w-3.5 h-3.5 text-[#2563EB]" />
                         </Button>
                       </Link>
                     </div>
@@ -890,4 +912,3 @@ export default function CallsPage() {
     </div>
   );
 }
-

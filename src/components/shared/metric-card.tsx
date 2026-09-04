@@ -25,42 +25,41 @@ export function MetricCard({
   className,
 }: MetricCardProps) {
   const iconColors = {
-    default: 'text-slate-400 bg-slate-800/80 border-slate-700/60',
-    blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-    teal: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-    emerald: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-    indigo: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
-    amber: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+    default: 'text-[#64748B] bg-[#F7F9FC] border-[#DCE5EF]',
+    blue: 'text-[#2563EB] bg-[#EFF6FF] border-[#2563EB]/20',
+    teal: 'text-[#0F9D9A] bg-[#E8F7F5] border-[#0F9D9A]/20',
+    emerald: 'text-[#16A34A] bg-[#DCFCE7]/60 border-[#16A34A]/20',
+    indigo: 'text-[#2563EB] bg-[#EFF6FF] border-[#2563EB]/20',
+    amber: 'text-[#D97706] bg-[#FEF3C7]/60 border-[#D97706]/20',
   };
 
   return (
     <Card
       className={cn(
-        'p-4 bg-slate-900/90 border-slate-800 hover:border-slate-700 transition-colors shadow-sm relative overflow-hidden',
+        'p-4 bg-white border border-[#DCE5EF] hover:border-[#2563EB]/40 transition-colors shadow-sm relative overflow-hidden rounded-md',
         className
       )}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{title}</p>
-          <h3 className="text-2xl font-bold text-slate-100 mt-1.5 tracking-tight font-sans">{value}</h3>
-          {subtitle && <p className="text-xs text-slate-400 mt-1">{subtitle}</p>}
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B] text-slate-400">{title}</p>
+          <h3 className="text-2xl font-bold text-[#10233F] mt-1 tracking-tight font-sans">{value}</h3>
+          {subtitle && <p className="text-xs text-[#64748B] text-slate-400 mt-1">{subtitle}</p>}
           {change && (
             <p
               className={cn(
                 'text-xs mt-1.5 font-medium flex items-center gap-1',
-                isPositive ? 'text-emerald-400' : 'text-slate-400'
+                isPositive ? 'text-[#16A34A]' : 'text-[#64748B]'
               )}
             >
               <span>{change}</span>
             </p>
           )}
         </div>
-        <div className={cn('p-2 rounded-lg border', iconColors[variant])}>
+        <div className={cn('p-2 rounded-md border flex-shrink-0', iconColors[variant])}>
           <Icon className="w-4 h-4" />
         </div>
       </div>
     </Card>
   );
 }
-

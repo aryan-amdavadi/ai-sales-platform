@@ -14,7 +14,6 @@ import {
   TrendingUp,
   ExternalLink,
   Sparkles,
-  Zap,
   Clock,
   CheckCircle2,
 } from 'lucide-react';
@@ -54,10 +53,10 @@ export default function DashboardPage() {
     return (
       <div className="space-y-6">
         <div className="flex flex-col gap-1">
-          <h1 className="text-xl font-bold tracking-tight text-slate-100">
-            SALES INTELLIGENCE COMMAND
+          <h1 className="text-xl font-bold tracking-tight text-[#10233F]">
+            AI SALES OVERVIEW
           </h1>
-          <p className="text-xs text-slate-400">Loading autonomous buying intent signals...</p>
+          <p className="text-xs text-[#64748B]">Loading autonomous buying intent signals...</p>
         </div>
         <TableLoadingSkeleton rows={5} />
       </div>
@@ -67,8 +66,8 @@ export default function DashboardPage() {
   if (error || !data) {
     return (
       <div className="space-y-6">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100">
-          SALES INTELLIGENCE COMMAND
+        <h1 className="text-xl font-bold tracking-tight text-[#10233F]">
+          AI SALES OVERVIEW
         </h1>
         <ErrorState message={error || 'No data returned'} onRetry={fetchMetrics} />
       </div>
@@ -84,245 +83,244 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="dashboard">
+    <div className="space-y-6 pb-12 max-w-[1536px] mx-auto" data-testid="dashboard">
       <div data-testid="dashboard-page" className="contents">
-      {/* Header & Tagline */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-xl font-bold tracking-tight text-slate-100">
-              SALES INTELLIGENCE COMMAND
-            </h1>
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              Live Telemetry
-            </span>
-          </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Prioritize the opportunities most likely to become real conversations.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          <Link href="/discover">
-            <Button variant="outline" size="sm" className="text-xs border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-200">
-              Run Public Scan
-            </Button>
-          </Link>
-          <Link href="/opportunities">
-            <Button size="sm" className="text-xs bg-blue-600 hover:bg-blue-500 text-white font-medium flex items-center gap-1.5 shadow-sm">
-              <span>View All Opportunities</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Key Metrics Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3" data-testid="metrics">
-        <MetricCard
-          title="Total Opps"
-          value={data.totalOpportunities}
-          subtitle="Public Signals"
-          icon={Target}
-          variant="default"
-        />
-        <MetricCard
-          title="High Intent"
-          value={data.highIntentCount}
-          subtitle="Intent >= 80"
-          icon={Flame}
-          variant="blue"
-        />
-        <MetricCard
-          title="Ready to Contact"
-          value={data.readyToContactCount}
-          subtitle="Pre-Qualified"
-          icon={UserCheck}
-          variant="indigo"
-        />
-        <MetricCard
-          title="AI Voice Calls"
-          value={data.aiCallsCount}
-          subtitle="Autonomous Voice"
-          icon={PhoneCall}
-          variant="default"
-        />
-        <MetricCard
-          title="Interested"
-          value={data.interestedCount}
-          subtitle="Signals Validated"
-          icon={HeartHandshake}
-          variant="emerald"
-        />
-        <MetricCard
-          title="Meetings"
-          value={data.meetingsCount}
-          subtitle="Discovery Booked"
-          icon={CalendarCheck}
-          variant="amber"
-        />
-        <MetricCard
-          title="Pipeline Value"
-          value={formatCurrency(data.totalPipelineValue)}
-          subtitle="Identified ARR"
-          icon={DollarSign}
-          variant="blue"
-          className="col-span-2 sm:col-span-1 lg:col-span-1"
-        />
-      </div>
-
-      {/* Priority Queue (Dominant) + Funnel Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* AI Priority Queue */}
-        <div className="lg:col-span-7 space-y-3.5" data-testid="priority-queue">
-          <div data-testid="hero-queue" className="hidden" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                <Sparkles className="w-4 h-4" />
-              </div>
-              <h2 className="text-sm font-bold tracking-tight text-slate-100 uppercase">
-                AI PRIORITY QUEUE
-              </h2>
+        {/* LEVEL 1: Header & Tagline */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F]">
+                AI SALES OVERVIEW
+              </h1>
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0F9D9A] animate-pulse-subtle" />
+                Live Intelligence Telemetry · SALES INTELLIGENCE COMMAND
+              </span>
             </div>
-            <span className="text-xs text-slate-400 font-medium">Ranked by Buying Intent</span>
+            <p className="text-xs text-[#64748B] mt-1">
+              Prioritize the opportunities most likely to become real conversations.
+            </p>
           </div>
 
-          <div className="space-y-2.5">
-            {data.priorityQueue.map((lead) => {
-              const isHero = lead.companyName === 'TechNova Solutions' || lead.companyName === 'ABC Technologies';
-              return (
-                <div
-                  key={lead.id}
-                  className={`p-4 rounded-lg border transition-all ${
-                    isHero
-                      ? 'bg-slate-900/90 border-blue-500/40 shadow-sm ring-1 ring-blue-500/20'
-                      : 'bg-slate-900/60 border-slate-800/90 hover:border-slate-700'
-                  }`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="space-y-1.5 flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Link
-                          href={`/opportunities/${lead.id}`}
-                          className="text-sm font-semibold text-slate-100 hover:text-blue-400 transition-colors flex items-center gap-1.5 group"
-                        >
-                          <span>{lead.companyName}</span>
-                          <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400" />
-                        </Link>
-                        {isHero && (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">
-                            HERO TARGET
-                          </span>
-                        )}
-                        <StatusBadge status={lead.urgency} type="urgency" />
-                        <StatusBadge status={lead.primarySource} type="source" />
-                      </div>
+          <div className="flex items-center gap-2.5">
+            <Link href="/discover">
+              <Button variant="outline" size="sm" className="text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] font-medium">
+                Run Public Scan
+              </Button>
+            </Link>
+            <Link href="/opportunities">
+              <Button size="sm" className="text-xs bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold flex items-center gap-1.5 shadow-sm">
+                <span>View All Opportunities</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
 
-                      <p className="text-xs text-slate-300">
-                        <span className="text-slate-200 font-medium">{lead.contactName}</span> ({lead.contactTitle}) —{' '}
-                        <span className="text-slate-400">{lead.topRequirement}</span>
-                      </p>
+        {/* Key Metrics Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3" data-testid="metrics">
+          <MetricCard
+            title="Total Opps"
+            value={data.totalOpportunities}
+            subtitle="Public Signals"
+            icon={Target}
+            variant="default"
+          />
+          <MetricCard
+            title="High Intent"
+            value={data.highIntentCount}
+            subtitle="Intent >= 80"
+            icon={Flame}
+            variant="teal"
+          />
+          <MetricCard
+            title="Ready to Contact"
+            value={data.readyToContactCount}
+            subtitle="Pre-Qualified"
+            icon={UserCheck}
+            variant="blue"
+          />
+          <MetricCard
+            title="AI Voice Calls"
+            value={data.aiCallsCount}
+            subtitle="Autonomous Voice"
+            icon={PhoneCall}
+            variant="default"
+          />
+          <MetricCard
+            title="Interested"
+            value={data.interestedCount}
+            subtitle="Signals Validated"
+            icon={HeartHandshake}
+            variant="emerald"
+          />
+          <MetricCard
+            title="Meetings"
+            value={data.meetingsCount}
+            subtitle="Discovery Booked"
+            icon={CalendarCheck}
+            variant="amber"
+          />
+          <MetricCard
+            title="Pipeline Value"
+            value={formatCurrency(data.totalPipelineValue)}
+            subtitle="Identified ARR"
+            icon={DollarSign}
+            variant="blue"
+            className="col-span-2 sm:col-span-1 lg:col-span-1"
+          />
+        </div>
 
-                      {isHero && (
-                        <div className="pt-1 flex items-center gap-3 text-[11px] text-slate-400">
-                          <span className="flex items-center gap-1 text-emerald-400">
-                            <CheckCircle2 className="w-3 h-3" /> Active Vendor Search
-                          </span>
-                          <span className="flex items-center gap-1 text-blue-400">
-                            <Clock className="w-3 h-3" /> RFP posted 3h ago
-                          </span>
+        {/* LEVEL 2 & 3: Priority Queue (Hero) + Opportunity Funnel */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* AI Priority Queue */}
+          <div className="lg:col-span-7 space-y-3.5" data-testid="priority-queue">
+            <div data-testid="hero-queue" className="hidden" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-md bg-[#EFF6FF] border border-[#2563EB]/20 text-[#2563EB]">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <h2 className="text-sm font-bold tracking-tight text-[#10233F] uppercase">
+                  AI PRIORITY OPPORTUNITIES
+                </h2>
+              </div>
+              <span className="text-xs text-[#64748B] font-medium">Ranked by Buying Intent Score</span>
+            </div>
+
+            <div className="space-y-3">
+              {data.priorityQueue.map((lead) => {
+                const isHero = lead.companyName === 'TechNova Solutions' || lead.companyName === 'ABC Technologies';
+                return (
+                  <div
+                    key={lead.id}
+                    className={`p-4 rounded-md border transition-all ${
+                      isHero
+                        ? 'bg-white border-[#2563EB]/40 shadow-sm ring-1 ring-[#2563EB]/20'
+                        : 'bg-white border-[#DCE5EF] hover:border-[#2563EB]/30'
+                    }`}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="space-y-1.5 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Link
+                            href={`/opportunities/${lead.id}`}
+                            className="text-base font-bold text-[#10233F] hover:text-[#2563EB] transition-colors flex items-center gap-1.5 group"
+                          >
+                            <span>{lead.companyName}</span>
+                            <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-[#2563EB]" />
+                          </Link>
+                          {isHero && (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#E8F7F5] text-[#0F9D9A] border border-[#0F9D9A]/30">
+                              HERO TARGET
+                            </span>
+                          )}
+                          <StatusBadge status={lead.urgency} type="urgency" />
+                          <StatusBadge status={lead.primarySource} type="source" />
                         </div>
-                      )}
-                    </div>
 
-                    <div className="flex items-center gap-3 sm:self-center flex-wrap">
-                      <div className="text-right">
-                        <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Intent</div>
-                        <div className="text-lg font-bold text-blue-400 font-sans">{lead.intentScore}</div>
+                        <p className="text-xs text-[#475569]">
+                          <span className="text-[#10233F] font-semibold">{lead.contactName}</span> ({lead.contactTitle}) —{' '}
+                          <span className="text-[#475569]">{lead.topRequirement}</span>
+                        </p>
+
+                        {isHero && (
+                          <div className="pt-1 flex items-center gap-3 text-[11px] text-[#64748B]">
+                            <span className="flex items-center gap-1 text-[#16A34A] font-medium">
+                              <CheckCircle2 className="w-3.5 h-3.5" /> Verified RFP Post
+                            </span>
+                            <span className="flex items-center gap-1 text-[#2563EB] font-medium">
+                              <Clock className="w-3.5 h-3.5" /> 30-day timeline target
+                            </span>
+                          </div>
+                        )}
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        {isHero && (
-                          <Link href={`/calls?leadId=${lead.id}&start=true`}>
+                      <div className="flex items-center gap-4 sm:self-center flex-wrap">
+                        <div className="text-right">
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">Intent</div>
+                          <div className="text-xl font-extrabold text-[#0F9D9A] font-sans">{lead.intentScore}</div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {isHero && (
+                            <Link href={`/calls?leadId=${lead.id}&start=true`}>
+                              <Button
+                                size="sm"
+                                className="h-8 text-xs bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold flex items-center gap-1.5 shadow-sm"
+                                data-testid="hero-call-now-btn"
+                              >
+                                <PhoneCall className="w-3.5 h-3.5" />
+                                <span>Call Now</span>
+                              </Button>
+                            </Link>
+                          )}
+                          <Link href={`/opportunities/${lead.id}`}>
                             <Button
                               size="sm"
-                              className="h-8 text-xs bg-blue-600 hover:bg-blue-500 text-white font-medium flex items-center gap-1.5 shadow-sm shadow-blue-600/20"
-                              data-testid="hero-call-now-btn"
+                              variant="outline"
+                              className="h-8 text-xs border-[#DCE5EF] bg-white hover:bg-[#F7F9FC] text-[#10233F] font-medium"
+                              data-testid={isHero ? 'hero-analyze-btn' : undefined}
                             >
-                              <PhoneCall className="w-3 h-3" />
-                              <span>Call Now</span>
+                              {isHero ? 'Review Opportunity' : 'Analyze'}
                             </Button>
                           </Link>
-                        )}
-                        <Link href={`/opportunities/${lead.id}`}>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="h-8 text-xs border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200"
-                            data-testid={isHero ? 'hero-analyze-btn' : undefined}
-                          >
-                            {isHero ? 'Review Opportunity' : 'Analyze'}
-                          </Button>
-                        </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Opportunity Funnel */}
-        <div className="lg:col-span-5 space-y-3.5" data-testid="opportunity-funnel">
-          <div data-testid="funnel-visualization" className="hidden" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300">
-                <TrendingUp className="w-4 h-4" />
-              </div>
-              <h2 className="text-sm font-bold tracking-tight text-slate-100 uppercase">
-                OPPORTUNITY FUNNEL
-              </h2>
+                );
+              })}
             </div>
-            <span className="text-xs text-slate-400 font-medium">Stage Conversion</span>
           </div>
 
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3.5">
-            {data.funnelData.map((stage) => {
-              const maxCount = Math.max(...data.funnelData.map((f) => f.count), 1);
-              const barWidth = Math.max(12, Math.round((stage.count / maxCount) * 100));
+          {/* LEVEL 4: Opportunity Funnel */}
+          <div className="lg:col-span-5 space-y-3.5" data-testid="opportunity-funnel">
+            <div data-testid="funnel-visualization" className="hidden" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] text-[#10233F]">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+                <h2 className="text-sm font-bold tracking-tight text-[#10233F] uppercase">
+                  OPPORTUNITY FUNNEL
+                </h2>
+              </div>
+              <span className="text-xs text-[#64748B] font-medium">Pipeline Conversion</span>
+            </div>
 
-              return (
-                <div key={stage.stage} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-300 font-medium">{stage.stage.replace(/_/g, ' ')}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-slate-400 text-xs">{stage.percentage}%</span>
-                      <span className="font-semibold text-slate-100">{stage.count}</span>
+            <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+              {data.funnelData.map((stage) => {
+                const maxCount = Math.max(...data.funnelData.map((f) => f.count), 1);
+                const barWidth = Math.max(12, Math.round((stage.count / maxCount) * 100));
+
+                return (
+                  <div key={stage.stage} className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#10233F] font-semibold">{stage.stage.replace(/_/g, ' ')}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#64748B] text-xs">{stage.percentage}%</span>
+                        <span className="font-bold text-[#10233F]">{stage.count}</span>
+                      </div>
+                    </div>
+                    <div className="w-full h-2 rounded-full bg-[#F1F5F9] overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#2563EB] transition-all duration-500"
+                        style={{ width: `${barWidth}%` }}
+                      />
                     </div>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-blue-500 transition-all duration-500"
-                      style={{ width: `${barWidth}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            <div className="pt-2.5 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-              <span>Qualification Precision</span>
-              <span className="text-emerald-400 font-medium">94% High Intent Match</span>
-            </div>
-          </Card>
+              <div className="pt-3 border-t border-[#DCE5EF] flex items-center justify-between text-xs text-[#64748B]">
+                <span>AI Qualification Match Rate</span>
+                <span className="text-[#0F9D9A] font-bold">94% High Intent Match</span>
+              </div>
+            </Card>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
 }
-

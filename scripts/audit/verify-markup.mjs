@@ -9,6 +9,19 @@ console.log('========================================');
 
 const requiredMarkups = [
   {
+    page: 'Navigation Sidebar',
+    file: 'src/components/layout/sidebar.tsx',
+    checks: [
+      { name: 'nav dashboard (data-testid="nav-dashboard")', pattern: /data-testid="nav-dashboard"/ },
+      { name: 'nav discover (data-testid="nav-discover")', pattern: /data-testid="nav-discover"/ },
+      { name: 'nav opportunities (data-testid="nav-opportunities")', pattern: /data-testid="nav-opportunities"/ },
+      { name: 'nav campaigns (data-testid="nav-campaigns")', pattern: /data-testid="nav-campaigns"/ },
+      { name: 'nav ai-calls (data-testid="nav-ai-calls")', pattern: /data-testid="nav-ai-calls"/ },
+      { name: 'nav analytics (data-testid="nav-analytics")', pattern: /data-testid="nav-analytics"/ },
+      { name: 'nav settings (data-testid="nav-settings")', pattern: /data-testid="nav-settings"/ },
+    ],
+  },
+  {
     page: 'Dashboard',
     file: 'src/app/dashboard/page.tsx',
     checks: [

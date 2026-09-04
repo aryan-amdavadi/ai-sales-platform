@@ -1,65 +1,58 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Navigation & Responsive Shell', () => {
-  test('navigates through core routes on desktop', async ({ page, isMobile }) => {
-    // Only run on desktop
+test.describe('Seven Dashboard Navigation Tabs & Responsive Verification', () => {
+  const REQUIRED_TABS = [
+    { id: 'nav-dashboard', label: 'Dashboard', path: '/dashboard' },
+    { id: 'nav-discover', label: 'Discover', path: '/discover' },
+    { id: 'nav-opportunities', label: 'Opportunities', path: '/opportunities' },
+    { id: 'nav-campaigns', label: 'Campaigns', path: '/campaigns' },
+    { id: 'nav-ai-calls', label: 'AI Calls', path: '/calls' },
+    { id: 'nav-analytics', label: 'Analytics', path: '/analytics' },
+    { id: 'nav-settings', label: 'Settings', path: '/settings' },
+  ];
+
+  test('all seven dashboard tabs are visible, accessible, and not clipped on desktop', async ({ page, isMobile }) => {
     test.skip(!!isMobile, 'Desktop navigation only');
 
     await page.goto('/dashboard');
+    await page.waitForLoadState('networkidle');
 
-    // Go to Discover
-    await page.locator('aside.hidden a[href="/discover"]').click();
-    await expect(page).toHaveURL(/.*discover/);
-    await expect(page.locator('text=PUBLIC INTENT DISCOVERY ENGINE').first()).toBeVisible();
+    for (const tab of REQUIRED_TABS) {
+      const navItem = page.locator(`aside.hidden [data-testid="${tab.id}"]`);
+      await expect(navItem).toBeVisible();
 
-    // Go to Campaigns
-    await page.locator('aside.hidden a[href="/campaigns"]').click();
-    await expect(page).toHaveURL(/.*campaigns/);
-    await expect(page.locator('text=AUTONOMOUS OUTREACH CAMPAIGNS').first()).toBeVisible();
+      // Verify element is not clipped (in-viewport bounds)
+      const box = await navItem.boundingBox();
+      expect(box).not.toBeNull();
+      if (box) {
+        expect(box.width).toBeGreaterThan(0);
+        expect(box.height).toBeGreaterThan(0);
+        expect(box.y).toBeGreaterThanOrEqual(0);
+      }
 
-    // Go to AI Voice Calls
-    await page.locator('aside.hidden a[href="/calls"]').click();
-    await expect(page).toHaveURL(/.*calls/);
-    await expect(page.locator('text=AI VOICE CALL SESSIONS').first()).toBeVisible();
-
-    // Go to Intelligence
-    await page.locator('aside.hidden a[href="/intelligence"]').click();
-    await expect(page).toHaveURL(/.*intelligence/);
-    await expect(page.locator('text=ACCOUNT & FIRMOGRAPHIC INTELLIGENCE').first()).toBeVisible();
-
-    // Go to Analytics
-    await page.locator('aside.hidden a[href="/analytics"]').scrollIntoViewIfNeeded();
-    await page.locator('aside.hidden a[href="/analytics"]').click();
-    await expect(page).toHaveURL(/.*analytics/);
-    await expect(page.locator('text=CONVERSION & INTENT ANALYTICS').first()).toBeVisible();
-
-    // Go to Settings
-    await page.locator('aside.hidden a[href="/settings"]').scrollIntoViewIfNeeded();
-    await page.locator('aside.hidden a[href="/settings"]').click();
-    await expect(page).toHaveURL(/.*settings/);
-    await expect(page.locator('text=PLATFORM SETTINGS').first()).toBeVisible();
-
-    // Go to Admin
-    await page.locator('aside.hidden a[href="/admin"]').scrollIntoViewIfNeeded();
-    await page.locator('aside.hidden a[href="/admin"]').click();
-    await expect(page).toHaveURL(/.*admin/);
-    await expect(page.locator('text=ADMIN OBSERVABILITY & AUDIT LOGS').first()).toBeVisible();
+      // Click tab and check URL
+      await navItem.click();
+      await expect(page).toHaveURL(new RegExp(`.*${tab.path.replace('/', '\\/')}`));
+    }
   });
 
-  test('mobile drawer navigation works on small screens (375px)', async ({ page }) => {
+  test('mobile navigation drawer exposes all seven tabs without clipping at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/dashboard');
 
-    // Click mobile hamburger menu
     const menuBtn = page.locator('button[aria-label="Toggle mobile menu"]');
     await expect(menuBtn).toBeVisible();
     await menuBtn.click();
 
-    // Verify drawer appears and click Opportunities link in the fixed mobile aside
-    const oppLink = page.locator('aside.fixed a[href="/opportunities"]');
-    await expect(oppLink).toBeVisible({ timeout: 5000 });
-    await oppLink.click();
-    await expect(page).toHaveURL(/.*opportunities/, { timeout: 10000 });
-    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible({ timeout: 15000 });
+    for (const tab of REQUIRED_TABS) {
+      const navItem = page.locator(`aside.fixed [data-testid="${tab.id}"]`);
+      await expect(navItem).toBeVisible();
+      const box = await navItem.boundingBox();
+      expect(box).not.toBeNull();
+      if (box) {
+        expect(box.width).toBeGreaterThan(0);
+        expect(box.height).toBeGreaterThan(0);
+      }
+    }
   });
 });

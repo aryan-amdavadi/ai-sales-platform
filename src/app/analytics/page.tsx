@@ -37,7 +37,8 @@ import { MetricCard } from '@/components/shared/metric-card';
 import { TableLoadingSkeleton } from '@/components/shared/loading-skeleton';
 import { ErrorState } from '@/components/shared/error-state';
 
-const COLORS = ['#3b82f6', '#0ea5e9', '#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
+// Executive palette: Royal Blue primary, Teal secondary, Slate neutrals
+const ENTERPRISE_CHART_COLORS = ['#2563EB', '#0F9D9A', '#163A5F', '#475569', '#16A34A', '#D97706'];
 
 export default function AnalyticsPage() {
   const [data, setData] = useState<any>(null);
@@ -65,8 +66,8 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+      <div className="space-y-6 max-w-[1536px] mx-auto">
+        <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
           CONVERSION & INTENT ANALYTICS
         </h1>
         <TableLoadingSkeleton rows={6} />
@@ -76,8 +77,8 @@ export default function AnalyticsPage() {
 
   if (error || !data) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+      <div className="space-y-6 max-w-[1536px] mx-auto">
+        <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
           CONVERSION & INTENT ANALYTICS
         </h1>
         <ErrorState message={error || 'No analytics data'} onRetry={fetchAnalytics} />
@@ -86,20 +87,20 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-6 pb-16 max-w-7xl mx-auto" data-testid="analytics-page">
+    <div className="space-y-6 pb-16 max-w-[1536px] mx-auto" data-testid="analytics-page">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
               <BarChart3 className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
                 CONVERSION & INTENT ANALYTICS
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Real-time performance across intent scoring, multi-channel sourcing, ICP campaign conversions, and qualification velocity.
+              <p className="text-xs text-[#64748B] mt-0.5">
+                Real-time executive performance telemetry across intent scoring, multi-channel sourcing, and conversion velocity.
               </p>
             </div>
           </div>
@@ -123,11 +124,11 @@ export default function AnalyticsPage() {
           variant="blue"
         />
         <MetricCard
-          title="High-Intent Opportunities"
+          title="High-Intent Opps"
           value={data.highIntentOpportunities}
           subtitle="Score >= 80 (HOT)"
           icon={Flame}
-          variant="indigo"
+          variant="teal"
         />
         <MetricCard
           title="Qualified Leads"
@@ -162,7 +163,7 @@ export default function AnalyticsPage() {
           value={`${data.averageIntent}/100`}
           subtitle="AI Intent Engine"
           icon={Zap}
-          variant="indigo"
+          variant="teal"
         />
         <MetricCard
           title="Avg Qualification"
@@ -183,54 +184,54 @@ export default function AnalyticsPage() {
       {/* CHARTS ROW 1: Funnel Conversion & Intent Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Opportunity Funnel */}
-        <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+          <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-400" />
-              <h3 className="text-xs font-semibold text-slate-100 uppercase">
+              <TrendingUp className="w-4 h-4 text-[#2563EB]" />
+              <h3 className="text-xs font-bold text-[#10233F] uppercase">
                 1. Opportunity Funnel Conversion
               </h3>
             </div>
-            <span className="text-xs text-slate-400">Total: {data.totalOpportunities} Opps</span>
+            <span className="text-xs text-[#64748B] font-semibold">Total: {data.totalOpportunities} Opps</span>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.funnel} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis type="number" stroke="#64748b" textAnchor="end" fontSize={11} />
-                <YAxis dataKey="stage" type="category" stroke="#94a3b8" fontSize={11} width={85} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis type="number" stroke="#64748B" textAnchor="end" fontSize={11} />
+                <YAxis dataKey="stage" type="category" stroke="#10233F" fontSize={11} width={90} fontWeight={600} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#090d16', borderColor: '#1e293b', color: '#f8fafc', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#DCE5EF', color: '#10233F', fontSize: '12px', borderRadius: '4px' }}
                 />
-                <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="count" fill="#2563EB" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </Card>
 
         {/* Intent Trend & Progression */}
-        <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+          <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-blue-400" />
-              <h3 className="text-xs font-semibold text-slate-100 uppercase">
+              <Target className="w-4 h-4 text-[#0F9D9A]" />
+              <h3 className="text-xs font-bold text-[#10233F] uppercase">
                 2. Intent Score Progression Trend
               </h3>
             </div>
-            <span className="text-xs text-slate-400">Average Intent Curve</span>
+            <span className="text-xs text-[#64748B] font-semibold">Average Intent Curve</span>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.intentTrend} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="time" stroke="#94a3b8" fontSize={11} />
-                <YAxis domain={[50, 100]} stroke="#64748b" fontSize={11} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="time" stroke="#64748B" fontSize={11} />
+                <YAxis domain={[50, 100]} stroke="#64748B" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#090d16', borderColor: '#1e293b', color: '#f8fafc', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#DCE5EF', color: '#10233F', fontSize: '12px', borderRadius: '4px' }}
                 />
-                <Line type="monotone" dataKey="avgIntent" stroke="#0ea5e9" strokeWidth={2.5} dot={{ fill: '#0ea5e9' }} />
+                <Line type="monotone" dataKey="avgIntent" stroke="#0F9D9A" strokeWidth={2.5} dot={{ fill: '#0F9D9A' }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -240,15 +241,15 @@ export default function AnalyticsPage() {
       {/* CHARTS ROW 2: Source Distribution & Industry Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Source Platform Distribution */}
-        <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+          <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
-              <PieIcon className="w-4 h-4 text-blue-400" />
-              <h3 className="text-xs font-semibold text-slate-100 uppercase">
+              <PieIcon className="w-4 h-4 text-[#2563EB]" />
+              <h3 className="text-xs font-bold text-[#10233F] uppercase">
                 3. Public Source Breakdown
               </h3>
             </div>
-            <span className="text-xs text-slate-400">Multi-Channel Ingestion</span>
+            <span className="text-xs text-[#64748B] font-semibold">Multi-Channel Ingestion</span>
           </div>
 
           <div className="h-64 w-full">
@@ -265,40 +266,40 @@ export default function AnalyticsPage() {
                   nameKey="source"
                 >
                   {data.sourceDistribution?.map((entry: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={ENTERPRISE_CHART_COLORS[index % ENTERPRISE_CHART_COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#090d16', borderColor: '#1e293b', color: '#f8fafc', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#DCE5EF', color: '#10233F', fontSize: '12px', borderRadius: '4px' }}
                 />
-                <Legend wrapperStyle={{ fontSize: '11px', color: '#94a3b8' }} />
+                <Legend wrapperStyle={{ fontSize: '11px', color: '#475569' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </Card>
 
         {/* Industry Distribution */}
-        <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+          <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
-              <Layers className="w-4 h-4 text-blue-400" />
-              <h3 className="text-xs font-semibold text-slate-100 uppercase">
+              <Layers className="w-4 h-4 text-[#2563EB]" />
+              <h3 className="text-xs font-bold text-[#10233F] uppercase">
                 4. Opportunities By Industry
               </h3>
             </div>
-            <span className="text-xs text-slate-400">10 Sector Verticals</span>
+            <span className="text-xs text-[#64748B] font-semibold">10 Sector Verticals</span>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.industryDistribution} margin={{ top: 10, right: 20, left: 0, bottom: 40 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="industry" stroke="#94a3b8" fontSize={9} angle={-30} textAnchor="end" interval={0} />
-                <YAxis stroke="#64748b" fontSize={11} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="industry" stroke="#64748B" fontSize={9} angle={-30} textAnchor="end" interval={0} />
+                <YAxis stroke="#64748B" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#090d16', borderColor: '#1e293b', color: '#f8fafc', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#DCE5EF', color: '#10233F', fontSize: '12px', borderRadius: '4px' }}
                 />
-                <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="count" fill="#2563EB" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -306,31 +307,31 @@ export default function AnalyticsPage() {
       </div>
 
       {/* CHARTS ROW 3: Campaign Performance Breakdown */}
-      <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+      <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+        <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
           <div className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-blue-400" />
-            <h3 className="text-xs font-semibold text-slate-100 uppercase">
+            <BarChart3 className="w-4 h-4 text-[#2563EB]" />
+            <h3 className="text-xs font-bold text-[#10233F] uppercase">
               5. Campaign Outreach & Conversion Performance
             </h3>
           </div>
-          <span className="text-xs text-slate-400">{data.campaignPerformance?.length || 0} ICP Campaigns</span>
+          <span className="text-xs text-[#64748B] font-semibold">{data.campaignPerformance?.length || 0} ICP Campaigns</span>
         </div>
 
         <div className="h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.campaignPerformance} margin={{ top: 10, right: 30, left: 0, bottom: 35 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={10} angle={-20} textAnchor="end" interval={0} />
-              <YAxis stroke="#64748b" fontSize={11} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="name" stroke="#64748B" fontSize={10} angle={-20} textAnchor="end" interval={0} />
+              <YAxis stroke="#64748B" fontSize={11} />
               <Tooltip
-                contentStyle={{ backgroundColor: '#090d16', borderColor: '#1e293b', color: '#f8fafc', fontSize: '12px' }}
+                contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#DCE5EF', color: '#10233F', fontSize: '12px', borderRadius: '4px' }}
               />
-              <Legend wrapperStyle={{ fontSize: '11px', color: '#94a3b8', paddingTop: '10px' }} />
-              <Bar dataKey="leads" name="Total Leads" fill="#64748b" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="contacted" name="Contacted" fill="#6366f1" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="interested" name="Interested" fill="#3b82f6" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="meetings" name="Meetings" fill="#10b981" radius={[3, 3, 0, 0]} />
+              <Legend wrapperStyle={{ fontSize: '11px', color: '#475569', paddingTop: '10px' }} />
+              <Bar dataKey="leads" name="Total Leads" fill="#64748B" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="contacted" name="Contacted" fill="#163A5F" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="interested" name="Interested" fill="#2563EB" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="meetings" name="Meetings" fill="#0F9D9A" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -338,4 +339,3 @@ export default function AnalyticsPage() {
     </div>
   );
 }
-

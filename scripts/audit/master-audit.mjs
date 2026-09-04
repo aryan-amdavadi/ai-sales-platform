@@ -23,7 +23,7 @@ const auditResults = {
 function runStep(name, cmd) {
   process.stdout.write(`• Running ${name}... `);
   try {
-    execSync(cmd, { stdio: 'pipe', env: { ...process.env, CI: '1' } });
+    execSync(cmd, { stdio: 'pipe', env: process.env });
     console.log('✓ PASS');
     return true;
   } catch (error) {

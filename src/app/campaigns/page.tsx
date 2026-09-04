@@ -97,8 +97,8 @@ export default function CampaignsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+      <div className="space-y-6 max-w-[1536px] mx-auto">
+        <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
           AUTONOMOUS OUTREACH CAMPAIGNS
         </h1>
         <TableLoadingSkeleton rows={6} />
@@ -108,8 +108,8 @@ export default function CampaignsPage() {
 
   if (error) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+      <div className="space-y-6 max-w-[1536px] mx-auto">
+        <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
           AUTONOMOUS OUTREACH CAMPAIGNS
         </h1>
         <ErrorState message={error} onRetry={fetchCampaigns} />
@@ -118,32 +118,32 @@ export default function CampaignsPage() {
   }
 
   return (
-    <div className="space-y-6 pb-16 max-w-7xl mx-auto" data-testid="campaigns-page">
+    <div className="space-y-6 pb-16 max-w-[1536px] mx-auto" data-testid="campaigns-page">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="p-3.5 rounded-lg bg-slate-900 border border-blue-500/50 text-blue-200 text-xs flex items-center justify-between shadow-xl animate-in fade-in duration-200">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-blue-400" />
+        <div className="p-3.5 rounded-md bg-white border border-[#2563EB]/40 text-[#10233F] text-xs flex items-center justify-between shadow-md animate-in fade-in duration-200">
+          <div className="flex items-center gap-2 font-medium">
+            <Sparkles className="w-4 h-4 text-[#2563EB]" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-200 text-sm font-bold">
+          <button onClick={() => setToastMessage(null)} className="text-[#64748B] hover:text-[#10233F] text-sm font-bold">
             &times;
           </button>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#DCE5EF] pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className="p-2 rounded-md bg-[#EFF6FF] text-[#2563EB] border border-[#2563EB]/20">
               <Megaphone className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
+              <h1 className="text-2xl font-bold tracking-tight text-[#10233F] uppercase">
                 AUTONOMOUS OUTREACH CAMPAIGNS
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-[#64748B] mt-0.5">
                 Orchestrate AI voice qualification, minimum intent gating, and multi-channel follow-ups mapped to public buying requirements.
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function CampaignsPage() {
         <Button
           onClick={() => setShowCreateModal(true)}
           size="sm"
-          className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 shadow-sm h-8"
+          className="text-xs font-semibold bg-[#2563EB] hover:bg-[#1d4ed8] text-white flex items-center gap-1.5 shadow-sm h-8"
           data-testid="create-campaign-btn"
         >
           <Plus className="w-3.5 h-3.5" />
@@ -162,9 +162,9 @@ export default function CampaignsPage() {
       </div>
 
       {/* Campaigns Table */}
-      <Card className="bg-slate-900/60 border-slate-800 overflow-x-auto">
+      <Card className="bg-white border-[#DCE5EF] overflow-x-auto rounded-md shadow-sm">
         <table className="w-full text-left text-xs" data-testid="campaigns-table">
-          <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+          <thead className="bg-[#F7F9FC] border-b border-[#DCE5EF] text-[11px] uppercase tracking-wider text-[#64748B] font-bold">
             <tr>
               <th className="py-3.5 px-4">Campaign Name & Goal</th>
               <th className="py-3.5 px-4">Target ICP & Filters</th>
@@ -176,39 +176,39 @@ export default function CampaignsPage() {
               <th className="py-3.5 px-4 text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-[#DCE5EF]">
             {campaigns.map((camp) => (
-              <tr key={camp.id} className="hover:bg-slate-800/40 transition-colors group">
+              <tr key={camp.id} className="hover:bg-[#F7F9FC] transition-colors group">
                 <td className="py-3.5 px-4">
                   <div className="space-y-0.5">
                     <Link
                       href={`/campaigns/${camp.id}`}
-                      className="font-semibold text-slate-100 group-hover:text-blue-400 transition-colors text-sm"
+                      className="font-bold text-[#10233F] group-hover:text-[#2563EB] transition-colors text-sm"
                     >
                       {camp.name}
                     </Link>
-                    <p className="text-[11px] text-slate-400 line-clamp-1">{camp.goal}</p>
+                    <p className="text-[11px] text-[#64748B] line-clamp-1 font-medium">{camp.goal}</p>
                   </div>
                 </td>
 
                 <td className="py-3.5 px-4 max-w-[220px]">
-                  <span className="text-slate-300 text-xs line-clamp-1">{camp.targetAudience}</span>
-                  <span className="text-[10px] text-blue-400 block mt-0.5 font-medium">{camp.channels || 'Voice AI, Email'}</span>
+                  <span className="text-[#10233F] text-xs line-clamp-1 font-medium">{camp.targetAudience}</span>
+                  <span className="text-[10px] text-[#2563EB] block mt-0.5 font-bold">{camp.channels || 'Voice AI, Email'}</span>
                 </td>
 
-                <td className="py-3.5 px-4 text-center font-semibold text-slate-200">
+                <td className="py-3.5 px-4 text-center font-bold text-[#10233F]">
                   {camp.totalLeads}
                 </td>
 
-                <td className="py-3.5 px-4 text-center text-indigo-400 font-medium">
+                <td className="py-3.5 px-4 text-center text-[#163A5F] font-bold">
                   {camp.contacted}
                 </td>
 
-                <td className="py-3.5 px-4 text-center text-emerald-400 font-semibold">
+                <td className="py-3.5 px-4 text-center text-[#16A34A] font-bold">
                   {camp.interested}
                 </td>
 
-                <td className="py-3.5 px-4 text-center text-blue-400 font-semibold">
+                <td className="py-3.5 px-4 text-center text-[#2563EB] font-bold">
                   {camp.meetings}
                 </td>
 
@@ -221,10 +221,10 @@ export default function CampaignsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-7 text-xs text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
+                      className="h-7 text-xs text-[#2563EB] hover:text-[#1d4ed8] hover:bg-[#EFF6FF] font-semibold"
                     >
                       <span>Manage</span>
-                      <ArrowRight className="w-3 h-3 ml-1" />
+                      <ArrowRight className="w-3.5 h-3.5 ml-1" />
                     </Button>
                   </Link>
                 </td>
@@ -236,49 +236,49 @@ export default function CampaignsPage() {
 
       {/* CREATE CAMPAIGN MODAL */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-          <Card className="p-6 bg-slate-900 border border-slate-800 max-w-lg w-full space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#10233F]/70 backdrop-blur-sm p-4">
+          <Card className="p-6 bg-white border border-[#DCE5EF] max-w-lg w-full space-y-4 rounded-md shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
               <div className="flex items-center gap-2">
-                <Megaphone className="w-4 h-4 text-blue-400" />
-                <h3 className="text-sm font-bold text-slate-100 uppercase">Create ICP Outreach Campaign</h3>
+                <Megaphone className="w-4 h-4 text-[#2563EB]" />
+                <h3 className="text-sm font-bold text-[#10233F] uppercase">Create ICP Outreach Campaign</h3>
               </div>
-              <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-slate-200">
+              <button onClick={() => setShowCreateModal(false)} className="text-[#64748B] hover:text-[#10233F] font-bold">
                 &times;
               </button>
             </div>
 
             <form onSubmit={handleCreateCampaign} className="space-y-3.5 text-xs">
               <div>
-                <label className="text-slate-300 font-semibold block mb-1">Campaign Name</label>
+                <label className="text-[#10233F] font-bold block mb-1">Campaign Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Healthcare EHR Cloud Migration Q4"
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                 />
               </div>
 
               <div>
-                <label className="text-slate-300 font-semibold block mb-1">Target ICP Persona</label>
+                <label className="text-[#10233F] font-bold block mb-1">Target ICP Persona</label>
                 <input
                   type="text"
                   required
                   value={formAudience}
                   onChange={(e) => setFormAudience(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-semibold block mb-1">Minimum Intent Gate</label>
+                  <label className="text-[#10233F] font-bold block mb-1">Minimum Intent Gate</label>
                   <select
                     value={formMinIntent}
                     onChange={(e) => setFormMinIntent(Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                   >
                     <option value={60}>60+ (Moderate Intent)</option>
                     <option value={75}>75+ (High Intent)</option>
@@ -287,11 +287,11 @@ export default function CampaignsPage() {
                 </div>
 
                 <div>
-                  <label className="text-slate-300 font-semibold block mb-1">Target Language</label>
+                  <label className="text-[#10233F] font-bold block mb-1">Target Language</label>
                   <select
                     value={formLanguage}
                     onChange={(e) => setFormLanguage(e.target.value as any)}
-                    className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                   >
                     <option value="en-US">English (US)</option>
                     <option value="hi-IN">Hindi (हिंदी)</option>
@@ -302,11 +302,11 @@ export default function CampaignsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-300 font-semibold block mb-1">Target Industry</label>
+                  <label className="text-[#10233F] font-bold block mb-1">Target Industry</label>
                   <select
                     value={formIndustry}
                     onChange={(e) => setFormIndustry(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                   >
                     <option value="Enterprise Software & IT">Enterprise Software & IT</option>
                     <option value="Healthcare & Life Sciences">Healthcare & Life Sciences</option>
@@ -317,34 +317,34 @@ export default function CampaignsPage() {
                 </div>
 
                 <div>
-                  <label className="text-slate-300 font-semibold block mb-1">Calling Window</label>
+                  <label className="text-[#10233F] font-bold block mb-1">Calling Window</label>
                   <input
                     type="text"
                     value={formCallWindow}
                     onChange={(e) => setFormCallWindow(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-slate-300 font-semibold block mb-1">Campaign Goal / Milestone</label>
+                <label className="text-[#10233F] font-bold block mb-1">Campaign Goal / Milestone</label>
                 <input
                   type="text"
                   placeholder="e.g. Schedule 10 technical discovery sessions for $100k+ ARR migration opportunities."
                   value={formGoal}
                   onChange={(e) => setFormGoal(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-slate-200 focus:outline-none focus:border-blue-500 text-xs"
+                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+              <div className="flex justify-end gap-2 pt-2 border-t border-[#DCE5EF]">
                 <Button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
                   variant="outline"
                   size="sm"
-                  className="border-slate-800 bg-slate-950 text-slate-400 text-xs"
+                  className="border-[#DCE5EF] bg-white text-[#64748B] text-xs font-medium"
                 >
                   Cancel
                 </Button>
@@ -352,7 +352,7 @@ export default function CampaignsPage() {
                   type="submit"
                   disabled={creating}
                   size="sm"
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs"
+                  className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs"
                 >
                   {creating ? 'Enrolling Leads...' : 'Launch Campaign'}
                 </Button>
@@ -364,4 +364,3 @@ export default function CampaignsPage() {
     </div>
   );
 }
-
