@@ -102,11 +102,11 @@ Enterprise exploration workspace featuring:
 
 ---
 
-## 9. Hero Opportunity Deep Dive: ABC Technologies (`/opportunities/[id]`)
+## 9. Hero Opportunity Deep Dive: TechNova Solutions (`/opportunities/[id]`)
 
 The hero benchmark record represents the ideal enterprise qualification scenario:
-- **Company**: ABC Technologies ($150,000 Pipeline Value, 500–1000 Employees, Enterprise Software)
-- **Decision Maker**: Marcus Vance, Chief Technology Officer (CTO)
+- **Company**: TechNova Solutions ($150,000 Pipeline Value, 500–1000 Employees, Enterprise Software)
+- **Decision Maker**: John Smith, Chief Technology Officer (CTO)
 - **Public Buying Signal**: "Urgent RFP: Seeking certified Microsoft partner to migrate on-premise SharePoint 2016 to SharePoint Online for 750 users before Q4 compliance deadline."
 - **Intent Dimension Breakdown**: Visual bars for Requirement Fit (95%), Urgency (92%), Authority (95%), Budget/ICP (90%), Channel Reliability (90%).
 - **Why This Lead? & Why Now?**: Instant evidence checklist confirming decision maker authority and legacy end-of-life trigger.
@@ -203,7 +203,7 @@ Configuration and benchmark resets:
 A built-in 11-step walkthrough (`src/components/shared/guided-demo.tsx`) accessible from the sidebar and header:
 1. **Sales Intelligence Command Center**: Overview of 7 core KPIs and system health.
 2. **AI Priority Queue & "Why Now?"**: Live intent ranking and urgent procurement triggers.
-3. **Hero Opportunity: ABC Technologies**: Deep dive into the $150k SharePoint migration opportunity.
+3. **Hero Opportunity: TechNova Solutions**: Deep dive into the $150k SharePoint migration opportunity.
 4. **Multidimensional Intent Engine**: Scoring breakdown across 5 weighted dimensions.
 5. **Evidence & Procurement Intelligence**: Verbatim public RFP citations and firmographics.
 6. **AI Pre-Call Sales Brief**: Turnkey talking points and objection playbooks.

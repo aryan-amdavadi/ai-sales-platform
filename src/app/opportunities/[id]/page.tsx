@@ -120,13 +120,7 @@ export default function OpportunityDetailPage() {
 
   const handleTriggerCall = () => {
     setCallingState('calling');
-    setTimeout(() => {
-      setCallingState('connected');
-      setTimeout(() => {
-        setCallingState('idle');
-        router.push(`/calls?leadId=${id}&start=true`);
-      }, 500);
-    }, 400);
+    router.push(`/calls?leadId=${id}&start=true`);
   };
 
   if (loading) {

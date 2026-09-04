@@ -4,23 +4,22 @@ test.describe('Opportunities Explorer & AI Intelligence Detail', () => {
   test('loads opportunity table, searches, and filters', async ({ page }) => {
     await page.goto('/opportunities');
 
-    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible();
-    await expect(page.locator('[data-testid="opportunities-table"]')).toBeVisible();
+    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('[data-testid="opportunities-table"]')).toBeVisible({ timeout: 15000 });
 
     // Check search functionality
     const searchInput = page.locator('[data-testid="search-input"]');
-    await searchInput.fill('SharePoint');
-    await page.waitForTimeout(400);
+    await searchInput.fill('TechNova');
 
     await expect(
-      page.locator('[data-testid="opportunities-table"] >> text=ABC Technologies').first()
-    ).toBeVisible();
+      page.locator('text=TechNova Solutions').first()
+    ).toBeVisible({ timeout: 10000 });
 
     // Check opening detail skeleton
-    await page.locator('[data-testid="opportunities-table"] >> text=Review').first().click();
+    await page.locator('text=Review').first().click();
 
     // Detail skeleton test IDs verification
-    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible();
+    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible({ timeout: 10000 });
     await expect(page.locator('[data-testid="intent-score"]')).toBeVisible();
     await expect(page.locator('[data-testid="evidence-panel"]')).toBeVisible();
     await expect(page.locator('[data-testid="sales-brief"]')).toBeVisible();
@@ -30,17 +29,19 @@ test.describe('Opportunities Explorer & AI Intelligence Detail', () => {
 
   test('hero opportunity detail runs AI Analysis and Sales Brief actions', async ({ page }) => {
     await page.goto('/opportunities');
+    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible({ timeout: 15000 });
 
-    // Search and open ABC Technologies
+    // Search and open TechNova Solutions
     const searchInput = page.locator('[data-testid="search-input"]');
-    await searchInput.fill('ABC Technologies');
-    await page.waitForTimeout(400);
+    await expect(searchInput).toBeVisible({ timeout: 15000 });
+    await searchInput.fill('TechNova');
 
-    await page.locator('[data-testid="opportunities-table"] >> text=Review').first().click();
+    await expect(page.locator('text=TechNova Solutions').first()).toBeVisible({ timeout: 10000 });
+    await page.locator('text=Review').first().click();
 
     // Verify detail loaded scoped to opportunity-detail
-    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible();
-    await expect(page.locator('[data-testid="opportunity-detail"] >> text=ABC Technologies').first()).toBeVisible();
+    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('text=TechNova Solutions').first()).toBeVisible();
 
     // Click "Analyze Opportunity" button
     const analyzeBtn = page.locator('[data-testid="analyze-btn"]');

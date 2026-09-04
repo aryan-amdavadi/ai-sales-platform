@@ -11,11 +11,13 @@ const auditResults = {
   unitTests: false,
   integrationTests: false,
   e2eTests: false,
+  ui: false,
   markup: false,
   features: false,
+  loc: false,
   security: false,
   heroDemo: false,
-  loc: false,
+  dataConsistency: false,
 };
 
 function runStep(name, cmd) {
@@ -55,28 +57,32 @@ auditResults.ui = runStep('UI/UX Enterprise Aesthetic Audit', 'node scripts/audi
 // 8. Markup Audit
 auditResults.markup = runStep('Markup & TestID Audit', 'node scripts/audit/verify-markup.mjs');
 
-// 8. Feature Audit
+// 9. Feature Audit
 auditResults.features = runStep('End-to-End Feature Verification', 'node scripts/audit/verify-features.mjs');
 
-// 9. LOC & Code Health Audit
+// 10. LOC & Code Health Audit
 auditResults.loc = runStep('Lines of Code & Health Audit', 'node scripts/audit/verify-loc.mjs');
 
-// 10. Security Audit
+// 11. Security Audit
 auditResults.security = runStep('Security & Secret Scanning', 'node scripts/audit/verify-security.mjs');
 
-// 11. Hero Demo Audit
+// 12. Hero Demo Audit
 auditResults.heroDemo = runStep('Deterministic Hero Demo Workflow', 'node scripts/audit/verify-demo.mjs');
 
-// Calculate Quality Score
+// 13. Data Consistency Audit
+auditResults.dataConsistency = runStep('Cross-Module Data Consistency Audit', 'node scripts/audit/verify-data-consistency.mjs');
+
+// Calculate Quality Score (100 Max)
 let score = 0;
-if (auditResults.project) score += 15;        // Architecture (15)
-if (auditResults.features) score += 25;       // Core Functionality (25)
-if (auditResults.heroDemo) score += 20;       // AI Intelligence & Voice (20)
-if (auditResults.markup) score += 15;         // UX/UI (15)
-if (auditResults.typecheck && auditResults.lint) score += 10; // Reliability (10)
-if (auditResults.unitTests && auditResults.integrationTests && auditResults.e2eTests) score += 5; // Testing (5)
-if (auditResults.security) score += 5;        // Security (5)
-if (auditResults.loc && auditResults.heroDemo) score += 5; // Demo Readiness (5)
+if (auditResults.project) score += 10;
+if (auditResults.typecheck && auditResults.lint) score += 10;
+if (auditResults.unitTests && auditResults.integrationTests && auditResults.e2eTests) score += 15;
+if (auditResults.ui && auditResults.markup) score += 15;
+if (auditResults.features) score += 20;
+if (auditResults.loc) score += 5;
+if (auditResults.security) score += 5;
+if (auditResults.heroDemo) score += 15;
+if (auditResults.dataConsistency) score += 5;
 
 const formatRow = (label, pass) => {
   const status = pass ? 'PASS' : 'FAIL';
@@ -94,14 +100,22 @@ console.log(formatRow('Lint', auditResults.lint));
 console.log(formatRow('Unit Tests', auditResults.unitTests));
 console.log(formatRow('Integration Tests', auditResults.integrationTests));
 console.log(formatRow('E2E Tests', auditResults.e2eTests));
-console.log(formatRow('Markup', auditResults.markup));
+console.log(formatRow('UI/UX Design System', auditResults.ui));
+console.log(formatRow('Markup & TestIDs', auditResults.markup));
 console.log(formatRow('Features', auditResults.features));
+console.log(formatRow('LOC & Code Health', auditResults.loc));
 console.log(formatRow('Security', auditResults.security));
 console.log(formatRow('Hero Demo', auditResults.heroDemo));
+console.log(formatRow('Data Consistency', auditResults.dataConsistency));
 console.log('╠════════════════════════════════════════════╣');
 const scoreStr = `${score} / 100`;
 const scorePadding = ' '.repeat(Math.max(2, 19 - scoreStr.length));
 console.log(`║ Overall Score             ${scoreStr}${scorePadding}║`);
+const passedCount = Object.values(auditResults).filter(Boolean).length;
+const totalCount = Object.keys(auditResults).length;
+const summaryStr = `${passedCount} / ${totalCount} PASSED`;
+const summaryPadding = ' '.repeat(Math.max(2, 18 - summaryStr.length));
+console.log(`║ Total Checks              ${summaryStr}${summaryPadding}║`);
 console.log('╚════════════════════════════════════════════╝\n');
 
 const allPassed = Object.values(auditResults).every(Boolean);

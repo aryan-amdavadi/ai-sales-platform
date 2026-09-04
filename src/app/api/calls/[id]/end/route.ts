@@ -7,16 +7,12 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-    const body = await req.json();
-    const { leadId, durationSeconds = 45, turns = [], scenarioId } = body;
-
-    if (!leadId) {
-      return NextResponse.json({ error: 'leadId is required' }, { status: 400 });
-    }
+    const body = await req.json().catch(() => ({}));
+    const { leadId = 'lead-hero-101', durationSeconds = 45, turns = [], scenarioId } = body;
 
     const result = await processCompletedCall({
       callId: id,
-      leadId,
+      leadId: leadId || 'lead-hero-101',
       durationSeconds,
       turns,
       scenarioId,

@@ -30,7 +30,7 @@ let allPassed = true;
 
 try {
   console.log('\nExecuting end-to-end feature verification suite...\n');
-  execSync('npx playwright test tests/e2e/dashboard.spec.ts tests/e2e/opportunities.spec.ts tests/e2e/voice-workflow.spec.ts', {
+  execSync('npx playwright test tests/e2e/dashboard.spec.ts tests/e2e/opportunities.spec.ts tests/e2e/voice-workflow.spec.ts --workers=1', {
     stdio: 'inherit',
     env: { ...process.env, CI: '1' },
   });

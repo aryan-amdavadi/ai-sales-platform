@@ -1,19 +1,19 @@
-# IntentOS — Hero Demo Walkthrough: ABC Technologies SharePoint Modernization
+# IntentOS — Hero Demo Walkthrough: TechNova Solutions SharePoint Modernization
 
 ---
 
 ## 1. Overview of the Hero Scenario
 
-The IntentOS benchmark demonstration centers on **ABC Technologies**, an enterprise software corporation with 750 employees facing an urgent technology modernization trigger. 
+The IntentOS benchmark demonstration centers on **TechNova Solutions**, an enterprise software corporation with 750 employees facing an urgent technology modernization trigger. 
 
-Instead of waiting for an SDR to discover the lead weeks late, IntentOS ingests the requirement from a public executive posting, scores the opportunity at **94 Intent (HOT)**, generates an executive pre-call brief, orchestrates an autonomous voice qualification call with CTO Marcus Vance, validates BANT qualification at **92%**, and delivers an actionable Next Best Action with one-click CRM synchronization.
+Instead of waiting for an SDR to discover the lead weeks late, IntentOS ingests the requirement from a public executive posting, scores the opportunity at **94 Intent (HOT)**, generates an executive pre-call brief, orchestrates an autonomous voice qualification call with CTO John Smith, validates BANT qualification at **92%**, and delivers an actionable Next Best Action with one-click CRM synchronization.
 
 ---
 
 ## 2. Step-by-Step Execution Flow
 
 ### Step 1: Ingestion of Public Buying Signal
-- **Source**: LinkedIn Executive RFP Post by CTO Marcus Vance.
+- **Source**: LinkedIn Executive RFP Post by CTO John Smith.
 - **Requirement Evidence**:
   > *"Urgent RFP: Seeking certified Microsoft implementation partner to migrate legacy on-premise SharePoint 2016 to SharePoint Online for 750 employees before Q4 compliance deadline. Must have proven zero-downtime cutover methodology and custom PowerApps/SPFx workflow refactoring capabilities."*
 - **Ingestion Timestamp**: 4 minutes ago.
@@ -24,7 +24,7 @@ Instead of waiting for an SDR to discover the lead weeks late, IntentOS ingests 
 The IntentOS scoring engine analyzes the requirement across 5 weighted dimensions:
 1. **Requirement Fit (95/100)**: Exact alignment with enterprise SharePoint online modernization capabilities.
 2. **Urgency & Timeline (92/100)**: Strict Q4 compliance cutover deadline (30–60 days).
-3. **Decision Maker Authority (95/100)**: Direct posting by Chief Technology Officer (Marcus Vance).
+3. **Decision Maker Authority (95/100)**: Direct posting by Chief Technology Officer (John Smith).
 4. **Firmographic ICP Alignment (90/100)**: 500–1000 employee enterprise software company.
 5. **Channel Reliability (90/100)**: Verified executive social post with direct contact info.
 
@@ -93,7 +93,7 @@ Immediately upon call termination:
 ## 3. How to Demo This in Under 3 Minutes
 
 1. **Start on Dashboard (`/dashboard`)**:
-   - Point to the **AI Priority Queue** and show ABC Technologies ranked #1 with **94 Intent** and **$150k Pipeline**.
+   - Point to the **AI Priority Queue** and show TechNova Solutions ranked #1 with **94 Intent** and **$150k Pipeline**.
 2. **Open Opportunity Detail (`/opportunities/lead-hero-001`)**:
    - Show the **5-Dimensional Intent Score bars**, the **Why Now?** trigger card, and the **AI Pre-Call Sales Brief**.
 3. **Launch Voice Cockpit (`/calls?start=true`)**:

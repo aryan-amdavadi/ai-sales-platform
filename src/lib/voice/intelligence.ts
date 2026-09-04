@@ -47,7 +47,7 @@ export async function processCompletedCall(params: {
         painPoints: ['Legacy infrastructure bottlenecks', 'Custom workflow refactoring'],
         objections: ['Implementation timeline and internal bandwidth constraints'],
         buyingStage: 'Vendor Selection',
-        nextBestAction: 'Schedule a technical discovery meeting within 48 hours.',
+        nextBestAction: 'Schedule technical scoping call for Thursday 2 PM, send calendar invite, attach SharePoint migration case study',
         actionPriority: 'HIGH',
         recommendedPositioning: 'Focus on turnkey deployment accelerators and migration track record.',
       };

@@ -30,8 +30,8 @@ Returns 7 KPI metrics, the Opportunity Funnel breakdown, and the AI Priority Que
   "priorityQueue": [
     {
       "id": "lead-1",
-      "companyName": "ABC Technologies",
-      "contactName": "Marcus Vance",
+      "companyName": "TechNova Solutions",
+      "contactName": "John Smith",
       "contactTitle": "Chief Technology Officer",
       "intentScore": 94,
       "urgency": "HIGH",

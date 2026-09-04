@@ -85,15 +85,14 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="dashboard">
-      <div data-testid="dashboard-page" className="hidden" />
+      <div data-testid="dashboard-page" className="contents">
       {/* Header & Tagline */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl font-bold tracking-tight text-slate-100">
-              AI SALES OVERVIEW
+              SALES INTELLIGENCE COMMAND
             </h1>
-            <span className="sr-only">SALES INTELLIGENCE COMMAND</span>
             <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
               Live Telemetry
@@ -321,6 +320,7 @@ export default function DashboardPage() {
             </div>
           </Card>
         </div>
+      </div>
       </div>
     </div>
   );

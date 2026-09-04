@@ -20,29 +20,29 @@
 >
 > *Here on the dashboard, IntentOS is actively monitoring 10 live enterprise accounts with over $700,000 in identified requirement pipeline. Notice our **Opportunity Funnel** showing real-time stage progression.*
 >
-> *Right at the top of our **AI Priority Queue**, our engine has flagged a high-probability target: **ABC Technologies**. The decision maker is **Marcus Vance, Chief Technology Officer**, with a critically high intent score of **94/100**."*
+> *Right at the top of our **AI Priority Queue**, our engine has flagged a high-probability target: **TechNova Solutions**. The decision maker is **John Smith, Chief Technology Officer**, with a critically high intent score of **94/100**."*
 
 ---
 
 ## Act 3: Public Intent Discovery (`/discover`) (1:30 – 2:15)
 
-> *"How did IntentOS find Marcus? Let's check **Public Intent Discovery**.*
+> *"How did IntentOS find John? Let's check **Public Intent Discovery**.*
 >
-> *IntentOS ingested a public RFP and technical requirement posted by ABC Technologies across LinkedIn. Rather than just parsing keywords, IntentOS extracted the exact business problem: an on-premises SharePoint 2016 system facing compliance obsolescence and a 30-day timeline to execute a zero-downtime cloud cutover."*
+> *IntentOS ingested a public RFP and technical requirement posted by TechNova Solutions across LinkedIn. Rather than just parsing keywords, IntentOS extracted the exact business problem: an on-premises SharePoint 2016 system facing compliance obsolescence and a 30-day timeline to execute a zero-downtime cloud cutover."*
 
 ---
 
 ## Act 4: 8-Dimension Intent, Evidence & AI Sales Brief (`/opportunities/lead-1`) (2:15 – 3:30)
 
-> *"Let's drill into the **Opportunity Detail** for ABC Technologies.*
+> *"Let's drill into the **Opportunity Detail** for TechNova Solutions.*
 >
 > *IntentOS doesn't use opaque black-box scores. Our **8-Dimensional Intent Engine** computes a transparent 94/100 score across Requirement Clarity, Urgency, Timeline, Solution Fit, Decision Maker Authority, Signal Recency, Company Fit, and Buying Stage.*
 >
-> *Below that, our **Why This Lead?** evidence checklist verifies that Marcus is an authorized CTO in active vendor evaluation with a $150k ARR pipeline value.*
+> *Below that, our **Why This Lead?** evidence checklist verifies that John is an authorized CTO in active vendor evaluation with a $150k ARR pipeline value.*
 >
-> *Notice our **Company Intelligence**: ABC Technologies is actively hiring SharePoint cloud engineers and grew 18% YoY.*
+> *Notice our **Company Intelligence**: TechNova Solutions is actively hiring SharePoint cloud engineers and grew 18% YoY.*
 >
-> *Before making contact, IntentOS synthesizes this **AI Pre-Call Sales Brief**: highlighting Marcus's core pain point — fear of downtime — and arming our agent with objection counter-strategies and a tailored opening hook."*
+> *Before making contact, IntentOS synthesizes this **AI Pre-Call Sales Brief**: highlighting John's core pain point — fear of downtime — and arming our agent with objection counter-strategies and a tailored opening hook."*
 
 ---
 

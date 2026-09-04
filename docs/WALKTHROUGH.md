@@ -17,7 +17,7 @@
    - Interested Prospects
    - Meetings Booked
    - Total Pipeline Value ($700,000+)
-3. Review the **AI Priority Queue**: Notice the Hero Lead **ABC Technologies** (Marcus Vance — CTO) pinned at the top with Intent Score **94/100**.
+3. Review the **AI Priority Queue**: Notice the Hero Lead **TechNova Solutions** (John Smith — CTO) pinned at the top with Intent Score **94/100**.
 4. Observe the **Opportunity Funnel**: Live conversion percentages across `DISCOVERED` ➔ `RELEVANT` ➔ `HIGH_INTENT` ➔ `QUALIFIED` ➔ `CONTACTED` ➔ `INTERESTED` ➔ `MEETING`.
 
 ---
@@ -33,9 +33,9 @@
 
 ## Stage 3: Opportunity Explorer & AI Intelligence (`/opportunities/lead-1`)
 
-1. Click **Engage** on ABC Technologies or navigate to `/opportunities/lead-1`.
+1. Click **Engage** on TechNova Solutions or navigate to `/opportunities/lead-1`.
 2. Inspect the 13 deep intelligence panels:
-   - **Lead Profile**: Marcus Vance (CTO, ABC Technologies).
+   - **Lead Profile**: John Smith (CTO, TechNova Solutions).
    - **Autonomous Intent Score**: 94/100 with 8-dimension breakdown.
    - **Public Buying Requirement**: SharePoint 2016 to M365 Cloud Migration specification with 5 scope component pills.
    - **Why This Lead?**: 6-point extracted evidence checklist.
@@ -71,8 +71,8 @@
 
 1. Click **Push to CRM** on the post-call intelligence card.
 2. Observe the instant synchronization status:
-   - Contact created/updated (`Marcus Vance - CTO`)
-   - Opportunity created (`ABC Technologies - Cloud Migration - $150,000`)
+   - Contact created/updated (`John Smith - CTO`)
+   - Opportunity created (`TechNova Solutions - Microsoft 365 & SharePoint Implementation - $150,000`)
    - Call activity record attached with verbatim multi-turn transcript and BANT metrics.
    - Confirmation badge: `Synced to CRM ✓ (CRM-SYNC-819204)`.
 

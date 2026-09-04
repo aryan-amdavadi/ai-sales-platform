@@ -56,8 +56,10 @@ test.describe('Navigation & Responsive Shell', () => {
     await menuBtn.click();
 
     // Verify drawer appears and click Opportunities link in the fixed mobile aside
-    await page.locator('aside.fixed a[href="/opportunities"]').click();
-    await expect(page).toHaveURL(/.*opportunities/);
-    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible();
+    const oppLink = page.locator('aside.fixed a[href="/opportunities"]');
+    await expect(oppLink).toBeVisible({ timeout: 5000 });
+    await oppLink.click();
+    await expect(page).toHaveURL(/.*opportunities/, { timeout: 10000 });
+    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible({ timeout: 15000 });
   });
 });

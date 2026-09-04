@@ -130,9 +130,9 @@ sequenceDiagram
     UI->>API: GET /api/opportunities?sort=intentScore
     API->>DB: Query opportunities
     DB-->>API: Returns 105+ opportunities
-    API-->>UI: Displays AI Priority Queue (ABC Tech #1 with 94 Intent)
+    API-->>UI: Displays AI Priority Queue (TechNova Solutions #1 with 94 Intent)
 
-    SDR->>UI: Clicks "Review & Qualify" for ABC Technologies
+    SDR->>UI: Clicks "Review & Qualify" for TechNova Solutions
     UI->>API: GET /api/opportunities/lead-hero-001
     API-->>UI: Returns 5D Intent Breakdown, Why Now?, Sales Brief, BANT Score
 

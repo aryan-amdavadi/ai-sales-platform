@@ -17,8 +17,8 @@
 
 - **Key Highlights to Show**:
   - **7 Core KPI Cards**: Show 105 total opportunities, 35 high-intent targets, and $4.2M in pipeline value.
-  - **AI Priority Queue**: Highlight the top record: **ABC Technologies ($150k ARR, 94 Intent Score)**.
-  - **"Why Now?" Trigger**: Point out the live badge: *"CTO Marcus Vance posted urgent RFP for SharePoint migration before Q4 compliance deadline."*
+  - **AI Priority Queue**: Highlight the top record: **TechNova Solutions ($150k ARR, 94 Intent Score)**.
+  - **"Why Now?" Trigger**: Point out the live badge: *"CTO John Smith posted urgent RFP for SharePoint migration before Q4 compliance deadline."*
   - **Stage Conversion Funnel**: Point out conversion velocity from Ingested $\rightarrow$ Enriched $\rightarrow$ AI Voice Outreach $\rightarrow$ Meeting Booked.
 
 > *"Instead of a static lead list, IntentOS ranks prospects dynamically based on real-world buying urgency and economic buyer authority."*

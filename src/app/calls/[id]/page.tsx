@@ -238,7 +238,7 @@ export default function CallDetailPage() {
 
             <div>
               <h4 className="text-base font-semibold text-slate-100">
-                {call.nextStep || 'Schedule a technical discovery meeting within 48 hours.'}
+                {call.nextStep || 'Schedule technical scoping call for Thursday 2 PM, send calendar invite, attach SharePoint migration case study'}
               </h4>
               <p className="text-xs text-slate-300 mt-1">
                 Prospect explicitly agreed to an architectural briefing on legacy migration accelerators and zero-downtime cutover.

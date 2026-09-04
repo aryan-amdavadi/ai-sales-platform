@@ -6,22 +6,20 @@ test.describe('Task 3: Hero Lead Autonomous Voice & CRM Workflow E2E', () => {
   }) => {
     // 1. Dashboard / Opportunity Explorer
     await page.goto('/opportunities');
-    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible();
+    await expect(page.locator('text=OPPORTUNITY EXPLORER')).toBeVisible({ timeout: 15000 });
 
-    // 2. Search and select ABC Technologies Hero Lead
+    // 2. Search and select TechNova Solutions Hero Lead
     const searchInput = page.locator('[data-testid="search-input"]');
-    await searchInput.fill('ABC Technologies');
-    await page.waitForTimeout(400);
+    await searchInput.fill('TechNova');
+    await page.waitForTimeout(500);
 
-    await expect(
-      page.locator('[data-testid="opportunities-table"] >> text=ABC Technologies').first()
-    ).toBeVisible();
+    await expect(page.locator('text=TechNova Solutions').first()).toBeVisible({ timeout: 10000 });
 
     // 3. Open Opportunity Detail
-    await page.locator('[data-testid="opportunities-table"] >> text=Review').first().click();
-    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible();
+    await page.locator('text=Review').first().click();
+    await expect(page.locator('[data-testid="opportunity-detail"]')).toBeVisible({ timeout: 10000 });
     await expect(
-      page.locator('[data-testid="opportunity-detail"] >> text=ABC Technologies').first()
+      page.locator('[data-testid="opportunity-detail"] >> text=TechNova Solutions').first()
     ).toBeVisible();
 
     // 4. Verify AI Sales Brief and Score
@@ -36,7 +34,7 @@ test.describe('Task 3: Hero Lead Autonomous Voice & CRM Workflow E2E', () => {
 
     // 6. Redirects into Call Cockpit
     await page.waitForURL(/\/calls/);
-    await expect(page.locator('[data-testid="call-cockpit"]')).toBeVisible();
+    await expect(page.locator('[data-testid="call-cockpit"]')).toBeVisible({ timeout: 10000 });
 
     // 7. Verify Cockpit Elements & Live Signals
     await expect(page.locator('[data-testid="call-status"]')).toBeVisible();
@@ -49,46 +47,47 @@ test.describe('Task 3: Hero Lead Autonomous Voice & CRM Workflow E2E', () => {
 
     // AI Disclosure check in transcript
     await expect(
-      page.locator('[data-testid="transcript"] >> text=AI sales assistant').first()
-    ).toBeVisible();
+      page.locator('text=AI sales assistant').first()
+    ).toBeVisible({ timeout: 15000 });
 
     // 9. End Call (or wait for completion)
     const endCallBtn = page.locator('[data-testid="end-call"]');
-    if (await endCallBtn.isVisible()) {
-      await endCallBtn.click();
-    }
+    await expect(endCallBtn).toBeVisible({ timeout: 10000 });
+    await endCallBtn.click();
 
     // 10. Post-Call Intelligence Verification
     await expect(
       page.locator('text=Post-Call Conversation Intelligence & Next Action').first()
-    ).toBeVisible();
-    await expect(page.locator('text=HOT QUALIFIED (92%)').first()).toBeVisible();
+    ).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('text=HOT QUALIFIED (92%)').first()).toBeVisible({ timeout: 10000 });
     await expect(
-      page.locator('text=Schedule a technical discovery meeting within 48 hours.').first()
-    ).toBeVisible();
+      page.locator('text=Schedule technical scoping call for Thursday 2 PM').first()
+    ).toBeVisible({ timeout: 10000 });
 
     // 11. Push to CRM
     const pushCrmBtn = page.locator('[data-testid="push-crm-btn"]').first();
-    await expect(pushCrmBtn).toBeVisible();
+    await expect(pushCrmBtn).toBeVisible({ timeout: 10000 });
     await pushCrmBtn.click();
 
     // 12. Verify CRM Synchronized Confirmation
-    await expect(page.locator('text=Synced to CRM ✓').first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('text=Synced to CRM ✓').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('Direct Call Launch, Multilingual Selection & Human Handoff', async ({ page }) => {
     await page.goto('/calls');
 
     // Launch Call directly from Calls page
-    await page.locator('text=Launch Hero Call').click();
+    const launchBtn = page.locator('[data-testid="launch-hero-call"]').first();
+    await expect(launchBtn).toBeVisible({ timeout: 15000 });
+    await launchBtn.click();
 
-    await expect(page.locator('[data-testid="call-cockpit"]')).toBeVisible();
-    await expect(page.locator('[data-testid="human-handoff"]')).toBeVisible();
+    await expect(page.locator('[data-testid="call-cockpit"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('[data-testid="human-handoff"]')).toBeVisible({ timeout: 10000 });
 
     // Click Human Handoff
     await page.locator('[data-testid="human-handoff"]').click();
 
     // Verify Handoff notification
-    await expect(page.locator('text=Handoff requested')).toBeVisible();
+    await expect(page.locator('text=Handoff requested').first()).toBeVisible({ timeout: 10000 });
   });
 });

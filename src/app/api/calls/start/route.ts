@@ -4,7 +4,7 @@ import { AVAILABLE_SCENARIOS, HERO_SCENARIO_EN } from '@/lib/voice/scenarios';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body = await req.json().catch(() => ({}));
     const { leadId, campaignId, language = 'en-US' } = body;
 
     if (!leadId) {
