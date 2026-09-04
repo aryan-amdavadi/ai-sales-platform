@@ -6,7 +6,7 @@ export async function POST() {
     await runSeed();
     return NextResponse.json({
       success: true,
-      message: 'Demo dataset reset deterministically with 105+ opportunities and hero record ABC Technologies.',
+      message: 'Demo dataset reset deterministically with 105+ opportunities and hero record TechNova Solutions.',
     });
   } catch (error: any) {
     console.error('Error resetting demo database:', error);

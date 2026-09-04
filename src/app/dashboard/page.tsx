@@ -192,7 +192,7 @@ export default function DashboardPage() {
 
           <div className="space-y-2.5">
             {data.priorityQueue.map((lead) => {
-              const isHero = lead.companyName === 'ABC Technologies';
+              const isHero = lead.companyName === 'TechNova Solutions' || lead.companyName === 'ABC Technologies';
               return (
                 <div
                   key={lead.id}

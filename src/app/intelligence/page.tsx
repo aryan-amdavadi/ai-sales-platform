@@ -103,7 +103,8 @@ export default function IntelligencePage() {
       {/* Intelligence Cards Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {filtered.map((comp) => {
-          const isHero = comp.name === 'ABC Technologies';
+          const isHero =
+            comp.name === 'TechNova Solutions' || comp.name === 'ABC Technologies';
           return (
             <Card
               key={comp.id}

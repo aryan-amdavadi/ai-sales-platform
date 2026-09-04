@@ -147,7 +147,9 @@ export default function OpportunityDetailPage() {
     );
   }
 
-  const isHero = opportunity.company?.name === 'ABC Technologies';
+  const isHero =
+    opportunity.company?.name === 'TechNova Solutions' ||
+    opportunity.company?.name === 'ABC Technologies';
   const req = opportunity.requirements?.[0] || {};
   const qual = opportunity.qualifications?.[0] || {};
   const rec = opportunity.recommendations?.[0] || {};

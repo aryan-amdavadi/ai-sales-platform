@@ -216,7 +216,9 @@ export default function DiscoveryPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {results.map((item) => {
-            const isHero = item.company.name === 'ABC Technologies';
+            const isHero =
+              item.company.name === 'TechNova Solutions' ||
+              item.company.name === 'ABC Technologies';
             const req = item.requirements[0];
 
             return (

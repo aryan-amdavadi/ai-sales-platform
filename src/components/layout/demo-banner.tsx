@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 
 interface DemoBannerProps {
   onStartGuidedDemo?: () => void;
+  onStartJudgeMode?: () => void;
 }
 
-export function DemoBanner({ onStartGuidedDemo }: DemoBannerProps) {
+export function DemoBanner({ onStartGuidedDemo, onStartJudgeMode }: DemoBannerProps) {
   const [resetting, setResetting] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
 
@@ -43,6 +44,18 @@ export function DemoBanner({ onStartGuidedDemo }: DemoBannerProps) {
       </div>
 
       <div className="flex items-center gap-2">
+        {onStartJudgeMode && (
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={onStartJudgeMode}
+            className="h-7 px-2.5 text-xs text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 flex items-center gap-1 font-medium border border-amber-500/20"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Judge Fast-Track</span>
+          </Button>
+        )}
+
         {onStartGuidedDemo && (
           <Button
             size="sm"

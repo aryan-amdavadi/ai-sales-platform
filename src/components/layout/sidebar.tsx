@@ -18,6 +18,7 @@ import {
   X,
   PlayCircle,
   HelpCircle,
+  Gavel,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -64,9 +65,15 @@ interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
   onStartGuidedDemo?: () => void;
+  onStartJudgeMode?: () => void;
 }
 
-export function Sidebar({ mobileOpen, onMobileClose, onStartGuidedDemo }: SidebarProps) {
+export function Sidebar({
+  mobileOpen,
+  onMobileClose,
+  onStartGuidedDemo,
+  onStartJudgeMode,
+}: SidebarProps) {
   const pathname = usePathname();
 
   const navContent = (
@@ -140,6 +147,22 @@ export function Sidebar({ mobileOpen, onMobileClose, onStartGuidedDemo }: Sideba
 
       {/* Guided Tour & Account Footer */}
       <div className="p-3 border-t border-slate-800/80 bg-slate-950 space-y-2">
+        {onStartJudgeMode && (
+          <Button
+            onClick={() => {
+              onStartJudgeMode();
+              if (onMobileClose) onMobileClose();
+            }}
+            variant="outline"
+            size="sm"
+            className="w-full h-8 text-xs border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 flex items-center justify-center gap-1.5 font-semibold"
+            data-testid="sidebar-judge-mode-btn"
+          >
+            <Gavel className="w-3.5 h-3.5 text-amber-400" />
+            <span>Judge Fast-Track</span>
+          </Button>
+        )}
+
         {onStartGuidedDemo && (
           <Button
             onClick={() => {

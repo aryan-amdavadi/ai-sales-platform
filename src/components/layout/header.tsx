@@ -9,9 +9,10 @@ import {
   PhoneCall,
   Calendar,
   Database,
-  Flame,
+  UserCheck,
   PlayCircle,
-  CheckCircle2,
+  Gavel,
+  Flame,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -20,11 +21,18 @@ import { Button } from '@/components/ui/button';
 interface HeaderProps {
   onMobileMenuToggle: () => void;
   onStartGuidedDemo?: () => void;
+  onStartJudgeMode?: () => void;
 }
 
 interface NotificationItem {
   id: string;
-  type: 'HIGH_INTENT' | 'CALL_COMPLETED' | 'MEETING_RECOMMENDED' | 'CALLBACK_SCHEDULED' | 'CRM_SYNC';
+  type:
+    | 'HIGH_INTENT'
+    | 'CALL_COMPLETED'
+    | 'HUMAN_HANDOFF'
+    | 'MEETING_RECOMMENDED'
+    | 'CALLBACK_SCHEDULED'
+    | 'CRM_SYNC';
   title: string;
   message: string;
   timestamp: string;
@@ -32,7 +40,11 @@ interface NotificationItem {
   read: boolean;
 }
 
-export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
+export function Header({
+  onMobileMenuToggle,
+  onStartGuidedDemo,
+  onStartJudgeMode,
+}: HeaderProps) {
   const pathname = usePathname();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([
@@ -40,7 +52,8 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
       id: 'notif-1',
       type: 'HIGH_INTENT',
       title: 'High-Intent Lead Discovered',
-      message: 'ABC Technologies (Marcus Vance - CTO) scored 94 intent for SharePoint Modernization.',
+      message:
+        'TechNova Solutions (John Smith - CTO) scored 94 intent for Microsoft 365 & SharePoint Implementation.',
       timestamp: '5m ago',
       link: '/opportunities',
       read: false,
@@ -49,8 +62,18 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
       id: 'notif-2',
       type: 'CALL_COMPLETED',
       title: 'AI Voice Qualification Completed',
-      message: 'Marcus Vance confirmed 30-day procurement window and agreed to discovery.',
+      message: 'John Smith confirmed 30-day procurement window and agreed to scoping call.',
       timestamp: '15m ago',
+      link: '/calls',
+      read: false,
+    },
+    {
+      id: 'notif-handoff',
+      type: 'HUMAN_HANDOFF',
+      title: 'Human Handoff Available',
+      message:
+        'Live autonomous call with CTO John Smith can be transferred to human sales engineer with one click.',
+      timestamp: '20m ago',
       link: '/calls',
       read: false,
     },
@@ -58,7 +81,8 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
       id: 'notif-3',
       type: 'MEETING_RECOMMENDED',
       title: 'Meeting Recommended (Hot Lead)',
-      message: 'Schedule a technical discovery meeting within 48 hours for $150,000 ARR opportunity.',
+      message:
+        'Schedule a technical scoping call for Thursday 2 PM with CTO John Smith ($55,000 pipeline).',
       timestamp: '25m ago',
       link: '/opportunities',
       read: false,
@@ -67,7 +91,7 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
       id: 'notif-4',
       type: 'CALLBACK_SCHEDULED',
       title: 'Follow-Up Callback Scheduled',
-      message: 'Marcus Vance requested follow-up on Sep 2 at 14:00 EST.',
+      message: 'John Smith requested follow-up on Thursday at 14:00 EST.',
       timestamp: '40m ago',
       link: '/calls',
       read: true,
@@ -130,6 +154,8 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
         return <Sparkles className="w-3.5 h-3.5 text-amber-400" />;
       case 'CALLBACK_SCHEDULED':
         return <Calendar className="w-3.5 h-3.5 text-indigo-400" />;
+      case 'HUMAN_HANDOFF':
+        return <UserCheck className="w-3.5 h-3.5 text-amber-400" />;
       case 'CRM_SYNC':
         return <Database className="w-3.5 h-3.5 text-emerald-400" />;
     }
@@ -167,6 +193,20 @@ export function Header({ onMobileMenuToggle, onStartGuidedDemo }: HeaderProps) {
             ⌘K
           </kbd>
         </Link>
+
+        {/* Judge Mode Fast-Track Button */}
+        {onStartJudgeMode && (
+          <Button
+            onClick={onStartJudgeMode}
+            size="sm"
+            variant="outline"
+            className="h-8 text-xs font-semibold border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:text-amber-200 flex items-center gap-1.5"
+            data-testid="judge-mode-trigger"
+          >
+            <Gavel className="w-3.5 h-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Judge Mode</span>
+          </Button>
+        )}
 
         {/* Guided Demo Launch Button */}
         {onStartGuidedDemo && (

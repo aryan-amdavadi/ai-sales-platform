@@ -300,7 +300,7 @@ export default function OpportunitiesPage() {
             </thead>
             <tbody className="divide-y divide-slate-800/60">
               {opportunities.map((item) => {
-                const isHero = item.company?.name === 'ABC Technologies';
+                const isHero = item.company?.name === 'TechNova Solutions' || item.company?.name === 'ABC Technologies';
                 const req = item.requirements?.[0] || {};
 
                 return (

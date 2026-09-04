@@ -242,7 +242,7 @@ export default function SettingsPage() {
                 <h3 className="text-xs font-bold text-slate-100 uppercase tracking-wide">Deterministic Demo Control Center</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Reset the database to the benchmark state containing 105+ opportunities, 20 companies, 10 campaigns,
-                  20 completed calls, and the hero record (ABC Technologies - CTO Marcus Vance).
+                  20 completed calls, and the hero record (TechNova Solutions - CTO John Smith).
                 </p>
 
                 {resetMsg && (

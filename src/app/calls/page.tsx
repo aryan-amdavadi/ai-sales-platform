@@ -393,7 +393,7 @@ export default function CallsPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h2 className="text-base font-bold text-slate-100">
-                    AI SALES CALL &bull; {activeLead?.company?.name || 'ABC Technologies'}
+                    AI SALES CALL &bull; {activeLead?.company?.name || 'TechNova Solutions'}
                   </h2>
                   <span
                     className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
