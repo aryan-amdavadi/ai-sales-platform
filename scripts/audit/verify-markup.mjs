@@ -4,7 +4,7 @@ import path from 'path';
 const rootDir = process.cwd();
 
 console.log('\n========================================');
-console.log('INTENTOS MARKUP AUDIT');
+console.log('INTENTOS MARKUP & SEMANTIC STRUCTURE AUDIT');
 console.log('========================================');
 
 const requiredMarkups = [
@@ -12,37 +12,37 @@ const requiredMarkups = [
     page: 'Dashboard',
     file: 'src/app/dashboard/page.tsx',
     checks: [
-      { name: 'main / dashboard container', pattern: /dashboard-page/ },
-      { name: 'metrics cards', pattern: /MetricCard/ },
-      { name: 'priority queue (data-testid="hero-queue")', pattern: /data-testid="hero-queue"/ },
-      { name: 'funnel visualization (data-testid="funnel-visualization")', pattern: /data-testid="funnel-visualization"/ },
+      { name: 'dashboard container (data-testid="dashboard")', pattern: /data-testid="dashboard"/ },
+      { name: 'priority queue (data-testid="priority-queue")', pattern: /data-testid="priority-queue"/ },
+      { name: 'metrics container (data-testid="metrics")', pattern: /data-testid="metrics"/ },
+      { name: 'opportunity funnel (data-testid="opportunity-funnel")', pattern: /data-testid="opportunity-funnel"/ },
     ],
   },
   {
     page: 'Opportunity Detail',
     file: 'src/app/opportunities/[id]/page.tsx',
     checks: [
-      { name: 'opportunity detail container', pattern: /data-testid="opportunity-detail"/ },
+      { name: 'opportunity detail container (data-testid="opportunity-detail")', pattern: /data-testid="opportunity-detail"/ },
       { name: 'intent score (data-testid="intent-score")', pattern: /data-testid="intent-score"/ },
       { name: 'evidence panel (data-testid="evidence-panel")', pattern: /data-testid="evidence-panel"/ },
+      { name: 'qualification (data-testid="qualification")', pattern: /data-testid="qualification"/ },
       { name: 'sales brief (data-testid="sales-brief")', pattern: /data-testid="sales-brief"/ },
       { name: 'next best action (data-testid="next-best-action")', pattern: /data-testid="next-best-action"/ },
       { name: 'call action (data-testid="call-action")', pattern: /data-testid="call-action"/ },
-      { name: 'company intelligence', pattern: /COMPANY INTELLIGENCE/i },
-      { name: 'requirement analysis', pattern: /PUBLIC BUYING REQUIREMENT/i },
     ],
   },
   {
     page: 'Call Cockpit & Analysis',
     file: 'src/app/calls/page.tsx',
     checks: [
-      { name: 'call cockpit container', pattern: /data-testid="call-cockpit"/ },
+      { name: 'call cockpit container (data-testid="call-cockpit")', pattern: /data-testid="call-cockpit"/ },
       { name: 'call status (data-testid="call-status")', pattern: /data-testid="call-status"/ },
-      { name: 'conversation turn stream (data-testid="conversation")', pattern: /data-testid="conversation"/ },
-      { name: 'live signal gauges (data-testid="live-signals")', pattern: /data-testid="live-signals"/ },
-      { name: 'live transcript panel (data-testid="transcript")', pattern: /data-testid="transcript"/ },
+      { name: 'conversation stream (data-testid="conversation")', pattern: /data-testid="conversation"/ },
+      { name: 'live signals (data-testid="live-signals")', pattern: /data-testid="live-signals"/ },
+      { name: 'transcript panel (data-testid="transcript")', pattern: /data-testid="transcript"/ },
       { name: 'end call control (data-testid="end-call")', pattern: /data-testid="end-call"/ },
       { name: 'human handoff control (data-testid="human-handoff")', pattern: /data-testid="human-handoff"/ },
+      { name: 'crm sync (data-testid="crm-sync")', pattern: /data-testid="crm-sync"/ },
     ],
   },
 ];

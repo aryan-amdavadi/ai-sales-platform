@@ -689,7 +689,7 @@ export default function OpportunityDetailPage() {
           </Card>
 
           {/* Qualification Engine (BANT & Heat Classification) */}
-          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3">
+          <Card className="p-4 bg-slate-900/60 border-slate-800 space-y-3" data-testid="qualification">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <span className="text-xs uppercase font-semibold text-slate-300">
                 BANT Qualification Engine

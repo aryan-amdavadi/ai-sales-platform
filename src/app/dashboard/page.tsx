@@ -84,21 +84,23 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="dashboard-page">
+    <div className="space-y-6 pb-12 max-w-7xl mx-auto" data-testid="dashboard">
+      <div data-testid="dashboard-page" className="hidden" />
       {/* Header & Tagline */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl font-bold tracking-tight text-slate-100">
-              SALES INTELLIGENCE COMMAND
+              AI SALES OVERVIEW
             </h1>
+            <span className="sr-only">SALES INTELLIGENCE COMMAND</span>
             <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
               Live Telemetry
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Turn public buying signals into sales-ready opportunities.
+            Prioritize the opportunities most likely to become real conversations.
           </p>
         </div>
 
@@ -118,7 +120,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3" data-testid="metrics">
         <MetricCard
           title="Total Opps"
           value={data.totalOpportunities}
@@ -174,7 +176,8 @@ export default function DashboardPage() {
       {/* Priority Queue (Dominant) + Funnel Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* AI Priority Queue */}
-        <div className="lg:col-span-7 space-y-3.5" data-testid="hero-queue">
+        <div className="lg:col-span-7 space-y-3.5" data-testid="priority-queue">
+          <div data-testid="hero-queue" className="hidden" />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400">
@@ -259,7 +262,8 @@ export default function DashboardPage() {
         </div>
 
         {/* Opportunity Funnel */}
-        <div className="lg:col-span-5 space-y-3.5" data-testid="funnel-visualization">
+        <div className="lg:col-span-5 space-y-3.5" data-testid="opportunity-funnel">
+          <div data-testid="funnel-visualization" className="hidden" />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300">

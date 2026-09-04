@@ -660,7 +660,7 @@ export default function CallsPage() {
                     </p>
 
                     {/* Action Buttons: Schedule Meeting & Push to CRM */}
-                    <div className="flex items-center gap-2 pt-1 flex-wrap">
+                    <div className="flex items-center gap-2 pt-1 flex-wrap" data-testid="crm-sync">
                       <Button
                         onClick={handlePushToCRM}
                         disabled={crmPushing || crmSynced}
