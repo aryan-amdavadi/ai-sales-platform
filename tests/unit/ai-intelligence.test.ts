@@ -120,11 +120,11 @@ describe('AI Sales Intelligence Engine - Unit Tests', () => {
       industry: 'Enterprise Software & IT',
     });
 
-    expect(brief.prospect).toBe('Marcus Vance');
-    expect(brief.company).toBe('ABC Technologies');
+    expect(brief.prospect).toBe('John Smith');
+    expect(brief.company).toBe('TechNova Solutions');
     expect(brief.painPoints.length).toBeGreaterThanOrEqual(3);
     expect(brief.likelyObjections.length).toBeGreaterThanOrEqual(2);
-    expect(brief.openingStatement).toContain('ABC Technologies');
+    expect(brief.openingStatement).toContain('TechNova Solutions');
     expect(brief.questionsToAsk.length).toBeGreaterThanOrEqual(2);
     expect(brief.desiredOutcome).toBeTruthy();
   });
@@ -135,7 +135,7 @@ describe('AI Sales Intelligence Engine - Unit Tests', () => {
       prospectTitle: HERO_REQUIREMENT.contactTitle,
     });
     const intent = await provider.scoreIntent(analysis);
-    const fit = await provider.calculateFit([], analysis, { industry: 'Enterprise Software & IT' });
+    const fit = await provider.calculateFit([], analysis, { industry: 'IT Services' });
     const qual = await provider.qualifyLead(analysis, intent, fit, {
       prospectName: HERO_REQUIREMENT.contactName,
       companyName: HERO_REQUIREMENT.companyName,
@@ -150,6 +150,6 @@ describe('AI Sales Intelligence Engine - Unit Tests', () => {
     expect(nba.priority).toBe('HIGH');
     expect(nba.whyPoints.length).toBeGreaterThanOrEqual(3);
     expect(nba.suggestedChannel).toBe('Voice AI');
-    expect(nba.suggestedMessage).toContain('Marcus');
+    expect(nba.suggestedMessage).toContain('John');
   });
 });

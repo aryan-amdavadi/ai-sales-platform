@@ -261,12 +261,26 @@ export class LocalDemoAIProvider implements AIProvider {
       `Strong alignment with verified enterprise modernization capabilities`,
     ];
 
-    const whyNowSignals = [
-      `Public RFP requirement posted within the current procurement window`,
-      `Active hiring signals for lead architects & technical modernizers`,
-      `Legacy system end-of-life and migration deadline approaching`,
-      `Executive sponsor actively evaluating certified deployment partners`,
-    ];
+    const isHero =
+      analysis.requestedSolution.toLowerCase().includes('sharepoint') ||
+      analysis.requestedSolution.toLowerCase().includes('microsoft 365') ||
+      analysis.problem.toLowerCase().includes('sharepoint');
+
+    const whyNowSignals = isHero
+      ? [
+          'Job Posting: Senior SharePoint Migration Architect',
+          'RFP / Tender: M365 Security & Compliance Overhaul',
+          'Tech Stack Change: Migrating from on-prem Exchange',
+          'Executive Quote: "Accelerating our cloud collaboration roadmap this quarter"',
+          'News / PR: TechNova announces remote-first digital workplace',
+          'Website Activity: 14 visits to migration & consulting pages',
+        ]
+      : [
+          'Public RFP requirement posted within the current procurement window',
+          'Active hiring signals for lead architects & technical modernizers',
+          'Legacy system end-of-life and migration deadline approaching',
+          'Executive sponsor actively evaluating certified deployment partners',
+        ];
 
     return {
       keyPoints,
@@ -377,10 +391,10 @@ export class LocalDemoAIProvider implements AIProvider {
       whyTheyMatter: `${context.prospectName} is the ultimate technical decision maker and project sponsor at ${context.companyName}, owning the modernization budget and vendor selection.`,
       painPoints: isSharePoint
         ? [
-            'End-of-life risks and maintenance overhead on legacy SharePoint 2016 on-premise infrastructure.',
-            'Custom legacy workflow forms requiring modern SPFx component refactoring without business disruption.',
-            'Data security, permission mapping, and zero-downtime cutover during migration to SharePoint Online.',
-            'User adoption hurdles across 750+ enterprise employees requiring structured change management.',
+            'Legacy migration complexity: Retiring on-premise infrastructure without business disruption.',
+            'Workflow interruption: Ensuring business continuity for active operational workflows during cutover.',
+            'Security & governance compliance: Enforcing permissions, DLP, and compliance policies across Microsoft 365.',
+            'User adoption hurdles across distributed teams requiring structured change management and training.',
           ]
         : [
             `Operational inefficiency and technical debt in legacy ${analysis.industry} workflows.`,
@@ -389,19 +403,19 @@ export class LocalDemoAIProvider implements AIProvider {
           ],
       likelyObjections: [
         {
-          objection: 'We are concerned about downtime and disruption to our daily business operations during cutover.',
+          objection: 'Migration downtime: We are concerned about downtime and disruption to our daily business operations during cutover.',
           counterStrategy:
-            'Highlight our proven phased delta-migration methodology, shadow cutovers, and zero-downtime track record on 50+ enterprise engagements.',
+            'Zero-downtime phased migration strategy: Highlight our proven phased delta-migration methodology, shadow cutovers, and zero-downtime track record on enterprise engagements.',
         },
         {
-          objection: 'Our legacy custom forms and workflow components might not map cleanly to modern APIs.',
+          objection: 'Data security during transit: Ensuring compliance and zero data leakage while migrating sensitive corporate records.',
           counterStrategy:
-            'Reference our custom component accelerator framework that converts legacy custom scripts into native modern SPFx web parts with automated unit test suites.',
+            'Security compliance: Reference end-to-end TLS encryption, tenant-isolated pipelines, and automated SOC2-grade verification audits at every stage.',
         },
         {
-          objection: 'Can you commit to completing user training and post-launch hypercare within our 30-day target?',
+          objection: 'User adoption resistance: Teams may struggle adopting new SharePoint Online modern web parts and SPFx workflows.',
           counterStrategy:
-            'Offer dedicated on-site/remote training workshops and standard 60-day post-go-live hypercare SLA included in the scope.',
+            'Structured change management: Provide role-based interactive training workshops and standard 60-day post-go-live hypercare SLA.',
         },
       ],
       recommendedPositioning: `Position IntentOS as the specialized, certified enterprise implementation partner with zero-downtime modernization accelerators tailored for ${context.companyName}.`,

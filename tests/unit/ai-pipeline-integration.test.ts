@@ -4,9 +4,9 @@ import { executeSalesIntelligencePipeline, recalculateOpportunityScores, regener
 
 describe('AI Sales Intelligence Pipeline Integration', () => {
   it('executes full pipeline on hero opportunity and persists results to database', async () => {
-    // Locate the ABC Technologies hero lead
+    // Locate the TechNova Solutions hero lead
     const heroLead = await prisma.lead.findFirst({
-      where: { company: { name: 'ABC Technologies' } },
+      where: { company: { name: 'TechNova Solutions' } },
       include: {
         company: true,
         requirements: true,
@@ -49,13 +49,13 @@ describe('AI Sales Intelligence Pipeline Integration', () => {
 
   it('regenerates sales brief and logs activity', async () => {
     const heroLead = await prisma.lead.findFirst({
-      where: { company: { name: 'ABC Technologies' } },
+      where: { company: { name: 'TechNova Solutions' } },
     });
     if (!heroLead) return;
 
     const brief = await regenerateSalesBrief(heroLead.id);
-    expect(brief.prospect).toBe('Marcus Vance');
-    expect(brief.company).toBe('ABC Technologies');
+    expect(brief.prospect).toBe('John Smith');
+    expect(brief.company).toBe('TechNova Solutions');
     expect(brief.painPoints.length).toBeGreaterThan(0);
   });
 });

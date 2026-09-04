@@ -51,16 +51,16 @@ export interface SeedRequirement {
 
 export const SEED_COMPANIES: SeedCompany[] = [
   {
-    name: 'ABC Technologies',
-    domain: 'abctechnologies.com',
-    industry: 'Enterprise Software & IT',
-    size: '500-1,000 employees',
-    location: 'Austin, TX',
-    description: 'Leading provider of enterprise workflow automation and legacy IT infrastructure modernization.',
-    techStack: 'Microsoft 365, SharePoint, Azure, Windows Server, Oracle DB, React, Docker',
-    hiringSignals: 'Hiring 4 Senior Systems Engineers, 2 SharePoint Solutions Architects, and 1 IT Project Director.',
-    fundingSignals: 'Series C ($48M) funded by Horizon Ventures & Apex Growth Partners.',
-    growthSignals: 'Expanded enterprise headcount by 38% YoY with 2 new regional offices in Seattle and Atlanta.',
+    name: 'TechNova Solutions',
+    domain: 'technova.com',
+    industry: 'IT Services',
+    size: '51-200 employees',
+    location: 'San Francisco, CA',
+    description: 'Premier IT services and cloud consulting provider delivering managed enterprise infrastructure, digital workplace modernization, and security solutions.',
+    techStack: 'Microsoft 365, SharePoint Online, on-premise Exchange, Azure Active Directory, Windows Server, PowerShell, React',
+    hiringSignals: 'Hiring Senior SharePoint Migration Architect and M365 Security Lead to accelerate cloud collaboration roadmap.',
+    fundingSignals: 'Profitable mid-market IT services and enterprise solutions firm.',
+    growthSignals: 'Accelerating cloud collaboration roadmap this quarter; expanding remote-first digital workplace across 150+ staff.',
   },
   {
     name: 'Nova Systems',
@@ -293,15 +293,15 @@ export const SEED_COMPANIES: SeedCompany[] = [
 ];
 
 export const HERO_REQUIREMENT: SeedRequirement = {
-  companyName: 'ABC Technologies',
-  contactName: 'Marcus Vance',
+  companyName: 'TechNova Solutions',
+  contactName: 'John Smith',
   contactTitle: 'Chief Technology Officer (CTO)',
   platform: 'LINKEDIN',
   sourceName: 'LinkedIn Executive Post',
-  sourceUrl: 'https://linkedin.com/in/marcus-vance-cto/posts/sharepoint-partner-search',
-  requirementTitle: 'SharePoint Implementation Partner for Enterprise Modernization',
+  sourceUrl: 'https://linkedin.com/in/johnsmith-technova/posts/sharepoint-modernization',
+  requirementTitle: 'Microsoft 365 & SharePoint Implementation',
   description:
-    'ABC Technologies is seeking a dedicated SharePoint implementation partner for enterprise modernization. We need assistance with: SharePoint Online, Microsoft 365, legacy migration from on-premise servers, custom application development for internal workflows, user training across 750 staff members, and 24/7 post-go-live support.',
+    'TechNova Solutions is seeking an enterprise partner for a comprehensive Microsoft 365 & SharePoint Implementation. The scope covers SharePoint Online migration from on-premise infrastructure, custom SPFx application development, end-user change management and training, and SLA-backed post-go-live managed support within a 30-day timeline.',
   category: 'Enterprise Cloud Migration & Collaboration',
   tags: [
     'SharePoint Online',
@@ -311,25 +311,25 @@ export const HERO_REQUIREMENT: SeedRequirement = {
     'user training',
     'post-go-live support',
   ],
-  budgetEstimate: '$120,000 - $180,000',
+  budgetEstimate: '$45,000 - $65,000',
   timeframe: 'Immediate (Next 30 Days)',
   rawEvidence:
-    '"We are officially opening an RFP for a Microsoft certified partner to lead our SharePoint Online and Microsoft 365 transition. Priority is legacy migration from our 2016 servers, custom PowerApps/SPFx workflow builds, comprehensive user training, and SLA-backed post-go-live support. Please DM or reach out to our IT procurement desk directly."',
+    '"TechNova Solutions is accelerating our digital workplace modernization. We are opening vendor evaluation for a certified Microsoft partner to execute our Microsoft 365 & SharePoint Implementation — including legacy on-premise migration, custom SPFx workflow development, staff training, and post-go-live support. RFP submission deadline is 30 days."',
   intentScore: 94,
   urgency: 'IMMEDIATE',
   qualificationScore: 92,
   status: 'HIGH_INTENT',
-  pipelineValue: 150000,
+  pipelineValue: 55000,
   salesBrief:
-    'ABC Technologies CTO Marcus Vance is actively seeking a qualified SharePoint implementation partner. Immediate high-value opportunity ($150k pipeline). Key drivers include retiring legacy 2016 on-prem infrastructure, custom SPFx/PowerApp integration, end-user change management for 750 users, and ongoing Tier-2/3 support SLA.',
+    'TechNova Solutions CTO John Smith is leading a critical Microsoft 365 & SharePoint Implementation. High-intent opportunity ($55k pipeline) driven by executive cloud collaboration mandates. Scope includes retiring legacy on-premise infrastructure, custom SPFx development, comprehensive user training, and post-go-live SLA support within 30 days.',
   budgetFit: 95,
   authorityFit: 98,
   needFit: 96,
   timingFit: 92,
   recommendationAction: 'CALL_NOW',
-  recommendationTitle: 'Trigger Autonomous Voice AI Outreach to CTO Marcus Vance',
+  recommendationTitle: 'Trigger Autonomous Voice AI Outreach to CTO John Smith',
   recommendationRationale:
-    'Public RFP signal is 2 days old. High intent (94), budget verified, explicit technical scope matching SharePoint and M365 modernization capabilities.',
+    'Public RFP signal is 2 days old. High intent (94/100), verified CTO decision maker, explicit technical scope matching Microsoft 365 & SharePoint implementation capabilities.',
 };
 
 export const RAW_SAMPLE_REQUIREMENTS = [

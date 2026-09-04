@@ -14,7 +14,7 @@ describe('Scoring & Opportunity Queries', () => {
     expect(metrics.priorityQueue.length).toBeGreaterThan(0);
 
     // Hero record should appear in the priority queue
-    const heroInQueue = metrics.priorityQueue.find((l) => l.companyName === 'ABC Technologies');
+    const heroInQueue = metrics.priorityQueue.find((l) => l.companyName === 'TechNova Solutions');
     expect(heroInQueue).toBeDefined();
     expect(heroInQueue?.intentScore).toBe(94);
   });
@@ -26,7 +26,7 @@ describe('Scoring & Opportunity Queries', () => {
     });
 
     expect(results.total).toBeGreaterThan(0);
-    const heroRecord = results.items.find((item) => item.company.name === 'ABC Technologies');
+    const heroRecord = results.items.find((item) => item.company.name === 'TechNova Solutions');
     expect(heroRecord).toBeDefined();
     expect(heroRecord?.intentScore).toBe(94);
   });

@@ -130,31 +130,80 @@ export async function runSeed() {
     companyMap.set(comp.name, comp);
 
     // Add company insights
-    await prisma.companyInsight.createMany({
-      data: [
-        {
-          companyId: comp.id,
-          insightType: 'HIRING',
-          headline: `Aggressive hiring in engineering & modernization`,
-          details: compData.hiringSignals,
-          confidence: 92,
-        },
-        {
-          companyId: comp.id,
-          insightType: 'TECH_STACK',
-          headline: `Primary Tech Infrastructure Stack`,
-          details: compData.techStack,
-          confidence: 95,
-        },
-        {
-          companyId: comp.id,
-          insightType: 'GROWTH',
-          headline: `Market Expansion & Signals`,
-          details: compData.growthSignals,
-          confidence: 89,
-        },
-      ],
-    });
+    if (comp.name === 'TechNova Solutions') {
+      await prisma.companyInsight.createMany({
+        data: [
+          {
+            companyId: comp.id,
+            insightType: 'HIRING',
+            headline: 'Job Posting: Senior SharePoint Migration Architect',
+            details: 'Active recruitment for senior architect to oversee M365 and SharePoint Online cutover.',
+            confidence: 96,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'GROWTH',
+            headline: 'RFP / Tender: M365 Security & Compliance Overhaul',
+            details: 'Formal RFP open for Microsoft certified migration & security partner.',
+            confidence: 94,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'TECH_STACK',
+            headline: 'Tech Stack Change: Migrating from on-prem Exchange',
+            details: 'Decommissioning legacy on-premise Exchange & Windows servers in favor of cloud collaboration.',
+            confidence: 97,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'GROWTH',
+            headline: 'Executive Quote: "Accelerating our cloud collaboration roadmap this quarter"',
+            details: 'CTO John Smith announced cloud modernization prioritization for Q3.',
+            confidence: 98,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'GROWTH',
+            headline: 'News / PR: TechNova announces remote-first digital workplace',
+            details: 'Press release outlining full digital workplace transition for distributed workforce.',
+            confidence: 93,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'TECH_STACK',
+            headline: 'Website Activity: 14 visits to migration & consulting pages',
+            details: 'High intent engagement from TechNova corporate IP range on SharePoint consulting services.',
+            confidence: 95,
+          },
+        ],
+      });
+    } else {
+      await prisma.companyInsight.createMany({
+        data: [
+          {
+            companyId: comp.id,
+            insightType: 'HIRING',
+            headline: `Aggressive hiring in engineering & modernization`,
+            details: compData.hiringSignals,
+            confidence: 92,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'TECH_STACK',
+            headline: `Primary Tech Infrastructure Stack`,
+            details: compData.techStack,
+            confidence: 95,
+          },
+          {
+            companyId: comp.id,
+            insightType: 'GROWTH',
+            headline: `Market Expansion & Signals`,
+            details: compData.growthSignals,
+            confidence: 89,
+          },
+        ],
+      });
+    }
   }
 
   // 5. Create 10 Campaigns
@@ -185,18 +234,18 @@ export async function runSeed() {
     createdCampaigns.push(camp);
   }
 
-  // 6. Create Hero Opportunity (ABC Technologies - Marcus Vance)
-  const abcCompany = companyMap.get('ABC Technologies')!;
+  // 6. Create Hero Opportunity (TechNova Solutions - John Smith)
+  const heroCompany = companyMap.get('TechNova Solutions')!;
   const linkedinSource = createdSources['LINKEDIN'];
 
   const heroLead = await prisma.lead.create({
     data: {
       name: HERO_REQUIREMENT.contactName,
       title: HERO_REQUIREMENT.contactTitle,
-      email: 'marcus.vance@abctechnologies.com',
-      phone: '+1 (512) 893-4102',
-      linkedinUrl: 'https://linkedin.com/in/marcus-vance-cto',
-      companyId: abcCompany.id,
+      email: 'john.smith@technova.com',
+      phone: '+1 (555) 123-4567',
+      linkedinUrl: 'https://linkedin.com/in/johnsmith-technova',
+      companyId: heroCompany.id,
       sourceId: linkedinSource.id,
       campaignId: createdCampaigns[0].id,
       status: HERO_REQUIREMENT.status,
@@ -232,8 +281,8 @@ export async function runSeed() {
       needFit: HERO_REQUIREMENT.needFit,
       timingFit: HERO_REQUIREMENT.timingFit,
       overallScore: HERO_REQUIREMENT.qualificationScore,
-      reasoning: 'Marcus Vance is the ultimate technical decision maker with direct budgetary authority over the M365 modernization project.',
-      summary: 'High fit score across BANT criteria. Urgent timeline to retire legacy 2016 server.',
+      reasoning: 'John Smith is the ultimate technical decision maker with direct budgetary authority over the Microsoft 365 & SharePoint Implementation.',
+      summary: 'High fit score (96%) across BANT criteria. Urgent 30-day timeline to retire legacy on-premise infrastructure.',
       status: 'QUALIFIED',
     },
   });
@@ -247,7 +296,7 @@ export async function runSeed() {
       priority: 'HIGH',
       suggestedChannel: 'Voice AI',
       suggestedMessage:
-        'Hi Marcus, following up on your search for a certified Microsoft partner for the SharePoint Online migration and SPFx workflows at ABC Technologies.',
+        'Hi John, following up on your search for a certified Microsoft partner for the Microsoft 365 & SharePoint Implementation at TechNova Solutions.',
     },
   });
 
@@ -256,7 +305,7 @@ export async function runSeed() {
       userId: user.id,
       leadId: heroLead.id,
       action: 'HERO_OPPORTUNITY_DISCOVERED',
-      details: 'IntentOS discovered LinkedIn executive RFP post by CTO Marcus Vance.',
+      details: 'IntentOS discovered LinkedIn executive RFP post by CTO John Smith.',
     },
   });
 
@@ -533,7 +582,7 @@ export async function runSeed() {
   console.log(`   - Requirements: ${totalRequirements}`);
   console.log(`   - Campaigns: ${totalCampaigns}`);
   console.log(`   - Calls & Transcripts: ${totalCalls}`);
-  console.log(`   - Hero Opportunity: ABC Technologies (CTO Marcus Vance, Intent: 94)`);
+  console.log(`   - Hero Opportunity: TechNova Solutions (CTO John Smith, Intent: 94)`);
 }
 
 if (process.argv[1]?.includes('seed')) {

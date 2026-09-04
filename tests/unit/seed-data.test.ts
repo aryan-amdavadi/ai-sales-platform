@@ -12,12 +12,12 @@ describe('Seed Data Verification', () => {
     expect(industries.size).toBeGreaterThanOrEqual(10);
   });
 
-  it('contains the mandatory Hero Record: ABC Technologies (CTO Marcus Vance)', () => {
-    const abcCompany = SEED_COMPANIES.find((c) => c.name === 'ABC Technologies');
-    expect(abcCompany).toBeDefined();
-    expect(abcCompany?.name).toBe('ABC Technologies');
+  it('contains the mandatory Hero Record: TechNova Solutions (CTO John Smith)', () => {
+    const heroCompany = SEED_COMPANIES.find((c) => c.name === 'TechNova Solutions');
+    expect(heroCompany).toBeDefined();
+    expect(heroCompany?.name).toBe('TechNova Solutions');
 
-    expect(HERO_REQUIREMENT.contactName).toBe('Marcus Vance');
+    expect(HERO_REQUIREMENT.contactName).toBe('John Smith');
     expect(HERO_REQUIREMENT.contactTitle).toBe('Chief Technology Officer (CTO)');
     expect(HERO_REQUIREMENT.intentScore).toBe(94);
     expect(HERO_REQUIREMENT.requirementTitle).toContain('SharePoint');
