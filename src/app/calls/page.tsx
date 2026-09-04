@@ -59,7 +59,7 @@ export default function CallsPage() {
     timeline: 'Evaluating vendors',
     painPoint: 'Legacy migration',
     objection: 'None',
-    decisionMaker: 'Confirmed (CTO Marcus Vance)',
+    decisionMaker: 'Confirmed (John Smith, CTO)',
     buyingStage: 'Vendor Selection',
   });
 
@@ -149,14 +149,14 @@ export default function CallsPage() {
       }
 
       if (!targetLead) {
-        const resOpp = await fetch('/api/opportunities?search=ABC+Technologies');
+        const resOpp = await fetch('/api/opportunities?search=TechNova+Solutions');
         const oppData = await resOpp.json();
         targetLead = oppData.items?.[0] || {
           id: 'hero-lead',
-          name: 'Marcus Vance',
+          name: 'John Smith',
           title: 'Chief Technology Officer (CTO)',
-          company: { name: 'ABC Technologies', industry: 'Enterprise Software & IT' },
-          requirements: [{ title: 'SharePoint Online Modernization' }],
+          company: { name: 'TechNova Solutions', industry: 'IT Services' },
+          requirements: [{ title: 'Microsoft 365 & SharePoint Implementation' }],
         };
       }
       setActiveLead(targetLead);
@@ -525,7 +525,7 @@ export default function CallsPage() {
                         ) : (
                           <>
                             <User className="w-3 h-3" />
-                            Marcus Vance (CTO)
+                            {activeLead?.name || 'John Smith'} (CTO)
                           </>
                         )}
                       </span>
@@ -551,7 +551,7 @@ export default function CallsPage() {
                 {callStatus === 'DIALING' && (
                   <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-800 text-xs text-slate-400 flex items-center gap-2">
                     <PhoneCall className="w-4 h-4 text-blue-400 animate-bounce" />
-                    <span>Connecting autonomous voice session to Marcus Vance (CTO)...</span>
+                    <span>Connecting autonomous voice session to {activeLead?.name || 'John Smith'} (CTO)...</span>
                   </div>
                 )}
               </div>
@@ -702,7 +702,7 @@ export default function CallsPage() {
                 <input
                   type="text"
                   disabled
-                  value={`${activeLead?.name || 'Marcus Vance'} (${activeLead?.company?.name || 'ABC Technologies'})`}
+                  value={`${activeLead?.name || 'John Smith'} (${activeLead?.company?.name || 'TechNova Solutions'})`}
                   className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
                 />
               </div>
@@ -750,8 +750,8 @@ export default function CallsPage() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       leadId: activeLead?.id,
-                      leadName: activeLead?.name || 'Marcus Vance',
-                      companyName: activeLead?.company?.name || 'ABC Technologies',
+                      leadName: activeLead?.name || 'John Smith',
+                      companyName: activeLead?.company?.name || 'TechNova Solutions',
                       scheduledDate: '2026-09-02',
                       scheduledTime: '14:00 EST',
                       reason: 'Technical architecture discovery follow-up',

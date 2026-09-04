@@ -23,9 +23,12 @@ export async function processCompletedCall(params: {
     },
   });
 
-  const isHero = lead?.company?.name === 'ABC Technologies' || scenarioId?.includes('SHAREPOINT');
+  const isHero =
+    lead?.company?.name === 'TechNova Solutions' ||
+    lead?.company?.name === 'ABC Technologies' ||
+    scenarioId?.includes('SHAREPOINT');
   const heroSummary =
-    'CTO Marcus Vance confirmed active vendor evaluation for SharePoint Online modernization. Key friction point is legacy 2016 migration with zero downtime. Target vendor shortlist deadline is 30 days. Marcus explicitly agreed to a technical discovery session with our lead implementation specialist.';
+    'CTO John Smith confirmed active vendor evaluation for Microsoft 365 & SharePoint Implementation at TechNova Solutions. Primary requirements are migrating from on-premise infrastructure and custom SPFx development. Main concerns are legacy migration downtime and user adoption. John confirmed a strict 30-day vendor selection timeline and agreed to a 30-minute technical scoping call on Thursday at 2 PM.';
 
   const analysis: ConversationAnalysis = isHero
     ? {

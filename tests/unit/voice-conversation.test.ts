@@ -45,33 +45,34 @@ describe('Multilingual Scenarios & Deterministic Hero Call', () => {
   it('verifies deterministic English hero scenario dialogue and signals', () => {
     const hero = HERO_SCENARIO_EN;
     expect(hero.id).toBe('HIGH_INTENT_SHAREPOINT_EN');
-    expect(hero.prospectName).toBe('Marcus Vance');
+    expect(hero.prospectName).toBe('John Smith');
     expect(hero.prospectTitle).toContain('CTO');
-    expect(hero.companyName).toBe('ABC Technologies');
+    expect(hero.companyName).toBe('TechNova Solutions');
     expect(hero.turns.length).toBe(4);
 
     // AI Disclosure check
-    expect(hero.turns[0].aiStatement).toContain("I'm the AI sales assistant from IntentOS");
-    expect(hero.turns[0].aiStatement).toContain('SharePoint implementation requirement');
+    expect(hero.turns[0].aiStatement).toContain("AI sales assistant from IntentOS");
+    expect(hero.turns[0].aiStatement).toContain('TechNova Solutions');
+    expect(hero.turns[0].aiStatement).toContain('Microsoft 365 and SharePoint implementation');
 
     // Turn 1
-    expect(hero.turns[0].leadResponse).toContain('currently evaluating implementation partners');
+    expect(hero.turns[0].leadResponse).toContain('Yes, this is John. We are looking at partners');
     expect(hero.turns[0].signals.interest).toBe('HIGH');
     expect(hero.turns[0].signals.buyingStage).toBe('Vendor Selection');
 
     // Turn 2: Objection & Pain point
-    expect(hero.turns[1].aiStatement).toContain('biggest challenge');
-    expect(hero.turns[1].leadResponse).toContain('legacy migration is the biggest concern');
-    expect(hero.turns[1].signals.painPoint).toContain('Legacy SharePoint 2016');
+    expect(hero.turns[1].aiStatement).toContain('migrating from on-premise infrastructure');
+    expect(hero.turns[1].leadResponse).toContain('legacy migration downtime');
+    expect(hero.turns[1].signals.painPoint).toContain('Legacy migration');
 
     // Turn 3: Timeline
-    expect(hero.turns[2].aiStatement).toContain('What timeline are you working with');
+    expect(hero.turns[2].aiStatement).toContain('What timeline are you targeting');
     expect(hero.turns[2].leadResponse).toContain('within 30 days');
-    expect(hero.turns[2].signals.timeline).toContain('30 Days');
+    expect(hero.turns[2].signals.timeline).toContain('30 days');
 
     // Turn 4: Next Action Agreement
-    expect(hero.turns[3].aiStatement).toContain('technical discussion with an implementation specialist');
-    expect(hero.turns[3].leadResponse).toContain("we'd be interested in that");
+    expect(hero.turns[3].aiStatement).toContain('30-minute technical scoping call');
+    expect(hero.turns[3].leadResponse).toContain('Thursday at 2 PM works');
     expect(hero.turns[3].signals.interest).toBe('EXTREME');
   });
 
@@ -79,10 +80,14 @@ describe('Multilingual Scenarios & Deterministic Hero Call', () => {
     const hi = HERO_SCENARIO_HI;
     expect(hi.turns.length).toBe(4);
     expect(hi.turns[0].aiStatement).toContain('IntentOS का AI सेल्स असिस्टेंट');
+    expect(hi.prospectName).toBe('John Smith');
+    expect(hi.companyName).toBe('TechNova Solutions');
 
     const gu = HERO_SCENARIO_GU;
     expect(gu.turns.length).toBe(4);
     expect(gu.turns[0].aiStatement).toContain('IntentOS નો AI સેલ્સ આસિસ્ટન્ટ');
+    expect(gu.prospectName).toBe('John Smith');
+    expect(gu.companyName).toBe('TechNova Solutions');
   });
 });
 
@@ -92,11 +97,11 @@ describe('Conversation Intelligence & Signals Extraction', () => {
     expect(analysis.qualificationScore).toBe(92);
     expect(analysis.interestLevel).toBe('HIGH');
     expect(analysis.timeline).toBe('30 days');
-    expect(analysis.decisionMaker).toContain('CTO Marcus Vance');
+    expect(analysis.decisionMaker).toContain('John Smith, CTO');
     expect(analysis.painPoints.length).toBeGreaterThanOrEqual(1);
-    expect(analysis.painPoints.some((p) => p.includes('SharePoint 2016'))).toBe(true);
-    expect(analysis.objections.some((o) => o.includes('downtime'))).toBe(true);
-    expect(analysis.nextBestAction).toBe('Schedule a technical discovery meeting within 48 hours.');
+    expect(analysis.painPoints.some((p) => p.toLowerCase().includes('legacy migration'))).toBe(true);
+    expect(analysis.objections.some((o) => o.toLowerCase().includes('downtime'))).toBe(true);
+    expect(analysis.nextBestAction).toContain('scoping call');
     expect(analysis.actionPriority).toBe('HIGH');
   });
 });

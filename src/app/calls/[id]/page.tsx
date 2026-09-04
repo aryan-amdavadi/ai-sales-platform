@@ -407,7 +407,7 @@ export default function CallDetailPage() {
                 <input
                   type="text"
                   disabled
-                  value={`${call?.lead?.name || 'Marcus Vance'} (${call?.lead?.company?.name || 'ABC Technologies'})`}
+                  value={`${call?.lead?.name || 'John Smith'} (${call?.lead?.company?.name || 'TechNova Solutions'})`}
                   className="w-full bg-slate-950 border border-slate-800 p-2 rounded text-slate-200"
                 />
               </div>
@@ -455,8 +455,8 @@ export default function CallDetailPage() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       leadId: call?.leadId || call?.lead?.id,
-                      leadName: call?.lead?.name || 'Marcus Vance',
-                      companyName: call?.lead?.company?.name || 'ABC Technologies',
+                      leadName: call?.lead?.name || 'John Smith',
+                      companyName: call?.lead?.company?.name || 'TechNova Solutions',
                       scheduledDate: '2026-09-02',
                       scheduledTime: '14:00 EST',
                       reason: 'Technical architecture discovery follow-up',

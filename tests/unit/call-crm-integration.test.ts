@@ -69,9 +69,7 @@ describe('Call Intelligence, Qualification Update & CRM Push Pipeline', () => {
     expect(result.call.status).toBe('COMPLETED');
     expect(result.call.durationSeconds).toBe(52);
     expect(result.analysis.qualificationScore).toBe(92);
-    expect(result.analysis.nextBestAction).toBe(
-      'Schedule a technical discovery meeting within 48 hours.'
-    );
+    expect(result.analysis.nextBestAction).toContain('scoping call');
 
     // Verify database updates
     const updatedLead = await prisma.lead.findUnique({
@@ -95,7 +93,7 @@ describe('Call Intelligence, Qualification Update & CRM Push Pipeline', () => {
       (r) => r.actionType === 'SCHEDULE_MEETING'
     );
     expect(rec).toBeDefined();
-    expect(rec?.title).toBe('Schedule a technical discovery meeting within 48 hours.');
+    expect(rec?.title).toContain('scoping call');
     expect(rec?.priority).toBe('HIGH');
   });
 

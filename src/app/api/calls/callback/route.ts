@@ -6,8 +6,8 @@ const demoCallbacks: any[] = [
   {
     id: 'CB-101',
     leadId: 'hero-lead',
-    leadName: 'Marcus Vance',
-    companyName: 'ABC Technologies',
+    leadName: 'John Smith',
+    companyName: 'TechNova Solutions',
     scheduledDate: '2026-09-02',
     scheduledTime: '14:00 EST',
     reason: 'Follow-up on technical architecture discussion',
@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
     const newCallback = {
       id: `CB-${Math.floor(100 + Math.random() * 900)}`,
       leadId: leadId || 'lead-id',
-      leadName: leadName || 'Marcus Vance',
-      companyName: companyName || 'ABC Technologies',
+      leadName: leadName || 'John Smith',
+      companyName: companyName || 'TechNova Solutions',
       scheduledDate: scheduledDate || new Date(Date.now() + 86400000).toISOString().split('T')[0],
       scheduledTime: scheduledTime || '14:00 EST',
       reason: reason || 'Technical discovery follow-up',
