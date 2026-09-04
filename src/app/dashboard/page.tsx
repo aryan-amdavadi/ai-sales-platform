@@ -238,21 +238,36 @@ export default function DashboardPage() {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-3.5 sm:self-center">
+                    <div className="flex items-center gap-3 sm:self-center flex-wrap">
                       <div className="text-right">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Intent</div>
                         <div className="text-lg font-bold text-blue-400 font-sans">{lead.intentScore}</div>
                       </div>
 
-                      <Link href={`/opportunities/${lead.id}`}>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="h-8 text-xs border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200"
-                        >
-                          Analyze
-                        </Button>
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        {isHero && (
+                          <Link href={`/calls?leadId=${lead.id}&start=true`}>
+                            <Button
+                              size="sm"
+                              className="h-8 text-xs bg-blue-600 hover:bg-blue-500 text-white font-medium flex items-center gap-1.5 shadow-sm shadow-blue-600/20"
+                              data-testid="hero-call-now-btn"
+                            >
+                              <PhoneCall className="w-3 h-3" />
+                              <span>Call Now</span>
+                            </Button>
+                          </Link>
+                        )}
+                        <Link href={`/opportunities/${lead.id}`}>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="h-8 text-xs border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200"
+                            data-testid={isHero ? 'hero-analyze-btn' : undefined}
+                          >
+                            {isHero ? 'Review Opportunity' : 'Analyze'}
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
