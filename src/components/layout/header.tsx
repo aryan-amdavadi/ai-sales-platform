@@ -147,36 +147,36 @@ export function Header({
   const getIcon = (type: NotificationItem['type']) => {
     switch (type) {
       case 'HIGH_INTENT':
-        return <Flame className="w-3.5 h-3.5 text-[#2563EB]" />;
+        return <Flame className="w-3.5 h-3.5 text-blue-400" />;
       case 'CALL_COMPLETED':
-        return <PhoneCall className="w-3.5 h-3.5 text-[#0F9D9A]" />;
+        return <PhoneCall className="w-3.5 h-3.5 text-teal-400" />;
       case 'MEETING_RECOMMENDED':
-        return <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />;
+        return <Sparkles className="w-3.5 h-3.5 text-amber-400" />;
       case 'CALLBACK_SCHEDULED':
-        return <Calendar className="w-3.5 h-3.5 text-[#2563EB]" />;
+        return <Calendar className="w-3.5 h-3.5 text-blue-400" />;
       case 'HUMAN_HANDOFF':
-        return <UserCheck className="w-3.5 h-3.5 text-[#D97706]" />;
+        return <UserCheck className="w-3.5 h-3.5 text-amber-400" />;
       case 'CRM_SYNC':
-        return <Database className="w-3.5 h-3.5 text-[#16A34A]" />;
+        return <Database className="w-3.5 h-3.5 text-emerald-400" />;
     }
   };
 
   return (
-    <header className="sticky top-0 z-20 h-16 bg-[#102A43] text-white border-b border-[#163A5F] flex items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-20 h-16 bg-white/85 backdrop-blur-xl text-slate-800 border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-6 shadow-[0_1px_4px_rgba(15,23,42,0.02)]">
       {/* Left: Mobile Toggle & Breadcrumb */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMobileMenuToggle}
-          className="p-1.5 rounded-md text-[#9FB3C8] hover:text-white hover:bg-[#163A5F] lg:hidden"
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 lg:hidden transition-colors"
           aria-label="Toggle mobile menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-[#627D98] hidden sm:inline">Workspace</span>
-          <span className="text-[#D9E2EC] hidden sm:inline">/</span>
-          <span className="font-semibold text-white">{getPageTitle(pathname)}</span>
+          <span className="text-slate-400 hidden sm:inline">Workspace</span>
+          <span className="text-slate-300 hidden sm:inline">/</span>
+          <span className="font-semibold text-slate-900 tracking-tight">{getPageTitle(pathname)}</span>
         </div>
       </div>
 
@@ -185,11 +185,11 @@ export function Header({
         {/* Quick Search */}
         <Link
           href="/opportunities"
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#163A5F] border border-[#243B53] text-xs text-[#9FB3C8] hover:text-white hover:border-[#2563EB]/40 transition-colors"
+          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100/80 border border-slate-200/90 text-xs text-slate-600 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-100 transition-all"
         >
-          <Search className="w-3.5 h-3.5 text-[#627D98]" />
+          <Search className="w-3.5 h-3.5 text-slate-400" />
           <span>Quick search...</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-[#243B53] border border-[#334E68] text-[10px] text-[#9FB3C8] font-mono">
+          <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[10px] text-slate-500 font-mono shadow-2xs">
             ⌘K
           </kbd>
         </Link>
@@ -200,10 +200,10 @@ export function Header({
             onClick={onStartJudgeMode}
             size="sm"
             variant="outline"
-            className="h-8 text-xs font-semibold border-[#D97706]/40 bg-[#D97706]/10 text-[#D97706] hover:bg-[#D97706]/20 flex items-center gap-1.5"
+            className="h-8 text-xs font-semibold border-amber-200/90 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:border-amber-300 shadow-2xs flex items-center gap-1.5 transition-all"
             data-testid="judge-mode-trigger"
           >
-            <Gavel className="w-3.5 h-3.5 text-[#D97706]" />
+            <Gavel className="w-3.5 h-3.5 text-amber-600" />
             <span className="hidden sm:inline">Judge Mode</span>
           </Button>
         )}
@@ -214,51 +214,51 @@ export function Header({
             onClick={onStartGuidedDemo}
             size="sm"
             variant="outline"
-            className="h-8 text-xs font-medium border-[#2563EB]/30 bg-[#EAF2FF] text-[#2563EB] hover:bg-[#2563EB]/10 flex items-center gap-1.5"
+            className="h-8 text-xs font-medium border-blue-200/90 bg-blue-50/90 text-blue-700 hover:bg-blue-100 hover:border-blue-300 shadow-2xs flex items-center gap-1.5 transition-all"
             data-testid="guided-demo-btn"
           >
-            <PlayCircle className="w-3.5 h-3.5" />
+            <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
             <span className="hidden sm:inline">Guided Demo</span>
           </Button>
         )}
 
         {/* Live Engine Status Badge */}
-        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#E8F7F5] border border-[#0F9D9A]/30 text-[#0F9D9A] text-xs">
-          <span className="w-2 h-2 rounded-full bg-[#0F9D9A] animate-pulse-subtle" />
-          <span className="text-[11px] font-medium text-[#0F9D9A]">Nova AI: Active</span>
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs shadow-2xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-subtle shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+          <span className="text-[11px] font-semibold text-emerald-800">Nova AI: Active</span>
         </div>
 
         {/* Notification Center */}
         <div className="relative" ref={popoverRef}>
           <button
             onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="p-2 rounded-md text-[#9FB3C8] hover:text-white hover:bg-[#163A5F] transition-colors relative"
+            className="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors relative"
             aria-label="Notification center"
             data-testid="notifications-trigger"
           >
             <Bell className="w-4.5 h-4.5" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#2563EB]" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
             )}
           </button>
 
           {/* Notifications Dropdown */}
           {notificationsOpen && (
             <div
-              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-lg bg-white border border-[#DCE5EF] shadow-lg p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs"
+              className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-white/95 backdrop-blur-2xl border border-slate-200 shadow-2xl p-4 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs text-slate-800"
               data-testid="notifications-panel"
             >
-              <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2.5">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <Bell className="w-4 h-4 text-[#2563EB]" />
-                  <span className="font-semibold text-[#10233F]">
+                  <Bell className="w-4 h-4 text-blue-600" />
+                  <span className="font-bold text-slate-900">
                     Notifications ({unreadCount})
                   </span>
                 </div>
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-[11px] text-[#2563EB] hover:underline font-medium"
+                    className="text-[11px] text-blue-600 hover:text-blue-700 hover:underline font-semibold"
                   >
                     Mark read
                   </button>
@@ -276,20 +276,20 @@ export function Header({
                       );
                       setNotificationsOpen(false);
                     }}
-                    className={`block p-2.5 rounded-md border transition-all ${
+                    className={`block p-2.5 rounded-lg border transition-all ${
                       n.read
-                        ? 'bg-white border-[#DCE5EF] text-[#64748B] hover:bg-[#F7F9FC]'
-                        : 'bg-[#EFF6FF] border-[#2563EB]/30 text-[#10233F] hover:bg-[#EFF6FF]/80'
+                        ? 'bg-slate-50/70 border-slate-200/80 text-slate-500 hover:bg-slate-100/80'
+                        : 'bg-blue-50/70 border-blue-200/70 text-slate-800 hover:bg-blue-100/70'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <div className="flex items-center gap-1.5 font-semibold text-[11px] text-[#10233F]">
+                      <div className="flex items-center gap-1.5 font-bold text-[11px] text-slate-900">
                         {getIcon(n.type)}
                         <span>{n.title}</span>
                       </div>
-                      <span className="text-[10px] text-[#64748B]">{n.timestamp}</span>
+                      <span className="text-[10px] text-slate-400 font-medium">{n.timestamp}</span>
                     </div>
-                    <p className="text-[11px] text-[#475569] leading-relaxed">
+                    <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
                       {n.message}
                     </p>
                   </Link>
@@ -302,9 +302,9 @@ export function Header({
         {/* User Avatar */}
         <Link
           href="/settings"
-          className="flex items-center gap-2 pl-2 border-l border-[#243B53]"
+          className="flex items-center gap-2 pl-2 border-l border-slate-200"
         >
-          <div className="w-7 h-7 rounded-full bg-[#163A5F] text-white flex items-center justify-center text-xs font-semibold shadow-sm">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 border border-slate-200 text-white flex items-center justify-center text-xs font-bold shadow-xs hover:ring-2 hover:ring-blue-500/30 transition-all">
             AM
           </div>
         </Link>

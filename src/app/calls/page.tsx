@@ -386,10 +386,10 @@ export default function CallsPage() {
         </div>
       </div>
 
-      {/* AI SALES COMMUNICATIONS COCKPIT (Professional Software Style) */}
+      {/* ACTIVE CALL MODAL (HERO INTERACTION) */}
       {activeCallModal && (
         <Card
-          className="p-6 bg-white border border-[#DCE5EF] shadow-lg space-y-6 rounded-md animate-in fade-in duration-200"
+          className="p-6 glass-card border-slate-200/80 shadow-glass space-y-6 rounded-xl animate-in fade-in duration-200"
           data-testid="call-cockpit"
         >
           {/* Cockpit Top Bar */}
@@ -729,9 +729,9 @@ export default function CallsPage() {
 
       {/* SCHEDULE CALLBACK MODAL */}
       {showCallbackModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#10233F]/70 backdrop-blur-sm p-4">
-          <Card className="p-5 bg-white border border-[#DCE5EF] max-w-md w-full space-y-4 rounded-md shadow-2xl">
-            <h3 className="text-sm font-bold text-[#10233F] uppercase">Schedule Follow-Up Callback</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
+          <Card className="p-6 glass-card border-slate-200/80 max-w-md w-full space-y-4 rounded-xl shadow-2xl">
+            <h3 className="text-sm font-bold text-slate-900 uppercase">Schedule Follow-Up Callback</h3>
             <div className="space-y-3 text-xs">
               <div>
                 <label className="text-[#64748B] block mb-1 font-semibold">Target Prospect</label>
@@ -816,32 +816,32 @@ export default function CallsPage() {
         <div className="space-y-6">
           {/* Upcoming Scheduled Callbacks */}
           {callbacks.length > 0 && (
-            <Card className="p-5 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
-              <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2.5">
+            <Card className="p-5 glass-card border-slate-200/80 space-y-3 rounded-xl shadow-glass">
+              <div className="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#2563EB]" />
-                  <h3 className="text-xs font-bold text-[#10233F] uppercase">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <h3 className="text-xs font-bold text-slate-900 uppercase">
                     Upcoming Scheduled Callbacks ({callbacks.length})
                   </h3>
                 </div>
-                <span className="text-[11px] text-[#64748B] font-medium">Autonomous Queue</span>
+                <span className="text-[11px] text-slate-500 font-medium">Autonomous Queue</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {callbacks.map((cb) => (
                   <div
                     key={cb.id}
-                    className="p-3.5 rounded-md bg-[#F7F9FC] border border-[#DCE5EF] flex items-center justify-between text-xs"
+                    className="p-3.5 rounded-xl bg-white/70 border border-slate-200/80 backdrop-blur-sm flex items-center justify-between text-xs hover:border-blue-400/40 transition-all"
                   >
                     <div>
-                      <span className="font-bold text-[#10233F] block">{cb.companyName}</span>
-                      <span className="text-[#475569] text-[11px]">
+                      <span className="font-bold text-slate-900 block">{cb.companyName}</span>
+                      <span className="text-slate-500 text-[11px]">
                         {cb.leadName} &bull; {cb.reason}
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="text-[#2563EB] font-bold block">{cb.scheduledDate}</span>
-                      <span className="text-[#64748B] text-[10px]">{cb.scheduledTime}</span>
+                      <span className="text-blue-600 font-bold block">{cb.scheduledDate}</span>
+                      <span className="text-slate-400 text-[10px]">{cb.scheduledTime}</span>
                     </div>
                   </div>
                 ))}
@@ -851,7 +851,7 @@ export default function CallsPage() {
 
           {/* Completed Call History List */}
           <div className="space-y-3.5">
-            <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wide">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide">
               Completed Call Sessions & Transcripts ({calls.length})
             </h3>
 
@@ -863,7 +863,7 @@ export default function CallsPage() {
                 return (
                   <Card
                     key={call.id}
-                    className="p-4.5 bg-white border-[#DCE5EF] hover:border-[#2563EB]/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-md shadow-sm"
+                    className="p-4.5 glass-card-interactive border-slate-200/80 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-xl shadow-sm"
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2.5 flex-wrap">

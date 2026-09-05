@@ -136,27 +136,27 @@ export default function OpportunitiesPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <Card className="p-4 sm:p-5 bg-white border-[#D9E2EC] space-y-4 rounded-md shadow-sm">
+      <Card className="p-4 sm:p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
         {/* Row 1: Search & Quick Sort */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           <div className="md:col-span-6 relative">
-            <Search className="w-4 h-4 text-[#627D98] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <Input
               type="text"
               placeholder="Search by prospect name, title, company, or requirement keyword..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 h-9 bg-white border-[#D9E2EC] text-[#102A43] text-xs placeholder:text-[#627D98] focus-visible:ring-[#2563EB] font-sans font-medium"
+              className="pl-9 h-9 bg-white/90 border-slate-200/90 text-slate-800 text-xs placeholder:text-slate-400 focus-visible:ring-blue-500 font-sans font-medium rounded-lg"
               data-testid="search-input"
             />
           </div>
 
           <div className="md:col-span-3 flex items-center gap-2">
-            <label className="text-xs text-[#627D98] whitespace-nowrap font-bold">Sort By:</label>
+            <label className="text-xs text-slate-500 whitespace-nowrap font-bold">Sort By:</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2.5 text-xs text-[#102A43] focus:outline-none focus:border-[#2563EB] font-sans font-semibold"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2.5 text-xs text-slate-800 focus:outline-none focus:border-blue-500 font-sans font-semibold"
               data-testid="sort-by-select"
             >
               <option value="intent">Intent Score</option>
@@ -167,11 +167,11 @@ export default function OpportunitiesPage() {
           </div>
 
           <div className="md:col-span-3 flex items-center gap-2">
-            <label className="text-xs text-[#627D98] whitespace-nowrap font-bold">Order:</label>
+            <label className="text-xs text-slate-500 whitespace-nowrap font-bold">Order:</label>
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as any)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2.5 text-xs text-[#102A43] focus:outline-none focus:border-[#2563EB] font-sans font-semibold"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2.5 text-xs text-slate-800 focus:outline-none focus:border-blue-500 font-sans font-semibold"
             >
               <option value="desc">Descending (Highest First)</option>
               <option value="asc">Ascending (Lowest First)</option>
@@ -180,14 +180,14 @@ export default function OpportunitiesPage() {
         </div>
 
         {/* Row 2: Multi-facet Filter Selectors */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-3 border-t border-[#D9E2EC] text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-3 border-t border-slate-200/80 text-xs">
           {/* Industry Filter */}
           <div className="space-y-1">
-            <label className="text-[#627D98] text-[11px] font-bold">Industry</label>
+            <label className="text-slate-500 text-[11px] font-bold">Industry</label>
             <select
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2 text-[#102A43] text-xs focus:outline-none focus:border-[#2563EB] font-sans font-medium"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500 font-sans font-medium"
               data-testid="industry-filter"
             >
               {industries.map((ind) => (
@@ -200,11 +200,11 @@ export default function OpportunitiesPage() {
 
           {/* Source Platform Filter */}
           <div className="space-y-1">
-            <label className="text-[#627D98] text-[11px] font-bold">Source Platform</label>
+            <label className="text-slate-500 text-[11px] font-bold">Source Platform</label>
             <select
               value={source}
               onChange={(e) => setSource(e.target.value)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2 text-[#102A43] text-xs focus:outline-none focus:border-[#2563EB] font-sans font-medium"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500 font-sans font-medium"
               data-testid="source-filter"
             >
               {sources.map((src) => (
@@ -217,11 +217,11 @@ export default function OpportunitiesPage() {
 
           {/* Status Filter */}
           <div className="space-y-1">
-            <label className="text-[#627D98] text-[11px] font-bold">Pipeline Status</label>
+            <label className="text-slate-500 text-[11px] font-bold">Pipeline Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2 text-[#102A43] text-xs focus:outline-none focus:border-[#2563EB] font-sans font-medium"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500 font-sans font-medium"
               data-testid="status-filter"
             >
               {statuses.map((st) => (
@@ -234,11 +234,11 @@ export default function OpportunitiesPage() {
 
           {/* Urgency Filter */}
           <div className="space-y-1">
-            <label className="text-[#627D98] text-[11px] font-bold">Urgency</label>
+            <label className="text-slate-500 text-[11px] font-bold">Urgency</label>
             <select
               value={urgency}
               onChange={(e) => setUrgency(e.target.value)}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2 text-[#102A43] text-xs focus:outline-none focus:border-[#2563EB] font-sans font-medium"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500 font-sans font-medium"
               data-testid="urgency-filter"
             >
               {urgencies.map((urg) => (
@@ -251,11 +251,11 @@ export default function OpportunitiesPage() {
 
           {/* Min Intent Filter */}
           <div className="space-y-1">
-            <label className="text-[#627D98] text-[11px] font-bold">Min Intent Score</label>
+            <label className="text-slate-500 text-[11px] font-bold">Min Intent Score</label>
             <select
               value={minIntent}
               onChange={(e) => setMinIntent(e.target.value === '' ? '' : Number(e.target.value))}
-              className="w-full h-9 bg-white border border-[#D9E2EC] rounded-md px-2 text-[#102A43] text-xs focus:outline-none focus:border-[#2563EB] font-sans font-medium"
+              className="w-full h-9 bg-white/90 border border-slate-200/90 rounded-lg px-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500 font-sans font-medium"
               data-testid="min-intent-filter"
             >
               <option value="">Any Intent (0+)</option>
@@ -282,10 +282,10 @@ export default function OpportunitiesPage() {
             onAction={handleResetFilters}
           />
         ) : (
-          <div className="w-full min-w-0 overflow-hidden border border-[#D9E2EC] rounded-md bg-white shadow-sm">
+          <div className="w-full min-w-0 overflow-hidden border border-slate-200/80 rounded-xl glass-panel shadow-glass">
             <div className="w-full overflow-x-auto custom-scrollbar">
               <table className="w-full min-w-[840px] text-left text-xs border-collapse" data-testid="opportunities-table">
-                <thead className="bg-[#F5F7FA] border-b border-[#D9E2EC] text-[11px] uppercase tracking-wider text-[#627D98] font-bold">
+                <thead className="bg-slate-100/70 backdrop-blur-sm border-b border-slate-200/80 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
                   <tr>
                     <th className="py-3 px-3 w-[22%] min-w-[160px]">Company & Prospect</th>
                     <th className="py-3 px-3 w-[24%] min-w-[160px]">Primary Requirement</th>
@@ -298,7 +298,7 @@ export default function OpportunitiesPage() {
                     <th className="py-3 px-3 text-right w-[7%] min-w-[65px]">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9E2EC]">
+                <tbody className="divide-y divide-slate-200/70">
                   {opportunities.map((item) => {
                     const isHero = item.company?.name === 'TechNova Solutions' || item.company?.name === 'ABC Technologies';
                     const req = item.requirements?.[0] || {};

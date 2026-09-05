@@ -4,22 +4,22 @@
 
 @layer base {
   :root {
-    --background: #F5F7FA;
-    --foreground: #102A43;
+    --background: #F8FAFC;
+    --foreground: #0F172A;
     --card: #FFFFFF;
-    --border: #D9E2EC;
-    --color-primary-ink: #102A43;
-    --color-deep-navy: #163A5F;
+    --border: #E2E8F0;
+    --color-primary-ink: #0B0F17;
+    --color-deep-navy: #0F172A;
     --color-royal-blue: #2563EB;
-    --color-soft-blue: #EAF2FF;
+    --color-soft-blue: #EFF6FF;
     --color-teal: #0F9D9A;
     --color-soft-teal: #E8F7F5;
-    --color-bg: #F5F7FA;
+    --color-bg: #F8FAFC;
     --color-surface: #FFFFFF;
-    --color-border: #D9E2EC;
-    --color-muted-text: #627D98;
-    --color-primary-text: #102A43;
-    --color-secondary-text: #627D98;
+    --color-border: #E2E8F0;
+    --color-muted-text: #64748B;
+    --color-primary-text: #0F172A;
+    --color-secondary-text: #475569;
     --color-success: #16A34A;
     --color-warning: #D97706;
     --color-danger: #DC2626;
@@ -38,8 +38,13 @@
   }
 
   body {
-    background-color: #F5F7FA;
-    color: #102A43;
+    background-color: #F8FAFC;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.035) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(15, 157, 154, 0.035) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(99, 102, 241, 0.03) 0px, transparent 60%);
+    background-attachment: fixed;
+    color: #0F172A;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -47,20 +52,68 @@
   }
 }
 
-/* Glassmorphism accent utility */
+/* Glassmorphism System Utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(220, 229, 239, 0.80);
-  box-shadow: 0 4px 20px rgba(16, 35, 63, 0.04);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-panel-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.90);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(37, 99, 235, 0.06);
+  transform: translateY(-1px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-card-interactive {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-interactive:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 26px -3px rgba(15, 23, 42, 0.07), inset 0 1px 0 0 rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
 }
 
 .glass-header {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(11, 15, 23, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.glass-dark-card {
+  background: rgba(11, 15, 23, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid #DCE5EF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
 }
 
 /* Enterprise scrollbar */
@@ -87,6 +140,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }

@@ -118,7 +118,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3" data-testid="metrics">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 2xl:gap-3 w-full min-w-0" data-testid="metrics">
           <MetricCard
             title="Total Opps"
             value={data.totalOpportunities}
@@ -167,7 +167,7 @@ export default function DashboardPage() {
             subtitle="Identified ARR"
             icon={DollarSign}
             variant="blue"
-            className="col-span-2 sm:col-span-1 lg:col-span-1"
+            className="col-span-2 sm:col-span-1 lg:col-span-1 xl:col-span-1"
           />
         </div>
 
@@ -194,10 +194,10 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={lead.id}
-                    className={`p-4 rounded-md border transition-all ${
+                    className={`p-4 rounded-xl border transition-all ${
                       isHero
-                        ? 'bg-white border-[#2563EB]/40 shadow-sm ring-1 ring-[#2563EB]/20'
-                        : 'bg-white border-[#D9E2EC] hover:border-[#2563EB]/30'
+                        ? 'glass-card border-blue-500/40 shadow-md ring-1 ring-blue-500/20 bg-gradient-to-r from-blue-50/50 via-white/90 to-white/80'
+                        : 'glass-card-interactive border-slate-200/80'
                     }`}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -289,7 +289,7 @@ export default function DashboardPage() {
               <span className="text-xs text-[#627D98] font-medium">Pipeline Conversion</span>
             </div>
 
-            <Card className="p-5 bg-white border-[#D9E2EC] space-y-4 rounded-md shadow-sm">
+            <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
               {data.funnelData.map((stage) => {
                 const maxCount = Math.max(...data.funnelData.map((f) => f.count), 1);
                 const barWidth = Math.max(12, Math.round((stage.count / maxCount) * 100));

@@ -162,10 +162,10 @@ export default function CampaignsPage() {
       </div>
 
       {/* Campaigns Table Container */}
-      <div className="w-full min-w-0 overflow-hidden border border-[#D9E2EC] rounded-md bg-white shadow-sm">
+      <div className="w-full min-w-0 overflow-hidden border border-slate-200/80 rounded-xl glass-panel shadow-glass">
         <div className="w-full overflow-x-auto custom-scrollbar">
           <table className="w-full min-w-[900px] text-left text-xs border-collapse" data-testid="campaigns-table">
-            <thead className="bg-[#F5F7FA] border-b border-[#D9E2EC] text-[11px] uppercase tracking-wider text-[#627D98] font-bold">
+            <thead className="bg-slate-100/70 backdrop-blur-sm border-b border-slate-200/80 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
               <tr>
                 <th className="py-3.5 px-4 w-[28%]">Campaign Name & Goal</th>
                 <th className="py-3.5 px-4 w-[24%]">Target ICP & Filters</th>
@@ -177,7 +177,7 @@ export default function CampaignsPage() {
                 <th className="py-3.5 px-4 text-right w-[8%]">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#D9E2EC]">
+            <tbody className="divide-y divide-slate-200/70">
               {campaigns.map((camp) => (
                 <tr key={camp.id} className="hover:bg-[#F5F7FA] transition-colors group">
                   <td className="py-3.5 px-4">

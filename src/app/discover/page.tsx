@@ -114,7 +114,7 @@ export default function DiscoveryPage() {
       </div>
 
       {/* Filter Toolbar */}
-      <Card className="p-4 sm:p-5 bg-white border-[#D9E2EC] space-y-4 rounded-md shadow-sm">
+      <Card className="p-4 sm:p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           {/* Keyword Search */}
           <div className="md:col-span-5 relative">
@@ -224,8 +224,8 @@ export default function DiscoveryPage() {
             return (
               <Card
                 key={item.id}
-                className={`p-5 bg-white border-[#D9E2EC] hover:border-[#2563EB]/40 transition-colors space-y-3 rounded-md shadow-sm ${
-                  isHero ? 'border-[#2563EB]/40 bg-[#EAF2FF]/40 ring-1 ring-[#2563EB]/20' : ''
+                className={`p-5 glass-card-interactive border-slate-200/80 space-y-3 rounded-xl shadow-sm ${
+                  isHero ? 'border-blue-500/40 bg-gradient-to-r from-blue-50/50 via-white/85 to-white/80 ring-1 ring-blue-500/20' : ''
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -256,7 +256,7 @@ export default function DiscoveryPage() {
                 </div>
 
                 {/* Requirement Snippet */}
-                <div className="space-y-1 bg-[#F5F7FA] p-3 rounded-md border border-[#D9E2EC]">
+                <div className="space-y-1 bg-slate-50/70 p-3 rounded-lg border border-slate-200/80 backdrop-blur-sm">
                   <h4 className="text-xs font-bold text-[#102A43]">{req?.title}</h4>
                   <p className="text-xs text-[#627D98] line-clamp-2 leading-relaxed font-medium">
                     &ldquo;{req?.rawEvidence || req?.description}&rdquo;
@@ -264,7 +264,7 @@ export default function DiscoveryPage() {
                 </div>
 
                 {/* Footer Meta & Actions */}
-                <div className="flex items-center justify-between pt-1 border-t border-[#D9E2EC] text-xs">
+                <div className="flex items-center justify-between pt-1 border-t border-slate-200/80 text-xs">
                   <span className="text-[#16A34A] font-bold">
                     ${item.pipelineValue?.toLocaleString()} Pipeline
                   </span>

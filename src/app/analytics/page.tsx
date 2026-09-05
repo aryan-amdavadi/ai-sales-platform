@@ -184,7 +184,7 @@ export default function AnalyticsPage() {
       {/* CHARTS ROW 1: Funnel Conversion & Intent Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Opportunity Funnel */}
-        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+        <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
           <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-[#2563EB]" />
@@ -211,7 +211,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Intent Trend & Progression */}
-        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+        <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
           <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
               <Target className="w-4 h-4 text-[#0F9D9A]" />
@@ -241,7 +241,7 @@ export default function AnalyticsPage() {
       {/* CHARTS ROW 2: Source Distribution & Industry Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Source Platform Distribution */}
-        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+        <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
           <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
               <PieIcon className="w-4 h-4 text-[#2563EB]" />
@@ -279,7 +279,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Industry Distribution */}
-        <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+        <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
           <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4 text-[#2563EB]" />
@@ -307,7 +307,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* CHARTS ROW 3: Campaign Performance Breakdown */}
-      <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm">
+      <Card className="p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
         <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
           <div className="flex items-center gap-2">
             <BarChart3 className="w-4 h-4 text-[#2563EB]" />

@@ -8,39 +8,39 @@ interface StatusBadgeProps {
 }
 
 export function StatusBadge({ status, type = 'status', className }: StatusBadgeProps) {
-  let variantClass = 'bg-[#F1F5F9] text-[#627D98] border-[#D9E2EC]';
+  let variantClass = 'bg-slate-500/10 text-slate-600 border-slate-300/80';
 
   if (type === 'urgency') {
     switch (status) {
       case 'IMMEDIATE':
-        variantClass = 'bg-[#FEF2F2] text-[#DC2626] border-[#DC2626]/30 font-semibold';
+        variantClass = 'bg-rose-500/15 text-rose-700 border-rose-500/30 font-semibold';
         break;
       case 'HIGH':
-        variantClass = 'bg-[#FEF3C7] text-[#D97706] border-[#D97706]/30';
+        variantClass = 'bg-amber-500/15 text-amber-700 border-amber-500/30';
         break;
       case 'MEDIUM':
-        variantClass = 'bg-[#EAF2FF] text-[#2563EB] border-[#2563EB]/30';
+        variantClass = 'bg-blue-500/15 text-blue-700 border-blue-500/30';
         break;
       case 'LOW':
-        variantClass = 'bg-[#F1F5F9] text-[#627D98] border-[#D9E2EC]';
+        variantClass = 'bg-slate-500/10 text-slate-600 border-slate-300/80';
         break;
     }
   } else if (type === 'source') {
     switch (status) {
       case 'LINKEDIN':
-        variantClass = 'bg-[#EAF2FF] text-[#2563EB] border-[#2563EB]/30';
+        variantClass = 'bg-blue-500/15 text-blue-700 border-blue-500/30';
         break;
       case 'X':
-        variantClass = 'bg-[#F1F5F9] text-[#627D98] border-[#D9E2EC]';
+        variantClass = 'bg-slate-800/10 text-slate-700 border-slate-300/80';
         break;
       case 'WEBSITE':
-        variantClass = 'bg-[#DCFCE7] text-[#16A34A] border-[#16A34A]/30';
+        variantClass = 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30';
         break;
       case 'PUBLIC_DIRECTORY':
-        variantClass = 'bg-[#E8F7F5] text-[#0F9D9A] border-[#0F9D9A]/30';
+        variantClass = 'bg-teal-500/15 text-teal-700 border-teal-500/30';
         break;
       case 'FREELANCE_PLATFORM':
-        variantClass = 'bg-[#EAF2FF] text-[#163A5F] border-[#163A5F]/30';
+        variantClass = 'bg-indigo-500/15 text-indigo-700 border-indigo-500/30';
         break;
     }
   } else {
@@ -48,29 +48,29 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
     switch (status) {
       case 'HIGH_INTENT':
       case 'QUALIFIED':
-        variantClass = 'bg-[#EAF2FF] text-[#2563EB] border-[#2563EB]/30 font-semibold';
+        variantClass = 'bg-blue-500/15 text-blue-700 border-blue-500/30 font-semibold';
         break;
       case 'INTERESTED':
       case 'MEETING':
-        variantClass = 'bg-[#DCFCE7] text-[#16A34A] border-[#16A34A]/30 font-semibold';
+        variantClass = 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30 font-semibold';
         break;
       case 'CONTACTED':
-        variantClass = 'bg-[#EAF2FF] text-[#163A5F] border-[#163A5F]/30';
+        variantClass = 'bg-indigo-500/15 text-indigo-700 border-indigo-500/30';
         break;
       case 'RELEVANT':
-        variantClass = 'bg-[#E8F7F5] text-[#0F9D9A] border-[#0F9D9A]/30';
+        variantClass = 'bg-teal-500/15 text-teal-700 border-teal-500/30';
         break;
       case 'DISCOVERED':
-        variantClass = 'bg-[#F1F5F9] text-[#627D98] border-[#D9E2EC]';
+        variantClass = 'bg-slate-500/10 text-slate-600 border-slate-300/80';
         break;
       case 'COMPLETED':
-        variantClass = 'bg-[#DCFCE7] text-[#16A34A] border-[#16A34A]/30';
+        variantClass = 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30';
         break;
       case 'IN_PROGRESS':
-        variantClass = 'bg-[#FEF3C7] text-[#D97706] border-[#D97706]/30';
+        variantClass = 'bg-amber-500/15 text-amber-700 border-amber-500/30';
         break;
       case 'ACTIVE':
-        variantClass = 'bg-[#EAF2FF] text-[#2563EB] border-[#2563EB]/30';
+        variantClass = 'bg-blue-500/15 text-blue-700 border-blue-500/30';
         break;
     }
   }
@@ -80,7 +80,7 @@ export function StatusBadge({ status, type = 'status', className }: StatusBadgeP
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium tracking-tight border',
+        'inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium tracking-tight border backdrop-blur-sm shadow-xs',
         variantClass,
         className
       )}

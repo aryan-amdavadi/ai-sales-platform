@@ -65,27 +65,27 @@ export function Sidebar({
   const pathname = usePathname();
 
   const navContent = (
-    <div className="flex flex-col h-full bg-[#102A43] border-r border-[#163A5F] text-white select-none">
+    <div className="flex flex-col h-full bg-white/90 backdrop-blur-xl border-r border-slate-200/80 text-slate-800 select-none shadow-[2px_0_20px_rgba(15,23,42,0.03)]">
       {/* Brand Header */}
-      <div className="h-16 px-5 border-b border-[#163A5F] flex items-center justify-between">
+      <div className="h-16 px-5 border-b border-slate-200/80 flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-md bg-[#2563EB] flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-[0_4px_12px_rgba(37,99,235,0.25)] transition-all group-hover:scale-105 group-hover:shadow-[0_4px_16px_rgba(37,99,235,0.35)]">
             <Zap className="w-4.5 h-4.5 fill-white text-white" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold tracking-tight text-white text-sm">INTENTOS</span>
-              <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-[#0F9D9A]/20 text-[#0F9D9A] border border-[#0F9D9A]/30">
+              <span className="font-bold tracking-tight text-slate-900 text-sm">INTENTOS</span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200/80">
                 ENTERPRISE
               </span>
             </div>
-            <p className="text-[11px] text-[#9FB3C8]">AI Sales Agent Platform</p>
+            <p className="text-[11px] text-slate-500 font-medium">AI Sales Agent Platform</p>
           </div>
         </Link>
         {mobileOpen && (
           <button
             onClick={onMobileClose}
-            className="p-1 rounded-md text-[#9FB3C8] hover:text-white lg:hidden"
+            className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 lg:hidden transition-colors"
             aria-label="Close navigation"
           >
             <X className="w-5 h-5" />
@@ -96,7 +96,7 @@ export function Sidebar({
       {/* Primary Navigation - All 7 Required Tabs */}
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar">
         <div className="space-y-1">
-          <div className="px-3 pb-2 text-[11px] font-semibold tracking-wider text-[#627D98] uppercase">
+          <div className="px-3 pb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
             Core Navigation
           </div>
           {PRIMARY_NAV_ITEMS.map((item) => {
@@ -110,21 +110,21 @@ export function Sidebar({
                 data-testid={item.testId}
                 onClick={onMobileClose}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium transition-colors duration-150',
+                  'group flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 border',
                   isActive
-                    ? 'bg-[#163A5F] text-white font-semibold shadow-sm'
-                    : 'text-[#9FB3C8] hover:text-white hover:bg-[#163A5F]/50'
+                    ? 'bg-blue-50/90 text-blue-700 font-semibold shadow-xs border-blue-200/70 backdrop-blur-md'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border-transparent'
                 )}
               >
                 <Icon
                   className={cn(
                     'w-4 h-4 flex-shrink-0 transition-colors',
-                    isActive ? 'text-[#2563EB]' : 'text-[#627D98] group-hover:text-white'
+                    isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
                   )}
                 />
                 <span className="truncate">{item.label}</span>
                 {isActive && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
                 )}
               </Link>
             );
@@ -133,7 +133,7 @@ export function Sidebar({
 
         {/* Secondary Navigation */}
         <div className="space-y-1">
-          <div className="px-3 pb-2 text-[11px] font-semibold tracking-wider text-[#64748B] uppercase">
+          <div className="px-3 pb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
             Intelligence & System
           </div>
           {SECONDARY_NAV_ITEMS.map((item) => {
@@ -146,19 +146,22 @@ export function Sidebar({
                 data-testid={item.testId}
                 onClick={onMobileClose}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-md text-xs font-medium transition-colors duration-150',
+                  'group flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 border',
                   isActive
-                    ? 'bg-[#163A5F] text-white font-semibold shadow-sm'
-                    : 'text-[#94A3B8] hover:text-white hover:bg-[#163A5F]/50'
+                    ? 'bg-teal-50/90 text-teal-800 font-semibold shadow-xs border-teal-200/70 backdrop-blur-md'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border-transparent'
                 )}
               >
                 <Icon
                   className={cn(
                     'w-4 h-4 flex-shrink-0 transition-colors',
-                    isActive ? 'text-[#0F9D9A]' : 'text-[#64748B] group-hover:text-white'
+                    isActive ? 'text-teal-600' : 'text-slate-400 group-hover:text-slate-600'
                   )}
                 />
                 <span className="truncate">{item.label}</span>
+                {isActive && (
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-600 shadow-[0_0_8px_rgba(13,148,136,0.6)]" />
+                )}
               </Link>
             );
           })}
@@ -166,7 +169,7 @@ export function Sidebar({
       </div>
 
       {/* Guided Tour & User Profile Footer */}
-      <div className="mt-auto p-3 border-t border-[#163A5F] bg-[#10233F] space-y-2">
+      <div className="mt-auto p-3 border-t border-slate-200/80 bg-slate-50/70 backdrop-blur-md space-y-2">
         {onStartJudgeMode && (
           <Button
             onClick={() => {
@@ -175,10 +178,10 @@ export function Sidebar({
             }}
             variant="outline"
             size="sm"
-            className="w-full h-8 text-xs border-[#D97706]/40 bg-[#D97706]/10 text-amber-300 hover:bg-[#D97706]/20 flex items-center justify-center gap-1.5 font-semibold"
+            className="w-full h-8 text-xs border-amber-200/80 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:border-amber-300 shadow-2xs flex items-center justify-center gap-1.5 font-semibold transition-all"
             data-testid="sidebar-judge-mode-btn"
           >
-            <Gavel className="w-3.5 h-3.5 text-amber-400" />
+            <Gavel className="w-3.5 h-3.5 text-amber-600" />
             <span>Judge Fast-Track</span>
           </Button>
         )}
@@ -191,20 +194,20 @@ export function Sidebar({
             }}
             variant="outline"
             size="sm"
-            className="w-full h-8 text-xs border-[#2563EB]/40 bg-[#2563EB]/10 text-blue-200 hover:bg-[#2563EB]/20 flex items-center justify-center gap-1.5 font-medium"
+            className="w-full h-8 text-xs border-blue-200/80 bg-blue-50/90 text-blue-700 hover:bg-blue-100 hover:border-blue-300 shadow-2xs flex items-center justify-center gap-1.5 font-medium transition-all"
           >
-            <PlayCircle className="w-3.5 h-3.5" />
+            <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
             <span>Start Guided Demo</span>
           </Button>
         )}
 
-        <div className="flex items-center gap-3 p-2 rounded-md bg-[#163A5F]/40 border border-[#163A5F]">
-          <div className="w-7 h-7 rounded-full bg-[#163A5F] border border-[#2563EB]/40 flex items-center justify-center text-xs font-semibold text-white">
+        <div className="flex items-center gap-3 p-2 rounded-lg bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-colors">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 border border-slate-200 flex items-center justify-center text-xs font-bold text-white shadow-xs">
             AM
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-white truncate">Alex Morgan</p>
-            <p className="text-[10px] text-[#94A3B8] truncate">Head of Revenue</p>
+            <p className="text-xs font-semibold text-slate-800 truncate">Alex Morgan</p>
+            <p className="text-[10px] text-slate-500 truncate">Head of Revenue</p>
           </div>
         </div>
       </div>
@@ -221,7 +224,7 @@ export function Sidebar({
       {/* Mobile drawer backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-[#10233F]/80 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={onMobileClose}
         />
       )}
