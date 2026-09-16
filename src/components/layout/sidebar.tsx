@@ -15,8 +15,6 @@ import {
   ShieldCheck,
   Zap,
   X,
-  PlayCircle,
-  Gavel,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -52,15 +50,11 @@ const SECONDARY_NAV_ITEMS: NavItem[] = [
 interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
-  onStartGuidedDemo?: () => void;
-  onStartJudgeMode?: () => void;
 }
 
 export function Sidebar({
   mobileOpen,
   onMobileClose,
-  onStartGuidedDemo,
-  onStartJudgeMode,
 }: SidebarProps) {
   const pathname = usePathname();
 
@@ -168,39 +162,8 @@ export function Sidebar({
         </div>
       </div>
 
-      {/* Guided Tour & User Profile Footer */}
+      {/* User Profile Footer */}
       <div className="mt-auto p-3 border-t border-slate-200/80 bg-slate-50/70 backdrop-blur-md space-y-2">
-        {onStartJudgeMode && (
-          <Button
-            onClick={() => {
-              onStartJudgeMode();
-              if (onMobileClose) onMobileClose();
-            }}
-            variant="outline"
-            size="sm"
-            className="w-full h-8 text-xs border-amber-200/80 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:border-amber-300 shadow-2xs flex items-center justify-center gap-1.5 font-semibold transition-all"
-            data-testid="sidebar-judge-mode-btn"
-          >
-            <Gavel className="w-3.5 h-3.5 text-amber-600" />
-            <span>Judge Fast-Track</span>
-          </Button>
-        )}
-
-        {onStartGuidedDemo && (
-          <Button
-            onClick={() => {
-              onStartGuidedDemo();
-              if (onMobileClose) onMobileClose();
-            }}
-            variant="outline"
-            size="sm"
-            className="w-full h-8 text-xs border-blue-200/80 bg-blue-50/90 text-blue-700 hover:bg-blue-100 hover:border-blue-300 shadow-2xs flex items-center justify-center gap-1.5 font-medium transition-all"
-          >
-            <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
-            <span>Start Guided Demo</span>
-          </Button>
-        )}
-
         <div className="flex items-center gap-3 p-2 rounded-lg bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-colors">
           <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 border border-slate-200 flex items-center justify-center text-xs font-bold text-white shadow-xs">
             AM

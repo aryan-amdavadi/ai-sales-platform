@@ -80,13 +80,10 @@ Standardized badge for opportunities, stages, sources, and qualification:
 <StatusBadge status="LINKEDIN" type="source" />
 ```
 
-### 3. GuidedDemo (`src/components/shared/guided-demo.tsx`)
-Interactive 11-step walkthrough modal featuring step indicators, animated progress bar, and direct navigation links.
-
-### 4. DetailLoadingSkeleton & TableLoadingSkeleton (`src/components/shared/loading-skeleton.tsx`)
+### 3. DetailLoadingSkeleton & TableLoadingSkeleton (`src/components/shared/loading-skeleton.tsx`)
 Smooth pulse placeholder skeletons matching table and card geometries.
 
-### 5. ErrorState & EmptyState (`src/components/shared/error-state.tsx`, `empty-state.tsx`)
+### 4. ErrorState & EmptyState (`src/components/shared/error-state.tsx`, `empty-state.tsx`)
 Polished empty states with contextual icons, clear explanations, and action triggers.
 
 ---

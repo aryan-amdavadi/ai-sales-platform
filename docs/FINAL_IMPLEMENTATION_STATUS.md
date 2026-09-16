@@ -38,7 +38,6 @@ All 4 tasks specified in the IntentOS hackathon requirements are completely impl
 | **Notifications** | Local Notification Center with Entity Deep Links| `src/components/layout/header.tsx` | **PASS** |
 | **Audit Logs** | Admin Activity Trail & Observability Telemetry | `src/app/admin/page.tsx` | **PASS** |
 | **Security** | Zero Hardcoded Keys, Zero-Trust Input Validation| `scripts/audit/verify-security.mjs` | **PASS** |
-| **Hero Demo** | Deterministic ABC Technologies Workflow | `scripts/audit/verify-demo.mjs` | **PASS** |
 
 ---
 
@@ -57,7 +56,6 @@ All 4 tasks specified in the IntentOS hackathon requirements are completely impl
 ║ Markup                    PASS             ║
 ║ Features                  PASS             ║
 ║ Security                  PASS             ║
-║ Hero Demo                 PASS             ║
 ╠════════════════════════════════════════════╣
 ║ Overall Score             100 / 100        ║
 ╚════════════════════════════════════════════╝
@@ -71,7 +69,6 @@ All 4 tasks specified in the IntentOS hackathon requirements are completely impl
 - **Reliability (10/10)**: 100% local deterministic fallback, 0 TypeScript errors, 0 ESLint warnings.
 - **Testing (5/5)**: 29 Vitest tests, 13 Playwright E2E tests, 100% pass rate.
 - **Security (5/5)**: Strict Zod validation, parameterized SQLite queries, no secrets committed.
-- **Demo Readiness (5/5)**: Deterministic 1-click Hero Demo with reset capability.
 
 ---
 

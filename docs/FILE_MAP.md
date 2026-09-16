@@ -56,7 +56,7 @@
 │   ├── components/              # Reusable React components
 │   │   ├── layout/              # Layout structural components
 │   │   │   ├── header.tsx       # Sticky top navigation bar & notification center
-│   │   │   ├── main-layout.tsx  # Application layout container & guided demo wire-up
+│   │   │   ├── main-layout.tsx  # Application layout container
 │   │   │   └── sidebar.tsx      # Grouped navigation sidebar & demo trigger
 │   │   ├── shared/              # Domain-specific shared components
 │   │   │   ├── empty-state.tsx  # Clean empty state placeholder

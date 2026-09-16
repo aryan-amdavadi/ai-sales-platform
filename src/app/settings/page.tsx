@@ -8,7 +8,6 @@ import {
   Volume2,
   Bell,
   Database,
-  RotateCcw,
   Check,
   Save,
 } from 'lucide-react';
@@ -17,10 +16,8 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState<'company' | 'ai' | 'voice' | 'notifications' | 'data' | 'demo'>('company');
+  const [activeTab, setActiveTab] = useState<'company' | 'ai' | 'voice' | 'notifications' | 'data'>('company');
   const [saved, setSaved] = useState(false);
-  const [resetting, setResetting] = useState(false);
-  const [resetMsg, setResetMsg] = useState('');
 
   // Form states
   const [companyName, setCompanyName] = useState('IntentOS Enterprise');
@@ -35,28 +32,12 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const handleResetDemo = async () => {
-    try {
-      setResetting(true);
-      const res = await fetch('/api/demo/reset', { method: 'POST' });
-      if (res.ok) {
-        setResetMsg('Demo dataset reseeded successfully!');
-        setTimeout(() => setResetMsg(''), 3000);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setResetting(false);
-    }
-  };
-
   const tabs = [
     { id: 'company', label: 'Company Profile', icon: Building },
     { id: 'ai', label: 'AI Intelligence', icon: Bot },
     { id: 'voice', label: 'Voice Outreach Engine', icon: Volume2 },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'data', label: 'Data & Ingestion', icon: Database },
-    { id: 'demo', label: 'Demo Mode Controls', icon: RotateCcw },
   ];
 
   return (
@@ -234,33 +215,6 @@ export default function SettingsPage() {
                   <div className="text-[#64748B]">DATABASE ENGINE: SQLite with Prisma ORM</div>
                   <div className="text-[#16A34A]">STATUS: Connected & Synchronized</div>
                 </div>
-              </div>
-            )}
-
-            {activeTab === 'demo' && (
-              <div className="space-y-4">
-                <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Deterministic Demo Control Center</h3>
-                <p className="text-xs text-[#64748B] leading-relaxed font-medium">
-                  Reset the database to the benchmark state containing 105+ opportunities, 20 companies, 10 campaigns,
-                  20 completed calls, and the hero record (TechNova Solutions - CTO John Smith).
-                </p>
-
-                {resetMsg && (
-                  <div className="p-3.5 rounded-md bg-[#DCFCE7] border border-[#16A34A]/30 text-xs text-[#16A34A] font-bold">
-                    {resetMsg}
-                  </div>
-                )}
-
-                <Button
-                  onClick={handleResetDemo}
-                  disabled={resetting}
-                  variant="outline"
-                  size="sm"
-                  className="border-[#DC2626]/30 bg-[#FEF2F2] hover:bg-[#FEF2F2]/80 text-[#DC2626] text-xs flex items-center gap-2 font-bold"
-                >
-                  <RotateCcw className={`w-3.5 h-3.5 ${resetting ? 'animate-spin' : ''}`} />
-                  <span>{resetting ? 'Resetting Database...' : 'Reset to Deterministic Benchmark'}</span>
-                </Button>
               </div>
             )}
           </Card>

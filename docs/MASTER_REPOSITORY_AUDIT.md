@@ -78,9 +78,7 @@ $$\text{Public Signal} \rightarrow \text{AI Requirement} \rightarrow \text{Inten
 - **Missing TestIDs in Markup:**
   - Dashboard: missing `data-testid="dashboard"`, `data-testid="priority-queue"`, `data-testid="metrics"`, `data-testid="opportunity-funnel"` (currently uses non-standard names `dashboard-page`, `hero-queue`, `funnel-visualization`).
   - Opportunity Detail: missing `data-testid="qualification"` on the BANT qualification card.
-  - CRM: missing `data-testid="crm-sync"`.
-- **Judge Mode:** Not yet implemented in the UI navigation or top bar (only Guided Demo exists).
-- **Guided Demo Copy:** Steps in `src/components/shared/guided-demo.tsx` do not match the exact 11-step canonical script defined in Directive Section 61.
+- **CRM:** missing `data-testid="crm-sync"`.
 
 ### 3. What is broken?
 - **E2E & Feature Audit Failure:** The uncommitted change in `src/app/dashboard/page.tsx` removed the `Pipeline Value` metric card. Consequently, running `npm run audit` fails at:
@@ -128,7 +126,6 @@ $$\text{Public Signal} \rightarrow \text{AI Requirement} \rightarrow \text{Inten
 - Canonical hero opportunity alignment: `TechNova Solutions`, `John Smith`, `CTO`, `Microsoft 365 / SharePoint`.
 - Audit script `scripts/audit/verify-data-consistency.mjs`.
 - Master audit script integration with data consistency verification.
-- `Judge Mode` fast-track navigation.
 - Mandatory documentation: `docs/MASTER_REPOSITORY_AUDIT.md`, `docs/REAL_VS_SIMULATED.md`, `docs/ACCEPTANCE_MATRIX.md`, `docs/LIMITATIONS.md`, `docs/FINAL_AUDIT.md`.
 
 ### 12. What is visually weak?
@@ -171,6 +168,5 @@ The repository will be systematically brought to 100% compliance across all 92 d
 1. **Baseline Stabilization:** Fix dashboard metric card regression and align all `data-testid` attributes to specification.
 2. **Hero Opportunity Canonical Realignment:** Establish `TechNova Solutions` / `John Smith` (CTO) / `Microsoft 365 & SharePoint Implementation` as the canonical hero across seed data, scenarios, intelligence, voice turns, E2E tests, and UI.
 3. **Data Consistency Audit Implementation:** Create `scripts/audit/verify-data-consistency.mjs` verifying cross-screen parity (Company, Prospect, Role, Requirement, Timeline, Intent, Qualification).
-4. **Judge Mode & Guided Demo Realignment:** Implement dedicated Judge Mode and update 11-step Guided Demo script.
-5. **Full Documentation Suite:** Create/update all 16 required documentation files in `docs/`.
-6. **Master Audit Execution & Git Release:** Achieve 100/100 `RESULT: PASS`, tag `v1.0.0`, and commit sequentially.
+4. **Full Documentation Suite:** Create/update all 16 required documentation files in `docs/`.
+5. **Master Audit Execution & Git Release:** Achieve 100/100 `RESULT: PASS`, tag `v1.0.0`, and commit sequentially.

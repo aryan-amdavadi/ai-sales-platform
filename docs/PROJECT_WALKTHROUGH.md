@@ -187,39 +187,23 @@ Full operational transparency:
 
 ---
 
-## 17. Platform Settings & Demo Control Center (`/settings`)
+## 17. Platform Settings (`/settings`)
 
-Configuration and benchmark resets:
+Configuration:
 - **Workspace Profile**: Organization name and corporate domain.
 - **AI Intelligence Settings**: Primary LLM engine (Gemini 3.7 Flash, Gemini 1.5 Pro, Deterministic Local Scorer) and auto-qualification confidence slider.
 - **Voice Synthesizer**: Voice profile picker and speaking rate controls.
 - **Notifications**: Granular alerts for high-intent signals and booked meetings.
-- **Deterministic Benchmark Reset**: One-click database restoration to the benchmark demo dataset (105+ opportunities, 20 companies, 10 campaigns, 20 completed calls).
 
 ---
 
-## 18. Guided Interactive Demo Tour
 
-A built-in 11-step walkthrough (`src/components/shared/guided-demo.tsx`) accessible from the sidebar and header:
-1. **Sales Intelligence Command Center**: Overview of 7 core KPIs and system health.
-2. **AI Priority Queue & "Why Now?"**: Live intent ranking and urgent procurement triggers.
-3. **Hero Opportunity: TechNova Solutions**: Deep dive into the $150k SharePoint migration opportunity.
-4. **Multidimensional Intent Engine**: Scoring breakdown across 5 weighted dimensions.
-5. **Evidence & Procurement Intelligence**: Verbatim public RFP citations and firmographics.
-6. **AI Pre-Call Sales Brief**: Turnkey talking points and objection playbooks.
-7. **AI Voice Outreach Cockpit**: Outbound dialing with live conversational speech.
-8. **Live Telemetry & Signal Extraction**: Dynamic extraction of timeline and decision maker authority.
-9. **Post-Call Intelligence & Next Best Action**: Instant qualification scoring and technical discovery recommendation.
-10. **Autonomous CRM Synchronization**: One-click CRM record creation.
-11. **Executive Pipeline Analytics**: End-to-end pipeline visibility and conversion ROI.
 
----
-
-## 19. Verification, Quality Assurance & Audit Results
+## 18. Verification, Quality Assurance & Audit Results
 
 IntentOS is protected by a multi-layered automated testing and verification suite:
 - **Vitest Unit & Logic Tests**: 29/29 tests passing across 7 test suites (Intent scorer, BANT qualifier, sales brief generator, voice scenarios, demo provider, CRM sync, campaigns).
-- **Playwright End-to-End Tests**: Complete verification of voice workflow, guided tour, multi-screen navigation, and responsive mobile drawers.
+- **Playwright End-to-End Tests**: Complete verification of voice workflow, multi-screen navigation, and responsive mobile drawers.
 - **UI/UX & Design System Audit**: `scripts/audit/verify-ui.mjs` verifying UI structure, navigation, responsiveness, accessibility, and visual tokens.
 - **Master Audit Suite**: `scripts/audit/master-audit.mjs` running the complete 11-step qualification checklist.
 

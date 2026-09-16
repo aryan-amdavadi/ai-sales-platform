@@ -84,11 +84,8 @@ if (!failed) {
 }
 
 // 2. NAVIGATION AUDIT
-console.log('2. Auditing Navigation & Guided Demo Trigger...');
+console.log('2. Auditing Navigation...');
 checkFileContains('src/components/layout/sidebar.tsx', ['/dashboard', '/opportunities', '/calls', '/discover', '/campaigns', '/intelligence', '/analytics', '/admin', '/settings'], 'Navigation Links');
-checkFileContains('src/components/layout/sidebar.tsx', ['Start Guided Demo', 'onStartGuidedDemo'], 'Sidebar Guided Demo Trigger');
-checkFileContains('src/components/layout/header.tsx', ['Guided Demo', 'onStartGuidedDemo'], 'Header Guided Demo Trigger');
-checkFileContains('src/components/shared/guided-demo.tsx', ['Step 1 of 11', 'TechNova Solutions', 'John Smith'], 'Guided Demo 11 Steps');
 
 if (!failed) {
   console.log('   ✅ NAVIGATION PASS\n');

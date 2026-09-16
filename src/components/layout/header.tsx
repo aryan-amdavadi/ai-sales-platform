@@ -10,8 +10,6 @@ import {
   Calendar,
   Database,
   UserCheck,
-  PlayCircle,
-  Gavel,
   Flame,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -20,8 +18,6 @@ import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
   onMobileMenuToggle: () => void;
-  onStartGuidedDemo?: () => void;
-  onStartJudgeMode?: () => void;
 }
 
 interface NotificationItem {
@@ -42,8 +38,6 @@ interface NotificationItem {
 
 export function Header({
   onMobileMenuToggle,
-  onStartGuidedDemo,
-  onStartJudgeMode,
 }: HeaderProps) {
   const pathname = usePathname();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -193,34 +187,6 @@ export function Header({
             ⌘K
           </kbd>
         </Link>
-
-        {/* Judge Mode Fast-Track Button */}
-        {onStartJudgeMode && (
-          <Button
-            onClick={onStartJudgeMode}
-            size="sm"
-            variant="outline"
-            className="h-8 text-xs font-semibold border-amber-200/90 bg-amber-50/90 text-amber-900 hover:bg-amber-100 hover:border-amber-300 shadow-2xs flex items-center gap-1.5 transition-all"
-            data-testid="judge-mode-trigger"
-          >
-            <Gavel className="w-3.5 h-3.5 text-amber-600" />
-            <span className="hidden sm:inline">Judge Mode</span>
-          </Button>
-        )}
-
-        {/* Guided Demo Launch Button */}
-        {onStartGuidedDemo && (
-          <Button
-            onClick={onStartGuidedDemo}
-            size="sm"
-            variant="outline"
-            className="h-8 text-xs font-medium border-blue-200/90 bg-blue-50/90 text-blue-700 hover:bg-blue-100 hover:border-blue-300 shadow-2xs flex items-center gap-1.5 transition-all"
-            data-testid="guided-demo-btn"
-          >
-            <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
-            <span className="hidden sm:inline">Guided Demo</span>
-          </Button>
-        )}
 
         {/* Live Engine Status Badge */}
         <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs shadow-2xs">

@@ -32,7 +32,7 @@ src/
 │   └── settings/         # Configuration & demo reset
 ├── components/
 │   ├── layout/           # Sidebar, Header, MainLayout
-│   ├── shared/           # MetricCard, StatusBadge, GuidedDemo, Skeletons
+│   ├── shared/           # MetricCard, StatusBadge, Skeletons
 │   └── ui/               # Radix UI + Tailwind primitives (Button, Card, Input)
 ├── lib/
 │   ├── intelligence/     # Intent Scorer, BANT Qualifier, Sales Brief

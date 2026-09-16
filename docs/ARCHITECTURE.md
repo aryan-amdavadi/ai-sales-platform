@@ -109,8 +109,8 @@ flowchart TB
 ### 5. UI Presentation & Component Design System (`src/components/`)
 - Built on Next.js 15 App Router with server/client boundaries.
 - **Design Tokens**: Standardized CSS variables in `src/app/globals.css`.
-- **Layout**: Structured sidebar (`WORKSPACE`, `INTELLIGENCE`, `SYSTEM`), sticky header with global search, notification center, and interactive guided demo trigger.
-- **Shared Primitives**: `MetricCard`, `StatusBadge`, `LoadingSkeleton`, `EmptyState`, `ErrorState`, `GuidedDemo`.
+- **Layout**: Structured sidebar (`WORKSPACE`, `INTELLIGENCE`, `SYSTEM`), sticky header with global search, and notification center.
+- **Shared Primitives**: `MetricCard`, `StatusBadge`, `LoadingSkeleton`, `EmptyState`, `ErrorState`.
 
 ---
 

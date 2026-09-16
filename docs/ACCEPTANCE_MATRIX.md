@@ -15,8 +15,7 @@ This document provides a comprehensive mapping of every major directive requirem
 | **Autonomous Voice Cockpit** | 4-Turn Dialogue, AI Disclosure | `src/app/calls/page.tsx`<br>`src/lib/voice/scenarios.ts` | `tests/unit/voice-conversation.test.ts`<br>`tests/e2e/voice-workflow.spec.ts` | **PASS (100%)** |
 | **Post-Call Intelligence** | Summary, BANT extraction, Next Best Action | `src/lib/voice/intelligence.ts`<br>`src/app/calls/[id]/page.tsx` | `tests/e2e/voice-workflow.spec.ts`<br>`tests/unit/call-crm-integration.test.ts` | **PASS (100%)** |
 | **CRM Synchronization** | SQLite CrmSync, Contact/Opportunity creation | `src/lib/crm/demo-provider.ts`<br>`src/app/api/calls/[id]/crm-push/route.ts` | `tests/unit/call-crm-integration.test.ts`<br>`tests/e2e/voice-workflow.spec.ts` | **PASS (100%)** |
-| **Guided Demo Tour** | 11-Step Interactive Walkthrough | `src/components/shared/guided-demo.tsx` | `scripts/audit/verify-ui.mjs` | **PASS (100%)** |
-| **Judge Evaluation Mode** | 10-Step Automated Sequence & Telemetry | `src/components/shared/judge-mode.tsx` | `scripts/audit/verify-ui.mjs` | **PASS (100%)** |
+
 | **Design System & TestIDs** | Dark Mode, Slate/Blue/Emerald, testIDs | `src/app/globals.css`<br>`src/components/layout/*` | `scripts/audit/verify-markup.mjs`<br>`scripts/audit/verify-ui.mjs` | **PASS (100%)** |
 | **Security & Compliance** | Zero Hardcoded Keys, AI Disclosure | `src/lib/config.ts`<br>`scripts/audit/verify-security.mjs` | `scripts/audit/verify-security.mjs` | **PASS (100%)** |
 | **Data Consistency** | Canonical Account Data Parity | `scripts/audit/verify-data-consistency.mjs` | `scripts/audit/verify-data-consistency.mjs` | **PASS (100%)** |
