@@ -26,6 +26,7 @@ model User {
   memberships   WorkspaceMember[]
   imports       LeadImport[]
   callbacks     Callback[]
+  ownedCampaigns Campaign[] @relation("CampaignOwner")
 }
 
 model Session {
@@ -188,6 +189,7 @@ model Lead {
   provenance         LeadFieldProvenance[]
   decisionTraces     AIDecisionTrace[]
   callbacks          Callback[]
+  enrollments        CampaignEnrollment[]
 }
 
 model Requirement {
@@ -228,14 +230,57 @@ model Campaign {
   workspaceId    String
   workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   name           String
-  targetAudience String
-  status         String   @default("ACTIVE") // DRAFT, ACTIVE, PAUSED, COMPLETED
-  goal           String?
-  channels       String? // JSON or comma-separated list of channels (Voice AI, Email, LinkedIn)
+  objective      String?
+  targetAudience String?
+  icpCriteria    String?
+  minIntentScore Int      @default(0)
+  minQualificationScore Int @default(0)
+  industries     String?  // JSON array
+  locations      String?  // JSON array
+  languages      String?  // JSON array
+  sourceFilters  String?  // JSON array
+  
+  mode           String   @default("CALLING_ONLY") // CALLING_ONLY, DISCOVERY_AND_CALLING
+  channels       String?  // JSON or comma-separated
+  
+  callingWindowStart String? @default("09:00")
+  callingWindowEnd   String? @default("17:00")
+  timezonePolicy     String? @default("PROSPECT_LOCAL") // PROSPECT_LOCAL, CAMPAIGN_LOCAL, STRICT_UTC
+  
+  retryPolicy    String?  @default("EXPONENTIAL_BACKOFF")
+  maxAttempts    Int      @default(3)
+  
+  scheduleMode   String   @default("IMMEDIATE") // IMMEDIATE, SCHEDULED, DAILY, WEEKLY, MONTHLY
+  scheduledAt    DateTime?
+  
+  status         String   @default("DRAFT") // DRAFT, SCHEDULED, ACTIVE, PAUSED, COMPLETED, CANCELLED
+  
+  ownerId        String?
+  owner          User?    @relation("CampaignOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  
   leads          Lead[]
   calls          Call[]
+  enrollments    CampaignEnrollment[]
+}
+
+model CampaignEnrollment {
+  id             String   @id @default(cuid())
+  campaignId     String
+  campaign       Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  leadId         String
+  lead           Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  status         String   @default("ENROLLED") // ENROLLED, QUEUED, CONTACTED, CONNECTED, QUALIFIED, INTERESTED, MEETING, REJECTED, OPTED_OUT, FAILED
+  attemptsCount  Int      @default(0)
+  
+  enrolledAt     DateTime @default(now())
+  lastContactedAt DateTime?
+  nextRetryAt    DateTime?
+  
+  @@unique([campaignId, leadId])
 }
 
 model Call {

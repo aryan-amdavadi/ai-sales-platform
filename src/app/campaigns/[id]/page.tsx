@@ -105,8 +105,10 @@ export default function CampaignDetailPage() {
   }
 
   // Filtered Leads
-  const leads = campaign.leads || [];
-  const filteredLeads = leads.filter((lead: any) => {
+  const enrollments = campaign.enrollments || [];
+  const filteredEnrollments = enrollments.filter((enrollment: any) => {
+    const lead = enrollment.lead;
+    if (!lead) return false;
     const matchesSearch =
       !searchLead ||
       lead.name.toLowerCase().includes(searchLead.toLowerCase()) ||
@@ -116,9 +118,9 @@ export default function CampaignDetailPage() {
     return matchesSearch && matchesIntent;
   });
 
-  const contactedCount = leads.filter((l: any) => ['CONTACTED', 'INTERESTED', 'MEETING', 'CONVERTED'].includes(l.status)).length;
-  const interestedCount = leads.filter((l: any) => ['INTERESTED', 'MEETING', 'CONVERTED'].includes(l.status)).length;
-  const meetingsCount = leads.filter((l: any) => ['MEETING', 'CONVERTED'].includes(l.status)).length;
+  const contactedCount = enrollments.filter((e: any) => ['CONTACTED', 'CONNECTED', 'QUALIFIED', 'INTERESTED', 'MEETING'].includes(e.status)).length;
+  const interestedCount = enrollments.filter((e: any) => ['INTERESTED', 'MEETING', 'QUALIFIED'].includes(e.status)).length;
+  const meetingsCount = enrollments.filter((e: any) => ['MEETING'].includes(e.status)).length;
 
   return (
     <div className="space-y-6 pb-16 max-w-7xl mx-auto">
@@ -152,27 +154,53 @@ export default function CampaignDetailPage() {
               <StatusBadge status={campaign.status} type="status" />
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
-              Goal: <span className="text-slate-200">{campaign.goal}</span>
+              Objective: <span className="text-slate-200">{campaign.objective || 'N/A'}</span>
             </p>
           </div>
         </div>
 
-        <Button
-          onClick={() => setShowEditModal(true)}
-          variant="outline"
-          size="sm"
-          className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
-        >
-          <Edit className="w-3.5 h-3.5 text-blue-400" />
-          <span>Edit Campaign</span>
-        </Button>
+        <div className="flex items-center gap-2">
+          {campaign.status === 'PAUSED' ? (
+            <Button
+              onClick={() => {
+                setEditStatus('ACTIVE');
+                handleUpdateCampaign(new Event('submit') as any);
+              }}
+              size="sm"
+              className="h-8 text-xs bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5"
+            >
+              Resume Campaign
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setEditStatus('PAUSED');
+                handleUpdateCampaign(new Event('submit') as any);
+              }}
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs border-amber-500/30 text-amber-400 hover:bg-amber-950/30 flex items-center gap-1.5"
+            >
+              Pause Campaign
+            </Button>
+          )}
+          <Button
+            onClick={() => setShowEditModal(true)}
+            variant="outline"
+            size="sm"
+            className="h-8 text-xs border-slate-700 bg-slate-900 text-slate-300 hover:text-slate-100 flex items-center gap-1.5"
+          >
+            <Edit className="w-3.5 h-3.5 text-blue-400" />
+            <span>Settings</span>
+          </Button>
+        </div>
       </div>
 
       {/* Campaign Dashboard Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-4 bg-slate-900/60 border-slate-800">
           <span className="text-[10px] text-slate-400 uppercase font-semibold">Enrolled Leads</span>
-          <p className="text-2xl font-bold text-slate-100 mt-1">{leads.length}</p>
+          <p className="text-2xl font-bold text-slate-100 mt-1">{enrollments.length}</p>
         </Card>
         <Card className="p-4 bg-slate-900/60 border-slate-800">
           <span className="text-[10px] text-slate-400 uppercase font-semibold">Contacted</span>
@@ -220,7 +248,7 @@ export default function CampaignDetailPage() {
       {/* Leads Table */}
       <div className="space-y-3">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-          Target Opportunities ({filteredLeads.length})
+          Target Opportunities ({filteredEnrollments.length})
         </h3>
         <Card className="bg-slate-900/60 border-slate-800 overflow-x-auto">
           <table className="w-full text-left text-xs">
@@ -234,8 +262,10 @@ export default function CampaignDetailPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {filteredLeads.map((lead: any) => (
-                <tr key={lead.id} className="hover:bg-slate-800/40 transition-colors">
+              {filteredEnrollments.map((enrollment: any) => {
+                const lead = enrollment.lead;
+                return (
+                <tr key={enrollment.id} className="hover:bg-slate-800/40 transition-colors">
                   <td className="py-3 px-4">
                     <span className="font-semibold text-slate-200 block">{lead.company?.name}</span>
                     <span className="text-[11px] text-slate-400">{lead.name} &bull; {lead.title}</span>
@@ -247,17 +277,23 @@ export default function CampaignDetailPage() {
                     {lead.intentScore}
                   </td>
                   <td className="py-3 px-4">
-                    <StatusBadge status={lead.status} type="status" />
+                    <StatusBadge status={enrollment.status} type="status" />
                   </td>
                   <td className="py-3 px-4 text-right">
                     <Link href={`/opportunities/${lead.id}`}>
-                      <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-400 hover:bg-blue-500/10">
-                        View
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 text-xs text-blue-400 hover:text-blue-300 hover:bg-slate-800 font-semibold"
+                      >
+                        <span>View Lead</span>
+                        <ArrowLeft className="w-3.5 h-3.5 ml-1 rotate-180" />
                       </Button>
                     </Link>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </Card>

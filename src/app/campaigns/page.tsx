@@ -25,13 +25,46 @@ export default function CampaignsPage() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [formName, setFormName] = useState('');
-  const [formGoal, setFormGoal] = useState('');
+  const [formObjective, setFormObjective] = useState('');
   const [formAudience, setFormAudience] = useState('Enterprise CTOs & VPs of IT');
   const [formMinIntent, setFormMinIntent] = useState(75);
-  const [formIndustry, setFormIndustry] = useState('Enterprise Software & IT');
-  const [formLocation, setFormLocation] = useState('Austin, TX');
+  const [formIndustry, setFormIndustry] = useState('');
+  const [formLocation, setFormLocation] = useState('');
   const [formLanguage, setFormLanguage] = useState<'en-US' | 'hi-IN' | 'gu-IN'>('en-US');
-  const [formCallWindow, setFormCallWindow] = useState('09:00 - 17:00 EST');
+  const [formCallWindowStart, setFormCallWindowStart] = useState('09:00');
+  const [formCallWindowEnd, setFormCallWindowEnd] = useState('17:00');
+  const [formScheduleMode, setFormScheduleMode] = useState('IMMEDIATE');
+  const [formMaxAttempts, setFormMaxAttempts] = useState(3);
+  
+  const [estimatedLeads, setEstimatedLeads] = useState<number | null>(null);
+  const [estimating, setEstimating] = useState(false);
+
+  useEffect(() => {
+    if (!showCreateModal) return;
+    const fetchEstimate = async () => {
+      setEstimating(true);
+      try {
+        const res = await fetch('/api/campaigns/preview-audience', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            minIntentScore: formMinIntent,
+            industries: formIndustry ? [formIndustry] : undefined,
+            locations: formLocation ? [formLocation] : undefined,
+          })
+        });
+        const data = await res.json();
+        setEstimatedLeads(data.count || 0);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setEstimating(false);
+      }
+    };
+    
+    const timeout = setTimeout(fetchEstimate, 500);
+    return () => clearTimeout(timeout);
+  }, [formMinIntent, formIndustry, formLocation, showCreateModal]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -69,12 +102,15 @@ export default function CampaignsPage() {
         body: JSON.stringify({
           name: formName,
           targetAudience: formAudience,
-          goal: formGoal || `Autonomous qualification for ${formIndustry} accounts with ${formMinIntent}+ intent.`,
-          minIntent: formMinIntent,
-          industry: formIndustry,
-          location: formLocation,
-          language: formLanguage,
-          callWindow: formCallWindow,
+          objective: formObjective || `Autonomous qualification for ${formIndustry || 'all'} accounts with ${formMinIntent}+ intent.`,
+          minIntentScore: formMinIntent,
+          industries: formIndustry ? [formIndustry] : undefined,
+          locations: formLocation ? [formLocation] : undefined,
+          languages: [formLanguage],
+          callingWindowStart: formCallWindowStart,
+          callingWindowEnd: formCallWindowEnd,
+          scheduleMode: formScheduleMode,
+          maxAttempts: formMaxAttempts
         }),
       });
 
@@ -82,7 +118,7 @@ export default function CampaignsPage() {
       if (json.success) {
         setShowCreateModal(false);
         setFormName('');
-        setFormGoal('');
+        setFormObjective('');
         showToast(`Campaign created successfully with ${json.enrolledCount} initial opportunities enrolled!`);
         fetchCampaigns();
       } else {
@@ -188,7 +224,7 @@ export default function CampaignsPage() {
                       >
                         {camp.name}
                       </Link>
-                      <p className="text-[11px] text-[#627D98] line-clamp-1 font-medium">{camp.goal}</p>
+                      <p className="text-[11px] text-[#627D98] line-clamp-1 font-medium">{camp.objective}</p>
                     </div>
                   </td>
 
@@ -251,6 +287,17 @@ export default function CampaignsPage() {
             </div>
 
             <form onSubmit={handleCreateCampaign} className="space-y-3.5 text-xs">
+              
+              <div className="bg-[#F8FAFC] p-3 rounded border border-[#E2E8F0] flex items-center justify-between">
+                <div>
+                  <h4 className="font-bold text-[#10233F]">Audience Estimate</h4>
+                  <p className="text-[10px] text-[#64748B]">Leads matching current criteria</p>
+                </div>
+                <div className="text-xl font-bold text-[#2563EB]">
+                  {estimating ? <span className="animate-pulse">...</span> : estimatedLeads}
+                </div>
+              </div>
+
               <div>
                 <label className="text-[#10233F] font-bold block mb-1">Campaign Name</label>
                 <input
@@ -259,7 +306,7 @@ export default function CampaignsPage() {
                   placeholder="e.g. Healthcare EHR Cloud Migration Q4"
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
-                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
+                  className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs"
                 />
               </div>
 
@@ -270,7 +317,7 @@ export default function CampaignsPage() {
                   required
                   value={formAudience}
                   onChange={(e) => setFormAudience(e.target.value)}
-                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
+                  className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs"
                 />
               </div>
 
@@ -280,8 +327,9 @@ export default function CampaignsPage() {
                   <select
                     value={formMinIntent}
                     onChange={(e) => setFormMinIntent(Number(e.target.value))}
-                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
+                    className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs"
                   >
+                    <option value={0}>All Leads</option>
                     <option value={60}>60+ (Moderate Intent)</option>
                     <option value={75}>75+ (High Intent)</option>
                     <option value={85}>85+ (Critical / Immediate)</option>
@@ -289,54 +337,54 @@ export default function CampaignsPage() {
                 </div>
 
                 <div>
-                  <label className="text-[#10233F] font-bold block mb-1">Target Language</label>
-                  <select
-                    value={formLanguage}
-                    onChange={(e) => setFormLanguage(e.target.value as any)}
-                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
-                  >
-                    <option value="en-US">English (US)</option>
-                    <option value="hi-IN">Hindi (हिंदी)</option>
-                    <option value="gu-IN">Gujarati (ગુજરાતી)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
                   <label className="text-[#10233F] font-bold block mb-1">Target Industry</label>
                   <select
                     value={formIndustry}
                     onChange={(e) => setFormIndustry(e.target.value)}
-                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
+                    className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs"
                   >
+                    <option value="">All Industries</option>
                     <option value="Enterprise Software & IT">Enterprise Software & IT</option>
                     <option value="Healthcare & Life Sciences">Healthcare & Life Sciences</option>
                     <option value="Financial Services & FinTech">Financial Services & FinTech</option>
                     <option value="Manufacturing & Logistics">Manufacturing & Logistics</option>
-                    <option value="ALL">All Industries</option>
                   </select>
                 </div>
+              </div>
 
+              <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="text-[#10233F] font-bold block mb-1">Calling Window</label>
-                  <input
-                    type="text"
-                    value={formCallWindow}
-                    onChange={(e) => setFormCallWindow(e.target.value)}
-                    className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
-                  />
+                  <div className="flex items-center gap-1">
+                    <input type="time" value={formCallWindowStart} onChange={(e) => setFormCallWindowStart(e.target.value)} className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-xs" />
+                    <span>-</span>
+                    <input type="time" value={formCallWindowEnd} onChange={(e) => setFormCallWindowEnd(e.target.value)} className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-xs" />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="text-[#10233F] font-bold block mb-1">Max Attempts</label>
+                  <input type="number" min={1} max={10} value={formMaxAttempts} onChange={(e) => setFormMaxAttempts(Number(e.target.value))} className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-xs" />
+                </div>
+                
+                <div>
+                  <label className="text-[#10233F] font-bold block mb-1">Execution</label>
+                  <select value={formScheduleMode} onChange={(e) => setFormScheduleMode(e.target.value)} className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-xs">
+                    <option value="IMMEDIATE">Immediate Launch</option>
+                    <option value="SCHEDULED">Schedule for Later</option>
+                    <option value="DAILY">Daily Recurring</option>
+                  </select>
                 </div>
               </div>
 
               <div>
-                <label className="text-[#10233F] font-bold block mb-1">Campaign Goal / Milestone</label>
+                <label className="text-[#10233F] font-bold block mb-1">Campaign Objective</label>
                 <input
                   type="text"
-                  placeholder="e.g. Schedule 10 technical discovery sessions for $100k+ ARR migration opportunities."
-                  value={formGoal}
-                  onChange={(e) => setFormGoal(e.target.value)}
-                  className="w-full bg-white border border-[#DCE5EF] p-2.5 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs font-semibold"
+                  placeholder="e.g. Schedule 10 technical discovery sessions."
+                  value={formObjective}
+                  onChange={(e) => setFormObjective(e.target.value)}
+                  className="w-full bg-white border border-[#DCE5EF] p-2 rounded text-[#10233F] focus:outline-none focus:border-[#2563EB] text-xs"
                 />
               </div>
 
@@ -346,7 +394,7 @@ export default function CampaignsPage() {
                   onClick={() => setShowCreateModal(false)}
                   variant="outline"
                   size="sm"
-                  className="border-[#DCE5EF] bg-white text-[#64748B] text-xs font-medium"
+                  className="border-[#DCE5EF] bg-white text-[#64748B] text-xs font-medium h-8"
                 >
                   Cancel
                 </Button>
@@ -354,9 +402,9 @@ export default function CampaignsPage() {
                   type="submit"
                   disabled={creating}
                   size="sm"
-                  className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs"
+                  className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-semibold text-xs h-8"
                 >
-                  {creating ? 'Enrolling Leads...' : 'Launch Campaign'}
+                  {creating ? 'Enrolling...' : (formScheduleMode === 'IMMEDIATE' ? 'Launch Campaign' : 'Schedule Campaign')}
                 </Button>
               </div>
             </form>

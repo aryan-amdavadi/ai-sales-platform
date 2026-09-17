@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCampaignsData } from '@/lib/scoring';
 import { prisma } from '@/lib/db/prisma';
+import { cookies } from 'next/headers';
+import { LocalDeterministicCampaignRunner } from '@/lib/campaigns/runner';
 
 export async function GET() {
   try {
@@ -14,67 +16,90 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const cookieStore = cookies();
+    const sessionId = (await cookieStore).get('session_id')?.value;
+
+    if (!sessionId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const session = await prisma.session.findUnique({
+      where: { id: sessionId },
+      include: { user: true }
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const membership = await prisma.workspaceMember.findFirst({
+      where: { userId: session.userId }
+    });
+
+    if (!membership) {
+      return NextResponse.json({ error: 'No workspace found' }, { status: 403 });
+    }
+
     const body = await req.json();
     const {
       name,
+      objective,
       targetAudience,
-      goal,
-      channels = 'Voice AI, Email, LinkedIn',
-      minIntent = 70,
-      industry,
-      location,
-      language = 'en-US',
-      callWindow = '09:00 - 17:00 EST',
+      minIntentScore = 70,
+      industries,
+      locations,
+      languages,
+      callingWindowStart = '09:00',
+      callingWindowEnd = '17:00',
+      timezonePolicy = 'PROSPECT_LOCAL',
+      retryPolicy = 'EXPONENTIAL_BACKOFF',
+      maxAttempts = 3,
+      scheduleMode = 'IMMEDIATE',
     } = body;
 
-    if (!name || !targetAudience) {
-      return NextResponse.json({ error: 'Name and targetAudience are required' }, { status: 400 });
+    if (!name) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
     }
 
     const campaign = await prisma.campaign.create({
-      data: { workspaceId: "dummy", 
+      data: {
+        workspaceId: membership.workspaceId,
         name,
-        targetAudience: `${targetAudience} (${language}, ${callWindow})`,
-        goal: goal || `Target high-intent opportunities with ${minIntent}+ intent score.`,
-        channels,
-        status: 'ACTIVE',
+        objective: objective || 'Drive initial qualification',
+        targetAudience,
+        minIntentScore: Number(minIntentScore),
+        industries: industries ? JSON.stringify(industries) : undefined,
+        locations: locations ? JSON.stringify(locations) : undefined,
+        languages: languages ? JSON.stringify(languages) : undefined,
+        callingWindowStart,
+        callingWindowEnd,
+        timezonePolicy,
+        retryPolicy,
+        maxAttempts: Number(maxAttempts),
+        scheduleMode,
+        status: scheduleMode === 'IMMEDIATE' ? 'ACTIVE' : 'SCHEDULED',
+        ownerId: session.userId,
       },
     });
 
-    // Auto-enroll matching leads if specified
-    const leadWhere: any = {
-      intentScore: { gte: minIntent },
-    };
-    if (industry && industry !== 'ALL') {
-      leadWhere.company = { industry };
-    }
-    if (location && location !== 'ALL') {
-      leadWhere.company = { ...(leadWhere.company || {}), location: { contains: location } };
-    }
-
-    const matchingLeads = await prisma.lead.findMany({
-      where: leadWhere,
-      take: 15,
-    });
-
-    for (const lead of matchingLeads) {
-      await prisma.lead.update({
-        where: { id: lead.id },
-        data: { workspaceId: "dummy",  campaignId: campaign.id },
-      });
+    let enrolledCount = 0;
+    if (campaign.status === 'ACTIVE') {
+      const runner = new LocalDeterministicCampaignRunner();
+      enrolledCount = await runner.evaluateAudiences(campaign.id);
     }
 
     await prisma.activityLog.create({
-      data: { workspaceId: "dummy", 
+      data: {
+        workspaceId: membership.workspaceId,
         action: 'CAMPAIGN_CREATED',
-        details: `Created campaign "${name}" with ${matchingLeads.length} initial opportunities enrolled. Criteria: Min Intent ${minIntent}, Lang ${language}.`,
+        details: `Created campaign "${name}" with ${enrolledCount} initial leads enrolled.`,
       },
     });
 
     return NextResponse.json({
       success: true,
       campaign,
-      enrolledCount: matchingLeads.length,
+      enrolledCount,
     });
   } catch (error: any) {
     console.error('Error creating campaign:', error);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
+import { cookies } from 'next/headers';
 
 export async function GET(
   req: NextRequest,
@@ -10,11 +11,15 @@ export async function GET(
     const campaign = await prisma.campaign.findUnique({
       where: { id },
       include: {
-        leads: {
+        enrollments: {
           include: {
-            company: true,
-            requirements: true,
-          },
+            lead: {
+              include: {
+                company: true,
+                requirements: true,
+              }
+            }
+          }
         },
         calls: {
           include: {
@@ -40,23 +45,38 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const cookieStore = cookies();
+    const sessionId = (await cookieStore).get('session_id')?.value;
+    if (!sessionId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const session = await prisma.session.findUnique({
+      where: { id: sessionId },
+    });
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const membership = await prisma.workspaceMember.findFirst({
+      where: { userId: session.userId }
+    });
+    if (!membership) return NextResponse.json({ error: 'No workspace' }, { status: 403 });
+
     const { id } = await params;
     const body = await req.json();
-    const { name, targetAudience, status, goal, channels } = body;
+    const { name, targetAudience, status, objective, channels } = body;
 
     const updated = await prisma.campaign.update({
-      where: { id },
-      data: { workspaceId: "dummy", 
+      where: { id, workspaceId: membership.workspaceId },
+      data: {
         ...(name && { name }),
         ...(targetAudience && { targetAudience }),
         ...(status && { status }),
-        ...(goal && { goal }),
+        ...(objective && { objective }),
         ...(channels && { channels }),
       },
     });
 
     await prisma.activityLog.create({
-      data: { workspaceId: "dummy", 
+      data: {
+        workspaceId: membership.workspaceId,
         action: 'CAMPAIGN_UPDATED',
         details: `Updated campaign "${updated.name}" (Status: ${updated.status}).`,
       },

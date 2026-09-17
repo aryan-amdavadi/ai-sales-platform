@@ -198,19 +198,13 @@ export async function getOpportunityById(id: string) {
 export async function getCampaignsData() {
   const campaigns = await prisma.campaign.findMany({
     include: {
-      leads: {
+      enrollments: {
         select: {
           id: true,
           status: true,
-          intentScore: true,
-          pipelineValue: true,
-        },
-      },
-      calls: {
-        select: {
-          id: true,
-          status: true,
-          interestLevel: true,
+          lead: {
+            select: { pipelineValue: true }
+          }
         },
       },
     },
@@ -218,18 +212,18 @@ export async function getCampaignsData() {
   });
 
   return campaigns.map((c) => {
-    const totalLeads = c.leads.length;
-    const contacted = c.leads.filter((l) => ['CONTACTED', 'INTERESTED', 'MEETING', 'CONVERTED'].includes(l.status)).length;
-    const interested = c.leads.filter((l) => ['INTERESTED', 'MEETING', 'CONVERTED'].includes(l.status)).length;
-    const meetings = c.leads.filter((l) => ['MEETING', 'CONVERTED'].includes(l.status)).length;
-    const totalPipeline = c.leads.reduce((sum, l) => sum + l.pipelineValue, 0);
+    const totalLeads = c.enrollments.length;
+    const contacted = c.enrollments.filter((e) => ['CONTACTED', 'CONNECTED', 'QUALIFIED', 'INTERESTED', 'MEETING'].includes(e.status)).length;
+    const interested = c.enrollments.filter((e) => ['INTERESTED', 'MEETING', 'QUALIFIED'].includes(e.status)).length;
+    const meetings = c.enrollments.filter((e) => ['MEETING'].includes(e.status)).length;
+    const totalPipeline = c.enrollments.reduce((sum, e) => sum + (e.lead?.pipelineValue || 0), 0);
 
     return {
       id: c.id,
       name: c.name,
       targetAudience: c.targetAudience,
       status: c.status,
-      goal: c.goal,
+      objective: c.objective,
       channels: c.channels,
       totalLeads,
       contacted,
