@@ -25,6 +25,7 @@ model User {
   activityLogs  ActivityLog[]
   memberships   WorkspaceMember[]
   imports       LeadImport[]
+  callbacks     Callback[]
 }
 
 model Session {
@@ -186,6 +187,7 @@ model Lead {
   discoveryResults   DiscoveryResult[]
   provenance         LeadFieldProvenance[]
   decisionTraces     AIDecisionTrace[]
+  callbacks          Callback[]
 }
 
 model Requirement {
@@ -246,7 +248,7 @@ model Call {
   campaign        Campaign?   @relation(fields: [campaignId], references: [id], onDelete: SetNull)
   userId          String?
   user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
-  status          String      @default("COMPLETED") // SCHEDULE, IN_PROGRESS, COMPLETED, FAILED, MISSED
+  status          String      @default("QUEUED") // QUEUED, SCHEDULED, RINGING, CONNECTED, IN_PROGRESS, VOICEMAIL, NO_ANSWER, CALLBACK_REQUESTED, COMPLETED, FAILED, HANDED_OFF
   scheduledAt     DateTime?
   startedAt       DateTime?
   endedAt         DateTime?
@@ -257,7 +259,45 @@ model Call {
   nextStep        String?
   recordingUrl    String?
   transcript      Transcript?
+
+  // Orchestration & Configuration
+  timezone        String?     // Prospect timezone
+  optOut          Boolean     @default(false)
+  maxAttempts     Int         @default(3)
+  retryDelay      Int         @default(86400) // Delay in seconds
+  language        String      @default("en")
+
+  attempts        CallAttempt[]
+  callbacks       Callback[]
+
   createdAt       DateTime    @default(now())
+}
+
+model CallAttempt {
+  id              String   @id @default(cuid())
+  callId          String
+  call            Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  startTime       DateTime @default(now())
+  endTime         DateTime?
+  disposition     String   // NO_ANSWER, VOICEMAIL, CONNECTED, FAILED
+  errorMessage    String?
+  createdAt       DateTime @default(now())
+}
+
+model Callback {
+  id              String   @id @default(cuid())
+  callId          String
+  call            Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  leadId          String
+  lead            Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  scheduledAt     DateTime
+  timezone        String?
+  reason          String?
+  assignedUserId  String?
+  assignedUser    User?    @relation(fields: [assignedUserId], references: [id], onDelete: SetNull)
+  status          String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Transcript {

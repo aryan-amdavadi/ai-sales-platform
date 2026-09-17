@@ -269,6 +269,8 @@ export async function getCallById(id: string) {
         },
       },
       transcript: true,
+      attempts: true,
+      callbacks: true,
     },
   });
 }

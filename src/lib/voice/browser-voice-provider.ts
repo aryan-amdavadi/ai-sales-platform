@@ -1,7 +1,7 @@
-import { VoiceProvider } from '@/types/voice';
+import { ClientVoiceProvider } from '@/types/voice';
 import { DemoVoiceProvider } from './demo-voice-provider';
 
-export class BrowserVoiceProvider implements VoiceProvider {
+export class BrowserVoiceProvider implements ClientVoiceProvider {
   name = 'BrowserVoiceProvider';
   private fallbackProvider = new DemoVoiceProvider();
   private recognition: any = null;

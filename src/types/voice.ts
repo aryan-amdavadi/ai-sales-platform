@@ -54,7 +54,7 @@ export interface CallbackRecord {
   createdAt: string;
 }
 
-export interface VoiceProvider {
+export interface ClientVoiceProvider {
   name: string;
   isSupported(): boolean;
   start(): Promise<void>;

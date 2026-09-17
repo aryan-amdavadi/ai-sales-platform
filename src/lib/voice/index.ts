@@ -1,4 +1,4 @@
-import { VoiceProvider } from '@/types/voice';
+import { ClientVoiceProvider } from '@/types/voice';
 import { BrowserVoiceProvider } from './browser-voice-provider';
 import { DemoVoiceProvider } from './demo-voice-provider';
 
@@ -7,7 +7,7 @@ export * from './demo-voice-provider';
 export * from './scenarios';
 export * from './intelligence';
 
-export function getVoiceProvider(): VoiceProvider {
+export function getVoiceProvider(): ClientVoiceProvider {
   const browserProvider = new BrowserVoiceProvider();
   if (browserProvider.isSupported()) {
     return browserProvider;

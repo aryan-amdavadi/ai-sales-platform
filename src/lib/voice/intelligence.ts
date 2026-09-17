@@ -30,6 +30,7 @@ export async function processCompletedCall(params: {
   const heroSummary =
     'CTO John Smith confirmed active vendor evaluation for Microsoft 365 & SharePoint Implementation at TechNova Solutions. Primary requirements are migrating from on-premise infrastructure and custom SPFx development. Main concerns are legacy migration downtime and user adoption. John confirmed a strict 30-day vendor selection timeline and agreed to a 30-minute technical scoping call on Thursday at 2 PM.';
 
+  const defaultPainPoints = lead?.requirements?.[0]?.description ? [lead.requirements[0].description] : ['Process inefficiency and scaling challenges'];
   const analysis: ConversationAnalysis = isHero
     ? {
         ...HERO_SCENARIO_EN.finalAnalysis,
@@ -37,19 +38,19 @@ export async function processCompletedCall(params: {
         summary: HERO_SCENARIO_EN.finalAnalysis.summary || heroSummary,
       }
     : {
-        callSummary: `Autonomous AI discovery call completed with ${lead?.name || 'the prospect'} at ${lead?.company?.name || 'the account'}. Confirmed active evaluation of enterprise modernization solutions.`,
-        summary: `Autonomous AI discovery call completed with ${lead?.name || 'the prospect'} at ${lead?.company?.name || 'the account'}. Confirmed active evaluation of enterprise modernization solutions.`,
-        qualificationScore: 90,
-        interestLevel: 'HIGH',
-        timeline: 'Next 30 to 60 days',
+        callSummary: `Autonomous AI discovery call completed with ${lead?.name || 'the prospect'} at ${lead?.company?.name || 'the account'}. Discussed ${lead?.company?.industry || 'their industry'} challenges.`,
+        summary: `Call with ${lead?.name || 'the prospect'} completed successfully. Discovered active interest in evaluating modernization solutions tailored to ${lead?.company?.name || 'their company'}.`,
+        qualificationScore: 85,
+        interestLevel: 'MEDIUM',
+        timeline: 'Evaluating options in the next quarter',
         decisionMaker: `Confirmed (${lead?.title || 'Decision Maker'})`,
-        budget: '$100,000 - $200,000',
-        painPoints: ['Legacy infrastructure bottlenecks', 'Custom workflow refactoring'],
-        objections: ['Implementation timeline and internal bandwidth constraints'],
-        buyingStage: 'Vendor Selection',
-        nextBestAction: 'Schedule technical scoping call for Thursday 2 PM, send calendar invite, attach SharePoint migration case study',
-        actionPriority: 'HIGH',
-        recommendedPositioning: 'Focus on turnkey deployment accelerators and migration track record.',
+        budget: 'Pending qualification',
+        painPoints: defaultPainPoints,
+        objections: ['Need to see a tailored demonstration before proceeding'],
+        buyingStage: 'Discovery',
+        nextBestAction: `Schedule follow-up demonstration for ${lead?.name || 'prospect'} and send relevant case studies.`,
+        actionPriority: 'MEDIUM',
+        recommendedPositioning: `Highlight ROI and speed-to-market relevant to ${lead?.company?.industry || 'their industry'}.`,
       };
 
   const summaryText = analysis.callSummary || analysis.summary || '';

@@ -1,6 +1,6 @@
-import { VoiceProvider } from '@/types/voice';
+import { ClientVoiceProvider } from '@/types/voice';
 
-export class DemoVoiceProvider implements VoiceProvider {
+export class DemoVoiceProvider implements ClientVoiceProvider {
   name = 'DemoVoiceProvider';
   private currentTimeout: any = null;
 
