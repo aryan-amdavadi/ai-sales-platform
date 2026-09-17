@@ -122,7 +122,7 @@ model Company {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   leads          Lead[]
-  insights       CompanyInsight[]
+  marketSignals  MarketSignal[]
 }
 
 model Product {
@@ -206,15 +206,17 @@ model Requirement {
   updatedAt       DateTime    @updatedAt
 }
 
-model CompanyInsight {
+model MarketSignal {
   id           String   @id @default(cuid())
   companyId    String
   company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  insightType  String // HIRING, TECH_STACK, FUNDING, EXPANSION, LEADERSHIP
-  headline     String
+  type         String // HIRING, FUNDING, TECHNOLOGY, GROWTH, LEADERSHIP, COMPETITOR
+  title        String
   details      String
-  confidence   Int      @default(90)
+  source       String
   sourceUrl    String?
+  confidence   Int      @default(90)
+  relevance    Int      @default(50) // Score determining how materially this strengthens an opportunity
   discoveredAt DateTime @default(now())
   createdAt    DateTime @default(now())
 }

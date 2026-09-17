@@ -3,6 +3,7 @@ import { AIProvider } from './provider';
 import { LocalDemoAIProvider } from './local-demo-provider';
 import { OllamaProvider } from './ollama-provider';
 import { FullAnalysisResult, SalesBrief } from '@/types/ai';
+import { getMarketIntelligenceProvider } from '../market-intelligence';
 
 export * from './provider';
 export * from './local-demo-provider';
@@ -19,13 +20,14 @@ export function getAIProvider(): AIProvider {
 export async function executeSalesIntelligencePipeline(leadId: string): Promise<{
   lead: any;
   analysisResult: FullAnalysisResult;
+  whyNowResult?: any;
 }> {
   const lead = await prisma.lead.findUnique({
     where: { id: leadId },
     include: {
       company: {
         include: {
-          insights: true,
+          marketSignals: true,
         },
       },
       source: true,
@@ -81,6 +83,10 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
 
   const analysisResult = pipelinePayload.result;
   const traces = pipelinePayload.traces;
+
+  // Run Market Intelligence "Why Now" Engine
+  const marketIntelligenceProvider = getMarketIntelligenceProvider();
+  const whyNowResult = await marketIntelligenceProvider.evaluateWhyNow(lead as any);
 
   // 1. Update Lead
   const salesBriefFormatted = typeof analysisResult.salesBrief === 'string'
@@ -181,6 +187,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
         fit: analysisResult.fit,
         qualification: analysisResult.qualification,
         nextAction: analysisResult.nextBestAction,
+        whyNow: whyNowResult,
       }),
     },
   });
@@ -209,6 +216,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
   return {
     lead: updatedLead,
     analysisResult,
+    whyNowResult,
   };
 }
 

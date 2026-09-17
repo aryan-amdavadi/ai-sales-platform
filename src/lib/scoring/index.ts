@@ -175,7 +175,7 @@ export async function getOpportunityById(id: string) {
     include: {
       company: {
         include: {
-          insights: true,
+          marketSignals: true,
         },
       },
       source: true,
@@ -276,7 +276,7 @@ export async function getCallById(id: string) {
 export async function getIntelligenceData() {
   const companies = await prisma.company.findMany({
     include: {
-      insights: true,
+      marketSignals: true,
       leads: {
         select: {
           id: true,
@@ -309,7 +309,7 @@ export async function getIntelligenceData() {
       hiringSignals: comp.hiringSignals,
       fundingSignals: comp.fundingSignals,
       growthSignals: comp.growthSignals,
-      insights: comp.insights,
+      marketSignals: comp.marketSignals,
       totalLeads: comp.leads.length,
       averageIntent: avgIntent,
       pipelineValue: totalPipeline,

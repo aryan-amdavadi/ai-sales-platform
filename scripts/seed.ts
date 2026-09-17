@@ -73,7 +73,7 @@ export async function runSeed() {
   await prisma.activityLog.deleteMany();
   await prisma.requirement.deleteMany();
   await prisma.lead.deleteMany();
-  await prisma.companyInsight.deleteMany();
+  await prisma.marketSignal.deleteMany();
   await prisma.campaign.deleteMany();
   await prisma.leadSource.deleteMany();
   await prisma.company.deleteMany();
@@ -198,15 +198,15 @@ export async function runSeed() {
     companyMap.set(comp.name, comp);
 
     if (comp.name === 'TechNova Solutions') {
-      await prisma.companyInsight.createMany({
+      await prisma.marketSignal.createMany({
         data: [
-          { companyId: comp.id, insightType: 'HIRING', headline: 'Job Posting: Senior SharePoint Migration Architect', details: 'Active recruitment for senior architect', confidence: 96 },
+          { companyId: comp.id, type: 'HIRING', title: 'Job Posting: Senior SharePoint Migration Architect', details: 'Active recruitment for senior architect', confidence: 96, source: 'LinkedIn Jobs' },
         ],
       });
     } else {
-      await prisma.companyInsight.createMany({
+      await prisma.marketSignal.createMany({
         data: [
-          { companyId: comp.id, insightType: 'HIRING', headline: `Aggressive hiring in engineering`, details: compData.hiringSignals, confidence: 92 },
+          { companyId: comp.id, type: 'HIRING', title: `Aggressive hiring in engineering`, details: compData.hiringSignals, confidence: 92, source: 'LinkedIn Jobs' },
         ],
       });
     }
