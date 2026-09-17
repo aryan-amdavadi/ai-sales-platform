@@ -39,6 +39,7 @@ export default function OpportunityDetailPage() {
   const id = params?.id as string;
 
   const [opportunity, setOpportunity] = useState<any>(null);
+  const [provenance, setProvenance] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +47,7 @@ export default function OpportunityDetailPage() {
   const [analyzing, setAnalyzing] = useState(false);
   const [generatingBrief, setGeneratingBrief] = useState(false);
   const [recalculating, setRecalculating] = useState(false);
+  const [enriching, setEnriching] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [callingState, setCallingState] = useState<'idle' | 'calling' | 'connected'>('idle');
 
@@ -57,6 +59,11 @@ export default function OpportunityDetailPage() {
       if (!res.ok) throw new Error('Opportunity record not found');
       const data = await res.json();
       setOpportunity(data);
+      
+      const provRes = await fetch(`/api/leads/${id}/provenance`);
+      if (provRes.ok) {
+        setProvenance(await provRes.json());
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to load opportunity');
     } finally {
@@ -73,6 +80,20 @@ export default function OpportunityDetailPage() {
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const handleEnrichProfile = async () => {
+    try {
+      setEnriching(true);
+      const res = await fetch(`/api/leads/${id}/enrich`, { method: 'POST' });
+      if (!res.ok) throw new Error('Failed to enrich lead');
+      await fetchOpportunity();
+      showToast('Lead enriched successfully! Verified provenance added.');
+    } catch (err: any) {
+      showToast(`Enrichment error: ${err.message}`);
+    } finally {
+      setEnriching(false);
+    }
   };
 
   const handleAnalyzeOpportunity = async () => {
@@ -271,6 +292,18 @@ export default function OpportunityDetailPage() {
           >
             <Sparkles className={`w-3.5 h-3.5 ${generatingBrief ? 'animate-spin text-[#2563EB]' : 'text-[#2563EB]'}`} />
             <span>{generatingBrief ? 'Synthesizing...' : 'Generate Sales Brief'}</span>
+          </Button>
+
+          <Button
+            onClick={handleEnrichProfile}
+            disabled={enriching || analyzing}
+            variant="outline"
+            size="sm"
+            className="h-8 text-xs border-[#0F9D9A]/30 bg-[#E8F7F5] hover:bg-[#0F9D9A]/10 text-[#0F9D9A] flex items-center gap-1.5 font-semibold"
+            data-testid="enrich-btn"
+          >
+            <CheckCircle2 className={`w-3.5 h-3.5 ${enriching ? 'animate-spin text-[#0F9D9A]' : 'text-[#0F9D9A]'}`} />
+            <span>{enriching ? 'Enriching...' : 'Enrich Profile'}</span>
           </Button>
 
           <Button
@@ -773,28 +806,55 @@ export default function OpportunityDetailPage() {
 
           {/* Lead Profile & Source Info */}
           <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
-            <h4 className="text-xs font-bold uppercase tracking-wide text-[#64748B]">
-              Decision Maker Profile
-            </h4>
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold uppercase tracking-wide text-[#64748B]">
+                Decision Maker Profile
+              </h4>
+              {opportunity.enrichmentStatus === 'ENRICHED' && (
+                <span className="px-2 py-0.5 rounded text-[10px] bg-[#E8F7F5] text-[#0F9D9A] font-bold border border-[#0F9D9A]/20">
+                  ENRICHED
+                </span>
+              )}
+            </div>
+            
             <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2 text-[#10233F]">
-                <User className="w-3.5 h-3.5 text-[#64748B]" />
-                <span className="font-bold">{opportunity.name}</span>
-              </div>
-              <div className="flex items-center gap-2 text-[#475569]">
-                <Mail className="w-3.5 h-3.5 text-[#64748B]" />
-                <span>{opportunity.email || 'john.smith@technova.com'}</span>
-              </div>
-              <div className="flex items-center gap-2 text-[#475569]">
-                <Phone className="w-3.5 h-3.5 text-[#64748B]" />
-                <span>{opportunity.phone || '+1 (555) 123-4567'}</span>
-              </div>
-              <div className="flex items-center gap-2 text-[#475569]">
-                <Globe className="w-3.5 h-3.5 text-[#64748B]" />
-                <span>{opportunity.company?.location || 'Austin, TX'}</span>
-              </div>
+              {/* Helper to render field with provenance */}
+              {[
+                { key: 'name', icon: User, value: opportunity.name },
+                { key: 'email', icon: Mail, value: opportunity.email || 'john.smith@technova.com' },
+                { key: 'phone', icon: Phone, value: opportunity.phone },
+                { key: 'location', icon: Globe, value: opportunity.company?.location || 'Austin, TX' },
+                { key: 'linkedinUrl', icon: Building2, value: opportunity.linkedinUrl }
+              ].map((field) => {
+                const prov = provenance.find(p => p.fieldName === field.key);
+                const Icon = field.icon;
+                const isUnavailable = !field.value;
+                
+                return (
+                  <div key={field.key} className="flex items-center justify-between group">
+                    <div className={`flex items-center gap-2 ${isUnavailable ? 'text-[#94A3B8] line-through' : 'text-[#10233F]'}`}>
+                      <Icon className="w-3.5 h-3.5 text-[#64748B]" />
+                      <span className={field.key === 'name' ? 'font-bold' : ''}>
+                        {field.value || 'UNAVAILABLE'}
+                      </span>
+                    </div>
+                    
+                    {prov && !isUnavailable && (
+                      <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-[10px] text-[#64748B]">{prov.sourceName}</span>
+                        {prov.inferred ? (
+                          <span title="Inferred" className="w-4 h-4 rounded bg-[#FEF3C7] text-[#D97706] flex items-center justify-center font-bold">I</span>
+                        ) : (
+                          <span title="Verified" className="w-4 h-4 rounded bg-[#E8F7F5] text-[#0F9D9A] flex items-center justify-center"><Check className="w-3 h-3" /></span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
               <div className="pt-2 border-t border-[#DCE5EF] flex items-center justify-between text-xs text-[#64748B]">
-                <span>Source:</span>
+                <span>Initial Source:</span>
                 <StatusBadge status={opportunity.source?.platform || 'LINKEDIN'} type="source" />
               </div>
             </div>

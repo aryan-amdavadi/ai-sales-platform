@@ -164,6 +164,9 @@ model Lead {
   campaignId         String?
   campaign           Campaign?        @relation(fields: [campaignId], references: [id], onDelete: SetNull)
   status             String           @default("DISCOVERED") // DISCOVERED, RELEVANT, HIGH_INTENT, QUALIFIED, CONTACTED, INTERESTED, MEETING, CONVERTED, ARCHIVED
+  enrichmentStatus   String           @default("PENDING") // PENDING, ENRICHED, FAILED
+  duplicateScore     Int              @default(0)
+  isVerified         Boolean          @default(false)
   intentScore        Int              @default(50) // 0 - 100
   urgency            String           @default("MEDIUM") // LOW, MEDIUM, HIGH, IMMEDIATE
   qualificationScore Int              @default(50) // 0 - 100
@@ -179,6 +182,7 @@ model Lead {
   activityLogs       ActivityLog[]
   importRows         LeadImportRow[]
   discoveryResults   DiscoveryResult[]
+  provenance         LeadFieldProvenance[]
 }
 
 model Requirement {
@@ -419,4 +423,19 @@ model DiscoveryResult {
   leadId        String?
   lead          Lead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
   createdAt     DateTime      @default(now())
+}
+
+model LeadFieldProvenance {
+  id          String   @id @default(cuid())
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  fieldName   String   // e.g. "email", "phone", "linkedinUrl", "title", "company"
+  sourceName  String   // e.g. "LinkedIn", "Clearbit", "ZoomInfo", "Inferred"
+  sourceUrl   String?
+  confidence  Int      @default(50)
+  inferred    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([leadId, fieldName])
 }
