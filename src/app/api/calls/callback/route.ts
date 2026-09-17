@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     if (leadId) {
       await prisma.activityLog.create({
-        data: {
+        data: { workspaceId: "dummy", 
           leadId,
           action: 'CALLBACK_SCHEDULED',
           details: `Scheduled callback for ${newCallback.scheduledDate} at ${newCallback.scheduledTime}. Reason: ${newCallback.reason}`,

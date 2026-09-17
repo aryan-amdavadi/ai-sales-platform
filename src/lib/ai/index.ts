@@ -71,7 +71,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
 
   const updatedLead = await prisma.lead.update({
     where: { id: leadId },
-    data: {
+    data: { 
       intentScore: analysisResult.intent.overallScore,
       qualificationScore: analysisResult.qualification.overallScore,
       urgency: analysisResult.analysis.urgency,
@@ -84,7 +84,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
   if (lead.requirements.length > 0) {
     await prisma.requirement.update({
       where: { id: lead.requirements[0].id },
-      data: {
+      data: { 
         category: analysisResult.analysis.requestedSolution,
         tags: JSON.stringify(analysisResult.analysis.requirements),
         timeframe: analysisResult.analysis.timeline,
@@ -98,7 +98,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
   if (lead.qualifications.length > 0) {
     await prisma.qualification.update({
       where: { id: lead.qualifications[0].id },
-      data: {
+      data: { 
         budgetFit: analysisResult.qualification.need,
         authorityFit: analysisResult.qualification.authority,
         needFit: analysisResult.qualification.need,
@@ -111,7 +111,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
     });
   } else {
     await prisma.qualification.create({
-      data: {
+      data: { 
         leadId: lead.id,
         budgetFit: analysisResult.qualification.need,
         authorityFit: analysisResult.qualification.authority,
@@ -129,7 +129,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
   if (lead.recommendations.length > 0) {
     await prisma.recommendation.update({
       where: { id: lead.recommendations[0].id },
-      data: {
+      data: { 
         actionType: analysisResult.nextBestAction.action,
         title: analysisResult.nextBestAction.title,
         rationale: analysisResult.nextBestAction.rationale,
@@ -140,7 +140,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
     });
   } else {
     await prisma.recommendation.create({
-      data: {
+      data: { 
         leadId: lead.id,
         actionType: analysisResult.nextBestAction.action,
         title: analysisResult.nextBestAction.title,
@@ -154,7 +154,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
 
   // 5. Create ActivityLog
   await prisma.activityLog.create({
-    data: {
+      data: { workspaceId: "dummy",  
       leadId: lead.id,
       action: 'OPPORTUNITY_ANALYZED',
       details: `AI Intelligence completed: Intent Score ${analysisResult.intent.overallScore}/100, Fit ${analysisResult.fit.overallFitScore}%, Qualification ${analysisResult.qualification.overallScore}% (${analysisResult.qualification.heatCategory}).`,
@@ -222,13 +222,13 @@ export async function regenerateSalesBrief(leadId: string): Promise<SalesBrief> 
 
   await prisma.lead.update({
     where: { id: leadId },
-    data: {
+    data: { 
       salesBrief: JSON.stringify(brief),
     },
   });
 
   await prisma.activityLog.create({
-    data: {
+      data: { workspaceId: "dummy",  
       leadId: lead.id,
       action: 'SALES_BRIEF_GENERATED',
       details: `Generated contextual pre-call sales brief and objection strategies for ${lead.name} at ${lead.company.name}.`,

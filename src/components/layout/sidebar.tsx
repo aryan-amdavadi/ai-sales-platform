@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { authClient } from '@/lib/auth/auth-client';
 import {
   LayoutDashboard,
   Compass,
@@ -57,6 +58,7 @@ export function Sidebar({
   onMobileClose,
 }: SidebarProps) {
   const pathname = usePathname();
+  const { data: session } = authClient.useSession();
 
   const navContent = (
     <div className="flex flex-col h-full bg-white/90 backdrop-blur-xl border-r border-slate-200/80 text-slate-800 select-none shadow-[2px_0_20px_rgba(15,23,42,0.03)]">
@@ -164,14 +166,32 @@ export function Sidebar({
 
       {/* User Profile Footer */}
       <div className="mt-auto p-3 border-t border-slate-200/80 bg-slate-50/70 backdrop-blur-md space-y-2">
-        <div className="flex items-center gap-3 p-2 rounded-lg bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-colors">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 border border-slate-200 flex items-center justify-center text-xs font-bold text-white shadow-xs">
-            AM
+        <div className="flex flex-col gap-2 p-2 rounded-lg bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-colors">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 border border-slate-200 flex items-center justify-center text-xs font-bold text-white shadow-xs overflow-hidden">
+              {session?.user?.image ? (
+                <img src={session.user.image} alt={session.user.name} className="w-full h-full object-cover" />
+              ) : (
+                session?.user?.name?.substring(0, 2).toUpperCase() || 'U'
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-semibold text-slate-800 truncate">{session?.user?.name || 'Loading...'}</p>
+              <p className="text-[10px] text-slate-500 truncate">{session?.user?.email}</p>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-slate-800 truncate">Alex Morgan</p>
-            <p className="text-[10px] text-slate-500 truncate">Head of Revenue</p>
-          </div>
+          
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={async () => {
+              await authClient.signOut();
+              window.location.href = '/login';
+            }}
+            className="w-full justify-start h-7 text-[10px] text-slate-600 hover:text-red-600 hover:bg-red-50"
+          >
+            Sign out
+          </Button>
         </div>
       </div>
     </div>

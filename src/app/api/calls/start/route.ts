@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     // Create call record with IN_PROGRESS
     const call = await prisma.call.create({
-      data: {
+      data: { workspaceId: "dummy", 
         leadId: lead.id,
         campaignId: campaignId || null,
         status: 'IN_PROGRESS',
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     // Log Activity
     await prisma.activityLog.create({
-      data: {
+      data: { workspaceId: "dummy", 
         leadId: lead.id,
         action: 'AI_CALL_STARTED',
         details: `Autonomous AI Sales Call initiated with ${lead.name} (${lead.title}) at ${lead.company.name}.`,

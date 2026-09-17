@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     const campaign = await prisma.campaign.create({
-      data: {
+      data: { workspaceId: "dummy", 
         name,
         targetAudience: `${targetAudience} (${language}, ${callWindow})`,
         goal: goal || `Target high-intent opportunities with ${minIntent}+ intent score.`,
@@ -60,12 +60,12 @@ export async function POST(req: NextRequest) {
     for (const lead of matchingLeads) {
       await prisma.lead.update({
         where: { id: lead.id },
-        data: { campaignId: campaign.id },
+        data: { workspaceId: "dummy",  campaignId: campaign.id },
       });
     }
 
     await prisma.activityLog.create({
-      data: {
+      data: { workspaceId: "dummy", 
         action: 'CAMPAIGN_CREATED',
         details: `Created campaign "${name}" with ${matchingLeads.length} initial opportunities enrolled. Criteria: Min Intent ${minIntent}, Lang ${language}.`,
       },

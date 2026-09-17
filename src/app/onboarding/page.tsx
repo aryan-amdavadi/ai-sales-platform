@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   CheckCircle2,
@@ -14,6 +13,8 @@ import {
   ArrowRight,
   ArrowLeft,
   Zap,
+  FileText,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,21 +23,18 @@ import { Card } from '@/components/ui/card';
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Form State
-  const [company, setCompany] = useState('Acme Solutions');
-  const [website, setWebsite] = useState('https://acmesolutions.io');
-  const [products, setProducts] = useState('Enterprise Cloud Migration, SharePoint Modernization');
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([
-    'Enterprise Cloud Services',
-    'Financial Technology',
-  ]);
-  const [locations, setLocations] = useState('United States, North America, Remote');
-  const [icp, setIcp] = useState(
-    'CTOs, VPs of Engineering, and IT Directors at 200+ employee enterprises modernizing legacy infrastructure.'
-  );
+  const [company, setCompany] = useState('');
+  const [website, setWebsite] = useState('');
+  const [products, setProducts] = useState('');
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [locations, setLocations] = useState('');
+  const [icp, setIcp] = useState('');
+  const [file, setFile] = useState<File | null>(null);
 
-  const totalSteps = 7;
+  const totalSteps = 8;
 
   const toggleIndustry = (ind: string) => {
     if (selectedIndustries.includes(ind)) {
@@ -57,6 +55,64 @@ export default function OnboardingPage() {
     'E-Commerce & Retail AI',
   ];
 
+  const handleNext = async () => {
+    if (step === 7) {
+      // Finalize and process
+      setIsProcessing(true);
+      setStep(8);
+      try {
+        // Save Workspace Profile
+        await fetch('/api/workspace', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            businessProfile: {
+              legalName: company || 'My Company',
+              websiteUrl: website,
+              targetGeographies: locations,
+            },
+            icpProfile: {
+              targetIndustries: JSON.stringify(selectedIndustries),
+              decisionMakers: icp,
+            }
+          })
+        });
+
+        // Save Products
+        if (products.trim()) {
+          const productList = products.split(',').map(p => p.trim()).filter(Boolean);
+          for (const pName of productList) {
+            await fetch('/api/products', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: pName, description: pName })
+            });
+          }
+        }
+
+        // Upload File if any
+        if (file) {
+          const formData = new FormData();
+          formData.append('file', file);
+          await fetch('/api/knowledge', {
+            method: 'POST',
+            body: formData,
+          });
+        }
+
+        // Run AI Analysis
+        await fetch('/api/business/analyze', { method: 'POST' });
+
+        setIsProcessing(false);
+      } catch (error) {
+        console.error('Failed to setup workspace:', error);
+        setIsProcessing(false);
+      }
+    } else {
+      setStep(s => s + 1);
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 space-y-8" data-testid="onboarding-page">
       {/* Brand Header */}
@@ -68,7 +124,7 @@ export default function OnboardingPage() {
           WORKSPACE SETUP WIZARD
         </h1>
         <p className="text-xs text-slate-400">
-          Configure your autonomous public intent discovery engine in 7 steps.
+          Configure your autonomous public intent discovery engine.
         </p>
       </div>
 
@@ -127,7 +183,7 @@ export default function OnboardingPage() {
               <h3 className="text-sm font-bold text-slate-100 uppercase">3. Products & Core Capabilities</h3>
             </div>
             <p className="text-xs text-slate-400">
-              List the primary services, products, or consulting offerings you want to sell.
+              List the primary services, products, or consulting offerings you want to sell (comma separated).
             </p>
             <textarea
               rows={3}
@@ -201,23 +257,54 @@ export default function OnboardingPage() {
         )}
 
         {step === 7 && (
-          <div className="text-center py-6 space-y-4">
-            <div className="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-6 h-6" />
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5 text-blue-400">
+              <FileText className="w-5 h-5" />
+              <h3 className="text-sm font-bold text-slate-100 uppercase">7. Knowledge Documents</h3>
             </div>
-            <h3 className="text-lg font-bold text-slate-100">
-              Your AI sales intelligence workspace is ready.
-            </h3>
-            <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
-              IntentOS has initialized autonomous monitoring across public buying feeds. 105+ high-intent opportunities
-              have been mapped to your ICP.
+            <p className="text-xs text-slate-400">
+              Upload case studies, product decks, or capability statements (PDF or TXT) to give the AI deeper context.
             </p>
+            <input
+              type="file"
+              accept=".pdf,.txt"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="w-full text-slate-100 text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+            {file && (
+              <p className="text-xs text-green-400 mt-2">Selected: {file.name}</p>
+            )}
+          </div>
+        )}
+
+        {step === 8 && (
+          <div className="text-center py-6 space-y-4">
+            {isProcessing ? (
+              <>
+                <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-400" />
+                <h3 className="text-lg font-bold text-slate-100">AI is analyzing your business...</h3>
+                <p className="text-xs text-slate-400">Processing documents and normalizing capabilities.</p>
+              </>
+            ) : (
+              <>
+                <div className="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-100">
+                  Your AI sales intelligence workspace is ready.
+                </h3>
+                <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+                  IntentOS has initialized autonomous monitoring across public buying feeds. Opportunities
+                  have been mapped to your unique capabilities.
+                </p>
+              </>
+            )}
           </div>
         )}
 
         {/* Buttons */}
         <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-          {step > 1 && step < 7 ? (
+          {step > 1 && step < 8 && !isProcessing ? (
             <Button
               variant="outline"
               size="sm"
@@ -234,13 +321,22 @@ export default function OnboardingPage() {
           {step < 7 ? (
             <Button
               size="sm"
-              onClick={() => setStep((s) => s + 1)}
+              onClick={() => handleNext()}
               className="text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1 ml-auto"
             >
               <span>Next Step</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Button>
-          ) : (
+          ) : step === 7 ? (
+            <Button
+              size="sm"
+              onClick={() => handleNext()}
+              className="text-xs font-semibold bg-green-600 hover:bg-green-500 text-white flex items-center gap-1 ml-auto"
+            >
+              <span>Finalize Setup</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+            </Button>
+          ) : !isProcessing ? (
             <Button
               size="sm"
               onClick={() => router.push('/dashboard')}
@@ -248,10 +344,11 @@ export default function OnboardingPage() {
             >
               Enter Dashboard
             </Button>
-          )}
+          ) : null}
         </div>
       </Card>
     </div>
   );
 }
+
 

@@ -76,7 +76,7 @@ export class DemoCRMProvider implements CRMProvider {
     // Update lead status to MEETING / QUALIFIED
     await prisma.lead.update({
       where: { id: leadId },
-      data: {
+      data: { workspaceId: "dummy", 
         status: 'MEETING',
       },
     });
@@ -86,7 +86,7 @@ export class DemoCRMProvider implements CRMProvider {
 
     // Log Activity
     await prisma.activityLog.create({
-      data: {
+      data: { workspaceId: "dummy", 
         leadId,
         action: 'CRM_PUSH_COMPLETED',
         details: `Synchronized opportunity to CRM (ID: ${oppRes.opportunityId}, Contact: ${contactRes.contactId}). Next action scheduled.`,

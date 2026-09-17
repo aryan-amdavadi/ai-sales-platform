@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Settings,
   Building,
@@ -18,18 +18,48 @@ import { Card } from '@/components/ui/card';
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<'company' | 'ai' | 'voice' | 'notifications' | 'data'>('company');
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Form states
-  const [companyName, setCompanyName] = useState('IntentOS Enterprise');
-  const [website, setWebsite] = useState('https://intentos.ai');
+  const [businessProfile, setBusinessProfile] = useState({
+    legalName: '',
+    websiteUrl: '',
+    domain: '',
+    industry: '',
+    description: '',
+    headquarters: '',
+    targetGeographies: ''
+  });
+  
+  // Dummy settings
   const [aiModel, setAiModel] = useState('gemini-3.7-flash');
   const [minConfidence, setMinConfidence] = useState(80);
   const [voiceSynthesizer, setVoiceSynthesizer] = useState('Nova Ultra-Low Latency');
   const [speakingRate, setSpeakingRate] = useState(1.0);
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  useEffect(() => {
+    fetch('/api/workspace')
+      .then(res => res.json())
+      .then(data => {
+        if (data.businessProfile) {
+          setBusinessProfile(data.businessProfile);
+        }
+        setLoading(false);
+      });
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      await fetch('/api/workspace', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ businessProfile })
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      console.error('Failed to save', error);
+    }
   };
 
   const tabs = [
@@ -39,6 +69,10 @@ export default function SettingsPage() {
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'data', label: 'Data & Ingestion', icon: Database },
   ];
+
+  if (loading) {
+    return <div className="p-8 text-center text-[#64748B]">Loading settings...</div>;
+  }
 
   return (
     <div className="space-y-6 pb-16 max-w-[1536px] w-full mx-auto" data-testid="settings-page">
@@ -99,21 +133,53 @@ export default function SettingsPage() {
             {activeTab === 'company' && (
               <div className="space-y-4">
                 <h3 className="text-xs font-bold text-[#10233F] uppercase tracking-wide">Enterprise Organization Profile</h3>
-                <div className="space-y-3 text-xs">
-                  <div>
+                <div className="space-y-3 text-xs grid grid-cols-2 gap-4">
+                  <div className="col-span-2">
                     <label className="text-[#64748B] block mb-1 font-bold">Company Legal Name</label>
                     <Input
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
+                      value={businessProfile.legalName || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, legalName: e.target.value})}
                       className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
                     />
                   </div>
                   <div>
-                    <label className="text-[#64748B] block mb-1 font-bold">Corporate Domain / Website</label>
+                    <label className="text-[#64748B] block mb-1 font-bold">Corporate Website</label>
                     <Input
-                      value={website}
-                      onChange={(e) => setWebsite(e.target.value)}
+                      value={businessProfile.websiteUrl || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, websiteUrl: e.target.value})}
                       className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[#64748B] block mb-1 font-bold">Domain</label>
+                    <Input
+                      value={businessProfile.domain || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, domain: e.target.value})}
+                      className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[#64748B] block mb-1 font-bold">Industry</label>
+                    <Input
+                      value={businessProfile.industry || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, industry: e.target.value})}
+                      className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[#64748B] block mb-1 font-bold">Headquarters</label>
+                    <Input
+                      value={businessProfile.headquarters || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, headquarters: e.target.value})}
+                      className="bg-white border-[#DCE5EF] text-[#10233F] text-xs font-semibold"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <label className="text-[#64748B] block mb-1 font-bold">Description</label>
+                    <textarea
+                      value={businessProfile.description || ''}
+                      onChange={(e) => setBusinessProfile({...businessProfile, description: e.target.value})}
+                      className="w-full bg-white border border-[#DCE5EF] rounded-md p-2 text-[#10233F] text-xs font-semibold min-h-[80px]"
                     />
                   </div>
                 </div>

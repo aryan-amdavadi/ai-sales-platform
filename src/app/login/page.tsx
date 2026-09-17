@@ -3,23 +3,36 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Zap, Lock, Mail, ArrowRight } from 'lucide-react';
+import { Zap, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { authClient } from '@/lib/auth/auth-client';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('alex.morgan@intentos.ai');
-  const [password, setPassword] = useState('••••••••••••');
+  const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+    setError(null);
+    
+    const { data, error: authError } = await authClient.signIn.email({
+      email,
+      password
+    });
+    
+    if (authError) {
+      setError(authError.message || "Invalid email or password");
+      setLoading(false);
+    } else {
       router.push('/dashboard');
-    }, 600);
+      router.refresh(); // Refresh to update server components layout context
+    }
   };
 
   return (
@@ -40,6 +53,13 @@ export default function LoginPage() {
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-4">
+          {error && (
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/30 flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <p className="text-xs text-red-300">{error}</p>
+            </div>
+          )}
+
           <div className="space-y-1">
             <label className="text-xs text-slate-400 font-medium">Enterprise Email</label>
             <div className="relative">
@@ -69,7 +89,7 @@ export default function LoginPage() {
           </div>
 
           <div className="p-3 rounded-lg bg-blue-950/20 border border-blue-500/20 text-[11px] text-blue-300">
-            <strong>DEMO CREDENTIALS:</strong> Pre-filled for Alex Morgan (Head of Sales).
+            <strong>DEV CREDENTIALS:</strong> alex.morgan@intentos.ai / password123
           </div>
 
           <Button

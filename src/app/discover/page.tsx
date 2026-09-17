@@ -15,8 +15,10 @@ import { StatusBadge } from '@/components/shared/status-badge';
 import { EmptyState } from '@/components/shared/empty-state';
 import { TableLoadingSkeleton } from '@/components/shared/loading-skeleton';
 import { OpportunityItem } from '@/types';
+import { ImportCenter } from '@/components/discover/import-center';
 
 export default function DiscoveryPage() {
+  const [activeTab, setActiveTab] = useState<'ai' | 'import'>('ai');
   const [keyword, setKeyword] = useState('');
   const [source, setSource] = useState('ALL');
   const [industry, setIndustry] = useState('ALL');
@@ -104,7 +106,7 @@ export default function DiscoveryPage() {
 
         <Button
           onClick={handleManualScan}
-          disabled={scanning}
+          disabled={scanning || activeTab !== 'ai'}
           size="sm"
           className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white text-xs font-semibold flex items-center gap-2 shadow-sm"
         >
@@ -113,7 +115,31 @@ export default function DiscoveryPage() {
         </Button>
       </div>
 
-      {/* Filter Toolbar */}
+      {/* Tabs */}
+      <div className="flex items-center gap-4 border-b border-slate-200">
+        <button
+          onClick={() => setActiveTab('ai')}
+          className={`pb-3 text-sm font-bold transition-colors border-b-2 ${
+            activeTab === 'ai' ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          AI Discovery Engine
+        </button>
+        <button
+          onClick={() => setActiveTab('import')}
+          className={`pb-3 text-sm font-bold transition-colors border-b-2 ${
+            activeTab === 'import' ? 'border-[#2563EB] text-[#2563EB]' : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          Import Center
+        </button>
+      </div>
+
+      {activeTab === 'import' ? (
+        <ImportCenter />
+      ) : (
+        <>
+          {/* Filter Toolbar */}
       <Card className="p-4 sm:p-5 glass-card border-slate-200/80 space-y-4 rounded-xl shadow-glass">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           {/* Keyword Search */}
@@ -283,6 +309,8 @@ export default function DiscoveryPage() {
             );
           })}
         </div>
+      )}
+      </>
       )}
     </div>
   );

@@ -84,8 +84,8 @@ export async function getDashboardMetrics(): Promise<DashboardMetrics> {
   };
 }
 
-export async function getOpportunities(params: LeadFilterParams) {
-  const where: any = {};
+export async function getOpportunities(params: LeadFilterParams, workspaceId: string) {
+  const where: any = { workspaceId };
 
   if (params.search && params.search.trim() !== '') {
     const term = params.search.trim();

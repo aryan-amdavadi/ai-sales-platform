@@ -46,7 +46,7 @@ export async function PATCH(
 
     const updated = await prisma.campaign.update({
       where: { id },
-      data: {
+      data: { workspaceId: "dummy", 
         ...(name && { name }),
         ...(targetAudience && { targetAudience }),
         ...(status && { status }),
@@ -56,7 +56,7 @@ export async function PATCH(
     });
 
     await prisma.activityLog.create({
-      data: {
+      data: { workspaceId: "dummy", 
         action: 'CAMPAIGN_UPDATED',
         details: `Updated campaign "${updated.name}" (Status: ${updated.status}).`,
       },

@@ -57,7 +57,7 @@ export async function processCompletedCall(params: {
   // 1. Update Call Record
   const updatedCall = await prisma.call.update({
     where: { id: callId },
-    data: {
+    data: { 
       status: 'COMPLETED',
       endedAt: new Date(),
       durationSeconds,
@@ -84,7 +84,7 @@ export async function processCompletedCall(params: {
   if (existingTranscript) {
     await prisma.transcript.update({
       where: { callId },
-      data: {
+      data: { 
         dialogue: JSON.stringify(turns),
         rawText,
         speakerTimeline: JSON.stringify(turns.map((t) => ({ speaker: t.speaker, timestamp: t.timestamp }))),
@@ -93,7 +93,7 @@ export async function processCompletedCall(params: {
     });
   } else {
     await prisma.transcript.create({
-      data: {
+      data: { 
         callId,
         dialogue: JSON.stringify(turns),
         rawText,
@@ -106,7 +106,7 @@ export async function processCompletedCall(params: {
   // 3. Update Lead Status & Qualification
   await prisma.lead.update({
     where: { id: leadId },
-    data: {
+    data: { 
       status: 'MEETING',
       qualificationScore: analysis.qualificationScore,
       intentScore: Math.max(94, (lead?.intentScore || 90)),
@@ -121,7 +121,7 @@ export async function processCompletedCall(params: {
   if (existingQual) {
     await prisma.qualification.update({
       where: { id: existingQual.id },
-      data: {
+      data: { 
         overallScore: analysis.qualificationScore,
         needFit: 96,
         authorityFit: 95,
@@ -133,7 +133,7 @@ export async function processCompletedCall(params: {
     });
   } else {
     await prisma.qualification.create({
-      data: {
+      data: { 
         leadId,
         overallScore: analysis.qualificationScore,
         needFit: 96,
@@ -154,7 +154,7 @@ export async function processCompletedCall(params: {
   if (existingRec) {
     await prisma.recommendation.update({
       where: { id: existingRec.id },
-      data: {
+      data: { 
         actionType: 'SCHEDULE_MEETING',
         title: analysis.nextBestAction,
         rationale: summaryText,
@@ -165,7 +165,7 @@ export async function processCompletedCall(params: {
     });
   } else {
     await prisma.recommendation.create({
-      data: {
+      data: { 
         leadId,
         actionType: 'SCHEDULE_MEETING',
         title: analysis.nextBestAction,
@@ -179,7 +179,7 @@ export async function processCompletedCall(params: {
 
   // 6. Record ActivityLog
   await prisma.activityLog.create({
-    data: {
+      data: { workspaceId: "dummy",  
       leadId,
       action: 'AI_CALL_COMPLETED',
       details: `Autonomous AI Sales Call completed (${durationSeconds}s) with ${lead?.name}. Interest: ${analysis.interestLevel}, Qualification: ${analysis.qualificationScore}% (HOT). Action: ${analysis.nextBestAction}`,
@@ -210,7 +210,7 @@ export async function performHumanHandoff(params: {
     if (leadId) {
       await prisma.lead.update({
         where: { id: leadId },
-        data: {
+        data: { 
           status: 'CONTACTED',
         },
       });
@@ -223,7 +223,7 @@ export async function performHumanHandoff(params: {
     if (callId) {
       await prisma.call.update({
         where: { id: callId },
-        data: {
+        data: { 
           status: 'COMPLETED',
           nextStep: 'Human Representative Follow-Up',
         },
@@ -236,7 +236,7 @@ export async function performHumanHandoff(params: {
   // Create ActivityLog
   try {
     await prisma.activityLog.create({
-      data: {
+      data: { workspaceId: "dummy",  
         leadId: leadId || undefined,
         action: 'HUMAN_HANDOFF_REQUESTED',
         details: `Live AI conversation transferred to human sales engineer. Reason: ${reason}.`,
