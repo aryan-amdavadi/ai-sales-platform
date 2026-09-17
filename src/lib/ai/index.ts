@@ -46,8 +46,15 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
     lead.requirements[0]?.title ||
     `${lead.company.name} is looking for enterprise partners to implement modern cloud and data architectures.`;
 
+  // Fetch Business Context
+  const workspaceId = lead.workspaceId;
+  const businessProfile = await prisma.businessProfile.findUnique({ where: { workspaceId } });
+  const icpProfile = await prisma.icpProfile.findUnique({ where: { workspaceId } });
+  const productOfferings = await prisma.product.findMany({ where: { workspaceId } });
+  const scoringConfig = await prisma.scoringConfiguration.findUnique({ where: { workspaceId } });
+
   // Run full intelligence pipeline
-  const analysisResult = await provider.runFullPipeline({
+  const pipelinePayload = await provider.runFullPipeline({
     rawText: rawRequirementText,
     prospectName: lead.name,
     prospectTitle: lead.title,
@@ -62,7 +69,18 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
     sourceUrl: lead.source?.sourceUrl || undefined,
     discoveryDate: lead.discoveredAt,
     pipelineValue: lead.pipelineValue,
+    businessProfile,
+    icpProfile,
+    productOfferings: productOfferings.map(p => ({
+      name: p.name,
+      description: p.description,
+      valueProps: p.valueProps || undefined
+    })),
+    scoringConfig
   });
+
+  const analysisResult = pipelinePayload.result;
+  const traces = pipelinePayload.traces;
 
   // 1. Update Lead
   const salesBriefFormatted = typeof analysisResult.salesBrief === 'string'
@@ -154,7 +172,7 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
 
   // 5. Create ActivityLog
   await prisma.activityLog.create({
-      data: { workspaceId: "dummy",  
+      data: { workspaceId: lead.workspaceId,  
       leadId: lead.id,
       action: 'OPPORTUNITY_ANALYZED',
       details: `AI Intelligence completed: Intent Score ${analysisResult.intent.overallScore}/100, Fit ${analysisResult.fit.overallFitScore}%, Qualification ${analysisResult.qualification.overallScore}% (${analysisResult.qualification.heatCategory}).`,
@@ -166,6 +184,27 @@ export async function executeSalesIntelligencePipeline(leadId: string): Promise<
       }),
     },
   });
+
+  // 6. Write Decision Traces
+  if (traces && traces.length > 0) {
+    // Clear old traces for this lead
+    await prisma.aIDecisionTrace.deleteMany({
+       where: { leadId: lead.id }
+    });
+    
+    await prisma.aIDecisionTrace.createMany({
+       data: traces.map(t => ({
+         workspaceId: lead.workspaceId,
+         leadId: lead.id,
+         targetMetric: t.targetMetric,
+         score: t.score,
+         contributingSignals: JSON.stringify(t.contributingSignals),
+         evidence: t.evidence,
+         confidence: t.confidence,
+         modelProvider: t.modelProvider
+       }))
+    });
+  }
 
   return {
     lead: updatedLead,

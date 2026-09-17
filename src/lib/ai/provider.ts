@@ -103,6 +103,20 @@ export interface AIProvider {
     sourceUrl?: string;
     discoveryDate?: Date | string;
     pipelineValue?: number;
+    // Business Context
+    businessProfile?: any;
+    icpProfile?: any;
     productOfferings?: Array<{ name: string; description: string; valueProps?: string }>;
-  }): Promise<FullAnalysisResult>;
+    scoringConfig?: any;
+  }): Promise<{
+    result: FullAnalysisResult;
+    traces: Array<{
+      targetMetric: string;
+      score: number;
+      contributingSignals: string[];
+      evidence: string;
+      confidence: number;
+      modelProvider: string;
+    }>;
+  }>;
 }

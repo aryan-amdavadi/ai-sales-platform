@@ -1,4 +1,9 @@
+import DashboardPage from '@/app/dashboard/page';
 import { prisma } from '@/lib/db/prisma';
+import { safeDecode } from 'better-auth';
+import { addAbortListener } from 'events';
+import { addAbortSignal } from 'stream';
+import { ad } from 'vitest/dist/chunks/reporters.d.BuRON0I0.js';
 
 export interface EnrichmentResult {
   fieldName: string;
@@ -101,7 +106,7 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
   // NORMALIZE
   const normalizedName = lead.name.trim();
   const normalizedEmail = lead.email?.trim().toLowerCase() || null;
-  
+
   if (lead.name !== normalizedName || lead.email !== normalizedEmail) {
     await prisma.lead.update({
       where: { id: lead.id },
@@ -119,7 +124,7 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
         id: { not: lead.id }
       }
     });
-    
+
     if (duplicates.length > 0) {
       await prisma.lead.update({
         where: { id: lead.id },
@@ -130,14 +135,14 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
 
   // ENRICH
   const enrichmentData = await provider.enrichLead(leadId, lead, lead.company);
-  
+
   let leadUpdateData: any = { enrichmentStatus: 'ENRICHED', isVerified: true };
   let companyUpdateData: any = {};
-  
+
   for (const field of enrichmentData) {
     // Only update if we don't already have high confidence data for this field
     const existingProvenance = lead.provenance.find(p => p.fieldName === field.fieldName);
-    
+
     if (!existingProvenance || existingProvenance.confidence <= field.confidence) {
       // Upsert provenance
       await prisma.leadFieldProvenance.upsert({
@@ -162,7 +167,7 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
           inferred: field.inferred
         }
       });
-      
+
       // Update actual data model
       if (['linkedinUrl', 'email', 'phone', 'title', 'name'].includes(field.fieldName)) {
         leadUpdateData[field.fieldName] = field.value;
@@ -179,11 +184,11 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
       data: companyUpdateData
     });
   }
-  
+
   await prisma.lead.update({
     where: { id: lead.id },
     data: leadUpdateData
   });
-  
+
   return { success: true };
 }

@@ -99,6 +99,8 @@ model Workspace {
   activityLogs        ActivityLog[]
   imports             LeadImport[]
   discoveryJobs       DiscoveryJob[]
+  scoringConfig       ScoringConfiguration?
+  decisionTraces      AIDecisionTrace[]
 }
 
 model Company {
@@ -183,6 +185,7 @@ model Lead {
   importRows         LeadImportRow[]
   discoveryResults   DiscoveryResult[]
   provenance         LeadFieldProvenance[]
+  decisionTraces     AIDecisionTrace[]
 }
 
 model Requirement {
@@ -438,4 +441,39 @@ model LeadFieldProvenance {
   updatedAt   DateTime @updatedAt
   
   @@unique([leadId, fieldName])
+}
+
+model ScoringConfiguration {
+  id               String    @id @default(cuid())
+  workspaceId      String    @unique
+  workspace        Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  
+  requirementWeight Int      @default(15)
+  urgencyWeight     Int      @default(15)
+  timelineWeight    Int      @default(15)
+  solutionFitWeight Int      @default(15)
+  decisionMakerWeight Int    @default(10)
+  recencyWeight     Int      @default(10)
+  companyFitWeight  Int      @default(10)
+  buyingStageWeight Int      @default(10)
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model AIDecisionTrace {
+  id                  String    @id @default(cuid())
+  workspaceId         String
+  workspace           Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId              String
+  lead                Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  targetMetric        String    // e.g. "Intent Score", "Solution Fit", "Urgency"
+  score               Int
+  contributingSignals String    // JSON array of strings
+  evidence            String    // Raw text explanation
+  confidence          Int       @default(90)
+  modelProvider       String    @default("LocalDemoAIProvider")
+  
+  createdAt           DateTime  @default(now())
 }

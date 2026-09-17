@@ -101,7 +101,17 @@ export class OllamaProvider implements AIProvider {
     return this.fallbackProvider.generateNextBestAction(analysis, intent, fit, qualification, context);
   }
 
-  async runFullPipeline(params: any): Promise<FullAnalysisResult> {
+  async runFullPipeline(params: any): Promise<{
+    result: FullAnalysisResult;
+    traces: Array<{
+      targetMetric: string;
+      score: number;
+      contributingSignals: string[];
+      evidence: string;
+      confidence: number;
+      modelProvider: string;
+    }>;
+  }> {
     return this.fallbackProvider.runFullPipeline(params);
   }
 }
