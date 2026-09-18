@@ -229,7 +229,7 @@ export async function runSeed() {
         name: campaignNames[i],
         targetAudience: `CTOs & VP Engineering in ${SEED_COMPANIES[i % SEED_COMPANIES.length].industry}`,
         status: i < 3 ? 'ACTIVE' : 'COMPLETED',
-        goal: `Qualify and book executive discovery meetings.`,
+        objective: `Qualify and book executive discovery meetings.`,
         channels: 'Voice AI, Targeted Email, LinkedIn',
       },
     });

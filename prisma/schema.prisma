@@ -109,6 +109,12 @@ model Workspace {
   usageLedger         UsageLedger[]
   invoices            Invoice[]
   notifications       Notification[]
+  auditLogs           AuditLog[]
+  securityEvents      SecurityEvent[]
+  fraudSignals        FraudSignal[]
+  
+  isSuspended         Boolean  @default(false)
+  suspendReason       String?
 }
 
 model Company {
@@ -587,6 +593,7 @@ model Integration {
   encryptedCredentialRef String?
   lastSyncAt             DateTime?
   errorState             String?
+  isDisabled             Boolean   @default(false)
   
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
@@ -697,4 +704,50 @@ model Notification {
   
   createdAt       DateTime @default(now())
 }
+
+// ============================================================================
+// Enterprise Admin, Fraud Detection and Security Controls
+// ============================================================================
+
+model AuditLog {
+  id              String   @id @default(cuid())
+  workspaceId     String?
+  workspace       Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  actor           String   // e.g., userId or "SYSTEM" or "ADMIN"
+  action          String
+  entityType      String
+  entityId        String
+  ipAddress       String?
+  userAgent       String?
+  metadata        String?  // JSON stringified context
+  
+  createdAt       DateTime @default(now())
+}
+
+model SecurityEvent {
+  id              String   @id @default(cuid())
+  workspaceId     String?
+  workspace       Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type            String   // LOGIN_FAILURE, API_ABUSE, RATE_LIMIT, UNUSUAL_VOLUME
+  severity        String   @default("WARNING") // WARNING, CRITICAL
+  description     String
+  ipAddress       String?
+  
+  createdAt       DateTime @default(now())
+}
+
+model FraudSignal {
+  id              String   @id @default(cuid())
+  workspaceId     String?
+  workspace       Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type            String   // ABNORMAL_CALL_VOLUME, DUPLICATE_BULK_IMPORT, REPEATED_API_FAILURES, etc.
+  riskLevel       String   // LOW, MEDIUM, HIGH, CRITICAL
+  status          String   @default("OPEN") // OPEN, ACKNOWLEDGED, RESOLVED
+  description     String
+  metadata        String?  // JSON context
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 

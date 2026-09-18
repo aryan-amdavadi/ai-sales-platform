@@ -1,275 +1,264 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  ShieldCheck,
-  Users,
-  Target,
-  PhoneCall,
-  Megaphone,
-  Clock,
-  Activity,
-  Server,
-  CheckCircle,
-  Search,
-  User,
-  Bot,
-} from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { MetricCard } from '@/components/shared/metric-card';
-import { TableLoadingSkeleton } from '@/components/shared/loading-skeleton';
-import { ErrorState } from '@/components/shared/error-state';
+import { Button } from '@/components/ui/button';
+import { ShieldCheck, Activity, Users, AlertTriangle } from 'lucide-react';
 
 export default function AdminPage() {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('WORKSPACES');
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
-  const [searchLog, setSearchLog] = useState('');
-  const [actionFilter, setActionFilter] = useState('ALL');
-
-  const fetchAdmin = async () => {
+  const fetchData = async (type: string) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      setError(null);
-      const res = await fetch('/api/admin');
-      if (!res.ok) throw new Error('Failed to load system admin data');
+      let endpoint = '';
+      if (type === 'WORKSPACES') endpoint = '/api/admin/security?type=workspaces';
+      else if (type === 'FRAUD') endpoint = '/api/admin/security?type=fraud';
+      else if (type === 'SECURITY') endpoint = '/api/admin/security?type=events';
+      else if (type === 'AUDIT') endpoint = '/api/admin/security?type=audit';
+
+      const res = await fetch(endpoint);
       const json = await res.json();
-      setData(json);
-    } catch (err: any) {
-      setError(err.message || 'Error fetching admin metrics');
+      setData(Array.isArray(json) ? json : []);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAdmin();
-  }, []);
+    fetchData(activeTab);
+  }, [activeTab]);
 
-  if (loading) {
-    return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
-          ADMIN OBSERVABILITY & AUDIT LOGS
-        </h1>
-        <TableLoadingSkeleton rows={6} />
-      </div>
-    );
-  }
-
-  if (error || !data) {
-    return (
-      <div className="space-y-6 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
-          ADMIN OBSERVABILITY & AUDIT LOGS
-        </h1>
-        <ErrorState message={error || 'No admin data'} onRetry={fetchAdmin} />
-      </div>
-    );
-  }
-
-  // Filter logs
-  const logs = data.recentActivity || [];
-  const filteredLogs = logs.filter((log: any) => {
-    const matchesSearch =
-      !searchLog ||
-      log.action.toLowerCase().includes(searchLog.toLowerCase()) ||
-      log.details.toLowerCase().includes(searchLog.toLowerCase()) ||
-      log.lead?.company?.name?.toLowerCase().includes(searchLog.toLowerCase()) ||
-      log.user?.name?.toLowerCase().includes(searchLog.toLowerCase());
-    const matchesAction = actionFilter === 'ALL' || log.action === actionFilter;
-    return matchesSearch && matchesAction;
-  });
+  const handleAction = async (action: string, payload: any) => {
+    setProcessing(true);
+    try {
+      await fetch('/api/admin/security', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, ...payload })
+      });
+      await fetchData(activeTab);
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   return (
-    <div className="space-y-6 pb-16 max-w-7xl mx-auto" data-testid="admin-page">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+    <div className="max-w-7xl mx-auto space-y-6 p-6">
+      <div className="flex items-center gap-3 border-b border-gray-200 pb-4">
+        <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+          <ShieldCheck className="w-6 h-6" />
+        </div>
         <div>
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-100 uppercase">
-                ADMIN OBSERVABILITY & AUDIT LOGS
-              </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
-                System status, infrastructure health, compute utilization, and transactional activity logs.
-              </p>
-            </div>
-          </div>
+          <h1 className="text-2xl font-bold text-gray-900">Enterprise Admin & Security</h1>
+          <p className="text-sm text-gray-500">Manage workspaces, review fraud signals, and audit platform activities.</p>
         </div>
       </div>
 
-      {/* Metric Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        <MetricCard
-          title="Active Users"
-          value={data.users?.length || 2}
-          subtitle="Enterprise Workspace"
-          icon={Users}
-          variant="default"
-        />
-        <MetricCard
-          title="Opportunities"
-          value={data.totalOpportunities}
-          subtitle="In Database"
-          icon={Target}
-          variant="blue"
-        />
-        <MetricCard
-          title="Campaigns"
-          value={data.totalCampaigns}
-          subtitle="Configured ICPs"
-          icon={Megaphone}
-          variant="indigo"
-        />
-        <MetricCard
-          title="Voice Calls"
-          value={data.totalCalls}
-          subtitle="Autonomous Sessions"
-          icon={PhoneCall}
-          variant="emerald"
-        />
-        <MetricCard
-          title="Voice Minutes"
-          value={`${data.totalVoiceMinutes}m`}
-          subtitle="Total Call Time"
-          icon={Clock}
-          variant="amber"
-        />
+      <div className="flex space-x-2 border-b border-gray-200 mb-4">
+        <button
+          className={`px-4 py-2 font-medium text-sm ${activeTab === 'WORKSPACES' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+          onClick={() => setActiveTab('WORKSPACES')}
+        >
+          Workspaces
+        </button>
+        <button
+          className={`px-4 py-2 font-medium text-sm flex items-center gap-2 ${activeTab === 'FRAUD' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+          onClick={() => setActiveTab('FRAUD')}
+        >
+          <AlertTriangle className="w-4 h-4" />
+          Fraud Signals
+        </button>
+        <button
+          className={`px-4 py-2 font-medium text-sm ${activeTab === 'SECURITY' ? 'border-b-2 border-orange-500 text-orange-500' : 'text-gray-500 hover:text-gray-700'}`}
+          onClick={() => setActiveTab('SECURITY')}
+        >
+          Security Events
+        </button>
+        <button
+          className={`px-4 py-2 font-medium text-sm ${activeTab === 'AUDIT' ? 'border-b-2 border-gray-800 text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
+          onClick={() => setActiveTab('AUDIT')}
+        >
+          Audit Logs
+        </button>
       </div>
 
-      {/* Subsystem Operational Status */}
-      <Card className="p-5 bg-slate-900/60 border-slate-800 space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2">
-            <Server className="w-4 h-4 text-blue-400" />
-            <h3 className="text-xs font-semibold text-slate-100 uppercase">
-              Subsystem Operational Telemetry
-            </h3>
-          </div>
-          <span className="text-xs text-emerald-400 font-medium">All Subsystems Operational</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-semibold">DATABASE STATUS</span>
-            <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
-              <CheckCircle className="w-3.5 h-3.5" />
-              <span>{data.systemStatus?.database}</span>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-semibold">VOICE INFERENCE ENGINE</span>
-            <div className="flex items-center gap-1.5 text-blue-400 font-medium">
-              <CheckCircle className="w-3.5 h-3.5" />
-              <span>{data.systemStatus?.voiceEngine}</span>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-semibold">UPTIME & LATENCY</span>
-            <div className="flex items-center gap-1.5 text-slate-200 font-medium">
-              <span>{data.systemStatus?.uptime} &bull; {data.systemStatus?.latencyMs}ms</span>
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      {/* Transactional Audit Log Table */}
-      <div className="space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-400" />
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Activity Logs & Security Audit Trail
-            </h3>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
-              <Search className="w-3.5 h-3.5 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search audit trail..."
-                value={searchLog}
-                onChange={(e) => setSearchLog(e.target.value)}
-                className="bg-transparent text-slate-200 placeholder:text-slate-500 focus:outline-none text-xs w-36 sm:w-48"
-              />
-            </div>
-
-            <select
-              value={actionFilter}
-              onChange={(e) => setActionFilter(e.target.value)}
-              className="bg-slate-900 border border-slate-800 text-slate-200 text-xs p-1 rounded focus:outline-none"
-            >
-              <option value="ALL">All Actions</option>
-              <option value="OPPORTUNITY_ANALYZED">Opportunity Analyzed</option>
-              <option value="CALL_COMPLETED">Call Completed</option>
-              <option value="CRM_PUSH_COMPLETED">CRM Push</option>
-              <option value="HUMAN_HANDOFF_REQUESTED">Human Handoff</option>
-              <option value="CAMPAIGN_CREATED">Campaign Created</option>
-              <option value="SIGNAL_INGESTED">Signal Ingested</option>
-            </select>
-          </div>
-        </div>
-
-        <Card className="bg-slate-900/60 border-slate-800 overflow-x-auto">
-          <table className="w-full text-left text-xs" data-testid="audit-table">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-              <tr>
-                <th className="py-3 px-4">Timestamp</th>
-                <th className="py-3 px-4">Actor</th>
-                <th className="py-3 px-4">Action</th>
-                <th className="py-3 px-4">Entity</th>
-                <th className="py-3 px-4">Result & Details</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60">
-              {filteredLogs.map((act: any) => {
-                const actorName = act.user?.name || (act.action.includes('CALL') || act.action.includes('ANALYZED') ? 'Nova AI Copilot' : 'System Engine');
-                const isAI = actorName.includes('AI') || actorName.includes('Nova');
-
-                return (
-                  <tr key={act.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3 px-4 whitespace-nowrap text-slate-400 text-[11px]">
-                      {new Date(act.createdAt).toLocaleString()}
-                    </td>
-
-                    <td className="py-3 px-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ${
-                        isAI ? 'bg-blue-950/60 text-blue-300 border border-blue-500/30' : 'bg-slate-800 text-slate-200 border border-slate-700'
-                      }`}>
-                        {isAI ? <Bot className="w-3 h-3 text-blue-400" /> : <User className="w-3 h-3 text-slate-400" />}
-                        <span>{actorName}</span>
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-4 whitespace-nowrap">
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 text-[11px] font-medium">
-                        {act.action}
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-medium">
-                      {act.lead?.company?.name ? `${act.lead.company.name} (${act.lead.name || 'Lead'})` : 'System Workspace'}
-                    </td>
-
-                    <td className="py-3 px-4 text-slate-300 text-xs max-w-md">
-                      {act.details}
-                    </td>
+      {loading ? (
+        <div className="p-8 text-center text-gray-500">Loading data...</div>
+      ) : (
+        <Card className="p-0 overflow-hidden">
+          {activeTab === 'WORKSPACES' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase text-xs font-bold">
+                  <tr>
+                    <th className="px-4 py-3">Workspace Name</th>
+                    <th className="px-4 py-3">Created</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Actions</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {data.map((ws) => (
+                    <tr key={ws.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 font-medium text-gray-900">{ws.name} <span className="text-gray-400 font-normal ml-1">({ws.id})</span></td>
+                      <td className="px-4 py-3 text-gray-500">{new Date(ws.createdAt).toLocaleDateString()}</td>
+                      <td className="px-4 py-3">
+                        {ws.isSuspended ? (
+                          <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Suspended</span>
+                        ) : (
+                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Active</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        {ws.isSuspended ? (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            disabled={processing}
+                            onClick={() => handleAction('unsuspendWorkspace', { workspaceId: ws.id })}
+                          >
+                            Unsuspend
+                          </Button>
+                        ) : (
+                          <Button 
+                            variant="destructive" 
+                            size="sm" 
+                            disabled={processing}
+                            onClick={() => handleAction('suspendWorkspace', { workspaceId: ws.id, reason: 'Manual suspension' })}
+                          >
+                            Suspend
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {activeTab === 'FRAUD' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase text-xs font-bold">
+                  <tr>
+                    <th className="px-4 py-3">Signal Type</th>
+                    <th className="px-4 py-3">Risk Level</th>
+                    <th className="px-4 py-3">Description</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {data.map((sig) => (
+                    <tr key={sig.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 font-medium text-gray-900">{sig.type}</td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${sig.riskLevel === 'CRITICAL' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>
+                          {sig.riskLevel}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-500">{sig.description}</td>
+                      <td className="px-4 py-3 text-gray-500">{sig.status}</td>
+                      <td className="px-4 py-3">
+                        {sig.status === 'OPEN' && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            disabled={processing}
+                            onClick={() => handleAction('resolveFraud', { id: sig.id })}
+                          >
+                            Resolve
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {data.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-8 text-center text-gray-500">No fraud signals detected.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {activeTab === 'SECURITY' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase text-xs font-bold">
+                  <tr>
+                    <th className="px-4 py-3">Event Type</th>
+                    <th className="px-4 py-3">Severity</th>
+                    <th className="px-4 py-3">Description</th>
+                    <th className="px-4 py-3">IP Address</th>
+                    <th className="px-4 py-3">Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {data.map((evt) => (
+                    <tr key={evt.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 font-medium text-gray-900">{evt.type}</td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-[10px] font-bold uppercase">
+                          {evt.severity}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-500">{evt.description}</td>
+                      <td className="px-4 py-3 text-gray-500">{evt.ipAddress || 'Unknown'}</td>
+                      <td className="px-4 py-3 text-gray-500">{new Date(evt.createdAt).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                  {data.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-8 text-center text-gray-500">No security events found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {activeTab === 'AUDIT' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase text-xs font-bold">
+                  <tr>
+                    <th className="px-4 py-3">Timestamp</th>
+                    <th className="px-4 py-3">Actor</th>
+                    <th className="px-4 py-3">Action</th>
+                    <th className="px-4 py-3">Entity Type</th>
+                    <th className="px-4 py-3">Entity ID</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {data.map((log) => (
+                    <tr key={log.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-500">{new Date(log.createdAt).toLocaleString()}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">{log.actor}</td>
+                      <td className="px-4 py-3 text-blue-600 font-mono text-xs">{log.action}</td>
+                      <td className="px-4 py-3 text-gray-500">{log.entityType}</td>
+                      <td className="px-4 py-3 text-gray-500 font-mono text-xs">{log.entityId}</td>
+                    </tr>
+                  ))}
+                  {data.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-8 text-center text-gray-500">No audit logs found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </Card>
-      </div>
+      )}
     </div>
   );
 }
-
