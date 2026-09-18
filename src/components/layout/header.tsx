@@ -41,68 +41,52 @@ export function Header({
 }: HeaderProps) {
   const pathname = usePathname();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<NotificationItem[]>([
-    {
-      id: 'notif-1',
-      type: 'HIGH_INTENT',
-      title: 'High-Intent Lead Discovered',
-      message:
-        'TechNova Solutions (John Smith - CTO) scored 94 intent for Microsoft 365 & SharePoint Implementation.',
-      timestamp: '5m ago',
-      link: '/opportunities',
-      read: false,
-    },
-    {
-      id: 'notif-2',
-      type: 'CALL_COMPLETED',
-      title: 'AI Voice Qualification Completed',
-      message: 'John Smith confirmed 30-day procurement window and agreed to scoping call.',
-      timestamp: '15m ago',
-      link: '/calls',
-      read: false,
-    },
-    {
-      id: 'notif-handoff',
-      type: 'HUMAN_HANDOFF',
-      title: 'Human Handoff Available',
-      message:
-        'Live autonomous call with CTO John Smith can be transferred to human sales engineer with one click.',
-      timestamp: '20m ago',
-      link: '/calls',
-      read: false,
-    },
-    {
-      id: 'notif-3',
-      type: 'MEETING_RECOMMENDED',
-      title: 'Meeting Recommended (Hot Lead)',
-      message:
-        'Schedule a technical scoping call for Thursday 2 PM with CTO John Smith ($55,000 pipeline).',
-      timestamp: '25m ago',
-      link: '/opportunities',
-      read: false,
-    },
-    {
-      id: 'notif-4',
-      type: 'CALLBACK_SCHEDULED',
-      title: 'Follow-Up Callback Scheduled',
-      message: 'John Smith requested follow-up on Thursday at 14:00 EST.',
-      timestamp: '40m ago',
-      link: '/calls',
-      read: true,
-    },
-    {
-      id: 'notif-5',
-      type: 'CRM_SYNC',
-      title: 'CRM Push Synchronized',
-      message: 'Opportunity & contact created in Salesforce/HubSpot (CRM-SYNC-819204).',
-      timestamp: '1h ago',
-      link: '/calls',
-      read: true,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch('/api/notifications');
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setNotifications(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch notifications', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 15000); // Polling every 15s
+    return () => clearInterval(interval);
+  }, []);
+
+  const markAllAsRead = async () => {
+    try {
+      await fetch('/api/notifications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'markAllAsRead' }),
+      });
+      setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+      setNotificationsOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const markAsRead = async (id: string) => {
+    try {
+      await fetch(`/api/notifications/${id}`, { method: 'PATCH' });
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const popoverRef = useRef<HTMLDivElement>(null);
-  const unreadCount = notifications.filter((n) => !n.read).length;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -118,9 +102,6 @@ export function Header({
     };
   }, [notificationsOpen]);
 
-  const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-  };
 
   const getPageTitle = (path: string) => {
     if (path.startsWith('/dashboard')) return 'Overview Dashboard';
@@ -238,12 +219,12 @@ export function Header({
                     href={n.link}
                     onClick={() => {
                       setNotifications((prev) =>
-                        prev.map((item) => (item.id === n.id ? { ...item, read: true } : item))
+                        prev.map((item) => (item.id === n.id ? { ...item, isRead: true } : item))
                       );
                       setNotificationsOpen(false);
                     }}
                     className={`block p-2.5 rounded-lg border transition-all ${
-                      n.read
+                      n.isRead
                         ? 'bg-slate-50/70 border-slate-200/80 text-slate-500 hover:bg-slate-100/80'
                         : 'bg-blue-50/70 border-blue-200/70 text-slate-800 hover:bg-blue-100/70'
                     }`}

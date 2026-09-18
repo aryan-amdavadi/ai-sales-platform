@@ -17,6 +17,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  notifications Notification[]
   
   // Custom fields
   role          String    @default("SALES_REP")
@@ -104,6 +105,10 @@ model Workspace {
   scoringConfig       ScoringConfiguration?
   decisionTraces      AIDecisionTrace[]
   integrations        Integration[]
+  subscription        WorkspaceSubscription?
+  usageLedger         UsageLedger[]
+  invoices            Invoice[]
+  notifications       Notification[]
 }
 
 model Company {
@@ -606,5 +611,90 @@ model SyncLog {
   
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+// ============================================================================
+// Platform Operations: Subscriptions, Billing, Usage, Notifications
+// ============================================================================
+
+model SubscriptionPlan {
+  id                  String   @id @default(cuid())
+  name                String   @unique // Starter, Growth, Enterprise
+  priceMonthly        Float
+  contactLimit        Int
+  aiVoiceMinuteLimit  Int
+  discoveryLimit      Int
+  campaignLimit       Int
+  teamMemberLimit     Int
+  integrationLimit    Int
+  exportLimit         Int
+  
+  subscriptions       WorkspaceSubscription[]
+}
+
+model WorkspaceSubscription {
+  id              String   @id @default(cuid())
+  workspaceId     String   @unique
+  workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  planId          String
+  plan            SubscriptionPlan @relation(fields: [planId], references: [id])
+  
+  status          String   @default("ACTIVE") // ACTIVE, PAST_DUE, CANCELED, TRIAL
+  startDate       DateTime @default(now())
+  currentPeriodEnd DateTime
+  cancelAtPeriodEnd Boolean @default(false)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model UsageLedger {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  
+  billingPeriodId String   // Identifier for the month/billing period (e.g. 2026-09)
+  type            String   // VOICE_MINUTES, DISCOVERED_LEADS, ENRICHED_LEADS, AI_ANALYSIS, IMPORTS, CRM_SYNC
+  amount          Float
+  description     String?
+  
+  createdAt       DateTime @default(now())
+  
+  @@index([workspaceId, billingPeriodId, type])
+}
+
+model Invoice {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  
+  billingPeriodId String
+  amount          Float
+  currency        String   @default("USD")
+  status          String   @default("DRAFT") // DRAFT, PAID, VOID, FAILED
+  usageSummary    String?  // JSON snapshot of usage for this invoice
+  
+  issuedAt        DateTime @default(now())
+  paidAt          DateTime?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Notification {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  type            String   // HIGH_INTENT, CALL_COMPLETED, MEETING_BOOKED, USAGE_LIMIT, BILLING, etc.
+  severity        String   @default("INFO") // INFO, WARNING, ERROR, SUCCESS
+  title           String
+  message         String
+  link            String?  // Optional URL or deep link
+  isRead          Boolean  @default(false)
+  
+  createdAt       DateTime @default(now())
 }
 

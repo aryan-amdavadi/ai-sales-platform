@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
 import { AVAILABLE_SCENARIOS, HERO_SCENARIO_EN } from '@/lib/voice/scenarios';
+import { checkUsageLimit } from '@/lib/billing/usage';
+import { createNotification } from '@/lib/notifications';
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,6 +23,21 @@ export async function POST(req: NextRequest) {
 
     if (!lead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+    }
+
+    const workspaceId = 'ws-1'; // Hardcoded for demo
+    const usageCheck = await checkUsageLimit(workspaceId, 'VOICE_MINUTES', 1);
+    if (!usageCheck.allowed) {
+      // Create notification
+      await createNotification(
+        workspaceId,
+        'USAGE_LIMIT',
+        'Voice Minute Limit Reached',
+        `You have exceeded your plan's voice minute limit of ${usageCheck.limit} minutes. Please upgrade your plan to continue using AI voice calls.`,
+        'ERROR',
+        '/settings/billing'
+      );
+      return NextResponse.json({ error: 'Voice minute limit reached. Please upgrade your plan.' }, { status: 402 });
     }
 
     // Create call record with IN_PROGRESS

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { processCompletedCall } from '@/lib/voice/intelligence';
+import { appendUsage } from '@/lib/billing/usage';
 
 export async function POST(
   req: NextRequest,
@@ -17,6 +18,9 @@ export async function POST(
       turns,
       scenarioId,
     });
+
+    const workspaceId = 'ws-1'; // Hardcoded for demo
+    await appendUsage(workspaceId, 'VOICE_MINUTES', Math.ceil(durationSeconds / 60), 'Completed AI outbound call');
 
     return NextResponse.json({
       success: true,
