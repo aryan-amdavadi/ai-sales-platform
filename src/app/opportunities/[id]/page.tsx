@@ -35,6 +35,7 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge } from '@/components/shared/status-badge';
 import { DetailLoadingSkeleton } from '@/components/shared/loading-skeleton';
 import { ErrorState } from '@/components/shared/error-state';
+import { OpportunityGraph } from '@/components/opportunities/opportunity-graph';
 
 export default function OpportunityDetailPage() {
   const params = useParams();
@@ -356,6 +357,10 @@ export default function OpportunityDetailPage() {
             </span>
           </Button>
         </div>
+      </div>
+
+      <div className="mb-6">
+        <OpportunityGraph opportunity={opportunity} />
       </div>
 
       {/* Main Grid Content */}

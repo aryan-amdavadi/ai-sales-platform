@@ -191,6 +191,11 @@ export async function getOpportunityById(id: string) {
       activityLogs: {
         orderBy: { createdAt: 'desc' },
       },
+      enrollments: {
+        include: {
+          campaign: true,
+        },
+      },
     },
   });
 }
