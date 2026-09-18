@@ -36,6 +36,7 @@ import { StatusBadge } from '@/components/shared/status-badge';
 import { DetailLoadingSkeleton } from '@/components/shared/loading-skeleton';
 import { ErrorState } from '@/components/shared/error-state';
 import { OpportunityGraph } from '@/components/opportunities/opportunity-graph';
+import { FusedSignalCard } from '@/components/opportunities/fused-signal-card';
 
 export default function OpportunityDetailPage() {
   const params = useParams();
@@ -367,6 +368,8 @@ export default function OpportunityDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* LEFT COLUMN: Core Analysis, Evidence, Company Intelligence & Sales Brief */}
         <div className="lg:col-span-8 space-y-6">
+          <FusedSignalCard opportunity={opportunity} />
+          
           {/* Public Requirement & Evidence Panel */}
           <Card className="p-5 bg-white border-[#DCE5EF] space-y-4 rounded-md shadow-sm" data-testid="evidence-panel">
             <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-3">
