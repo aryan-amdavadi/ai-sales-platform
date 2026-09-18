@@ -1,0 +1,233 @@
+
+Running 2 tests using 2 workers
+
+  pw:api => browserType.launch started +0ms
+  pw:api => browserType.launch started +0ms
+  pw:api <= browserType.launch succeeded +425ms
+  pw:api <= browserType.launch succeeded +411ms
+  pw:api => browser.newContext started +5ms
+  pw:api => browser.newContext started +6ms
+  pw:api <= browser.newContext succeeded +28ms
+  pw:api <= browser.newContext succeeded +28ms
+  pw:api => browserContext.newPage started +3ms
+  pw:api => browserContext.newPage started +3ms
+  pw:api <= browserContext.newPage succeeded +228ms
+  pw:api <= browserContext.newPage succeeded +229ms
+  pw:api => page.goto started +3ms
+  pw:api navigating to "http://localhost:3000/opportunities", waiting until "load" +1ms
+  pw:api => page.goto started +4ms
+  pw:api navigating to "http://localhost:3000/opportunities", waiting until "load" +2ms
+  pw:api   "commit" event fired +1s
+  pw:api   navigated to "http://localhost:3000/opportunities" +1ms
+  pw:api   "commit" event fired +1s
+  pw:api   navigated to "http://localhost:3000/opportunities" +0ms
+  pw:api   "domcontentloaded" event fired +230ms
+  pw:api   "domcontentloaded" event fired +268ms
+  pw:api   "load" event fired +1s
+  pw:api <= page.goto succeeded +2ms
+  pw:api   "load" event fired +1s
+  pw:api <= page.goto succeeded +67ms
+  pw:api => expect.toBeVisible started +133ms
+  pw:api Expect "toBeVisible" with timeout 15000ms +2ms
+  pw:api waiting for locator('text=OPPORTUNITY EXPLORER') +1ms
+  pw:api => expect.toBeVisible started +32ms
+  pw:api Expect "toBeVisible" with timeout 15000ms +2ms
+  pw:api waiting for locator('text=OPPORTUNITY EXPLORER') +1ms
+  pw:api <= expect.toBeVisible succeeded +109ms
+  pw:api => expect.toBeVisible started +8ms
+  pw:api Expect "toBeVisible" with timeout 15000ms +0ms
+  pw:api waiting for locator('[data-testid="opportunities-table"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +170ms
+  pw:api => expect.toBeVisible started +6ms
+  pw:api Expect "toBeVisible" with timeout 15000ms +20ms
+  pw:api waiting for locator('[data-testid="search-input"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +104ms
+  pw:api => locator.fill started +9ms
+  pw:api waiting for locator('[data-testid="search-input"]') +2ms
+  pw:api <= expect.toBeVisible succeeded +47ms
+  pw:api => locator.fill started +4ms
+  pw:api waiting for locator('[data-testid="search-input"]') +4ms
+  pw:api   locator resolved to <input value="" type="text" data-testid="search-input" placeholder="Search by prospect name, title, company, or requirement keyword..." class="flex w-full border px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 pl-9 h-9 bg-white/90 border-slate-200/90 text-slate-800 text-xs placeholder:text-slate-400 focus-visible:ring-blue-500 font-sans font-medium roun…/> +13ms
+  pw:api   fill("TechNova") +15ms
+  pw:api attempting fill action +4ms
+  pw:api   waiting for element to be visible, enabled and editable +12ms
+  pw:api   locator resolved to <input value="" type="text" data-testid="search-input" placeholder="Search by prospect name, title, company, or requirement keyword..." class="flex w-full border px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 pl-9 h-9 bg-white/90 border-slate-200/90 text-slate-800 text-xs placeholder:text-slate-400 focus-visible:ring-blue-500 font-sans font-medium roun…/> +87ms
+  pw:api   fill("TechNova") +29ms
+  pw:api attempting fill action +6ms
+  pw:api   waiting for element to be visible, enabled and editable +4ms
+  pw:api   navigated to "http://localhost:3000/opportunities" +7ms
+  pw:api   navigated to "http://localhost:3000/opportunities" +140ms
+  pw:api <= locator.fill succeeded +228ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 10000ms +1ms
+  pw:api waiting for locator('text=TechNova Solutions').first() +0ms
+  pw:api <= locator.fill succeeded +339ms
+  pw:api => expect.toBeVisible started +3ms
+  pw:api Expect "toBeVisible" with timeout 10000ms +1ms
+  pw:api waiting for locator('text=TechNova Solutions').first() +1ms
+[WebServer] 2026-09-18T18:18:15.578Z WARN [Better Auth]: [better-auth] Base URL is not set. Set the baseURL option or BETTER_AUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.
+  pw:api   locator resolved to <span>TechNova Solutions</span> +5s
+  pw:api <= expect.toBeVisible succeeded +0ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for locator('text=Review').first() +1ms
+  pw:api   locator resolved to <span>Review</span> +5ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +1ms
+  pw:api   locator resolved to <span>TechNova Solutions</span> +5s
+  pw:api <= expect.toBeVisible succeeded +0ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for locator('text=Review').first() +0ms
+  pw:api   locator resolved to <span>Review</span> +6ms
+  pw:api attempting click action +3ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +104ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +7ms
+  pw:api   element is visible, enabled and stable +164ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +3ms
+  pw:api   performing click action +4ms
+  pw:api   click action done +23ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +1ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 10000ms +1ms
+  pw:api waiting for locator('[data-testid="opportunity-detail"]') +0ms
+  pw:api   click action done +38ms
+  pw:api   waiting for scheduled navigations to finish +2ms
+  pw:api   navigations have finished +16ms
+  pw:api <= locator.click succeeded +7ms
+  pw:api => expect.toBeVisible started +3ms
+  pw:api Expect "toBeVisible" with timeout 10000ms +1ms
+  pw:api waiting for locator('[data-testid="opportunity-detail"]') +0ms
+[WebServer] 2026-09-18T18:18:18.324Z WARN [Better Auth]: [better-auth] Base URL is not set. Set the baseURL option or BETTER_AUTH_URL env, or use a dynamic baseURL with allowedHosts for multi-host setups. Without it the origin is derived from the incoming request, and callbacks and redirects may not work correctly.
+  pw:api   navigated to "http://localhost:3000/opportunities/cmu78y5r3002boqnzcmmawb6d" +5s
+  pw:api   navigated to "http://localhost:3000/opportunities/cmu78y5r3002boqnzcmmawb6d" +5s
+  pw:api   locator resolved to <div class="space-y-6 p-6" data-testid="opportunity-detail">…</div> +83ms
+  pw:api <= expect.toBeVisible succeeded +5ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +0ms
+  pw:api waiting for locator('[data-testid="intent-score"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +2ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +0ms
+  pw:api waiting for locator('[data-testid="evidence-panel"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +1ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +0ms
+  pw:api waiting for locator('[data-testid="sales-brief"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +2ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +2ms
+  pw:api waiting for locator('[data-testid="next-best-action"]') +1ms
+  pw:api <= expect.toBeVisible succeeded +2ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +2ms
+  pw:api waiting for locator('[data-testid="call-action"]') +0ms
+  pw:api   locator resolved to <div class="space-y-6 p-6" data-testid="opportunity-detail">…</div> +155ms
+  pw:api <= expect.toBeVisible succeeded +0ms
+  pw:api <= expect.toBeVisible succeeded +3ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +1ms
+  pw:api waiting for locator('text=TechNova Solutions').first() +0ms
+  pw:api => browserContext.close started +11ms
+  pw:api <= browserContext.close succeeded +13ms
+  ✓  2 [chromium] › tests/e2e/opportunities.spec.ts:4:7 › Opportunities Explorer & AI Intelligence Detail › loads opportunity table, searches, and filters (13.8s)
+  pw:api => browser.close started +33ms
+  pw:api <= browser.close succeeded +48ms
+  pw:api   locator resolved to <h1 class="text-2xl font-bold tracking-tight text-[#10233F]">TechNova Solutions</h1> +3s
+  pw:api <= expect.toBeVisible succeeded +0ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +0ms
+  pw:api waiting for locator('[data-testid="analyze-btn"]') +0ms
+  pw:api <= expect.toBeVisible succeeded +2ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for locator('[data-testid="analyze-btn"]') +1ms
+  pw:api   locator resolved to <button data-testid="analyze-btn" class="justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow-sm rounded-md px-3 h-8 text-xs font-semibold bg-[#10233F] hover:bg-[#163A5F] text-white flex items-center gap-1.5">…</button> +3ms
+  pw:api attempting click action +4ms
+  pw:api   waiting for element to be visible, enabled and stable +1ms
+  pw:api   element is visible, enabled and stable +43ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +4ms
+  pw:api   click action done +75ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +2ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +0ms
+  pw:api waiting for locator('[data-testid="opportunity-detail"]').locator('text=94').first() +1ms
+  pw:api <= expect.toBeVisible succeeded +9ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +2ms
+  pw:api waiting for locator('text=Why This Lead?').first() +0ms
+  pw:api <= expect.toBeVisible succeeded +7ms
+  pw:api => expect.toBeVisible started +2ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +2ms
+  pw:api waiting for locator('text=BANT Qualification Engine').first() +0ms
+  pw:api <= expect.toBeVisible succeeded +10ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +2ms
+  pw:api waiting for locator('text=HOT QUALIFIED').first() +0ms
+  pw:api <= expect.toBeVisible succeeded +8ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +1ms
+  pw:api waiting for locator('[data-testid="generate-brief-btn"]') +0ms
+  pw:api <= expect.toBeVisible succeeded +3ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for locator('[data-testid="generate-brief-btn"]') +0ms
+  pw:api   locator resolved to <button disabled data-testid="generate-brief-btn" class="justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border shadow-sm rounded-md px-3 h-8 text-xs border-[#2563EB]/30 bg-[#EFF6FF] hover:bg-[#2563EB]/10 text-[#2563EB] flex items-center gap-1.5 font-semibold">…</button> +3ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is not enabled +103ms
+  pw:api retrying click action +0ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is not enabled +149ms
+  pw:api retrying click action +0ms
+  pw:api   waiting 20ms +0ms
+  pw:api   waiting for element to be visible, enabled and stable +24ms
+  pw:api   element is not enabled +75ms
+  pw:api retrying click action +0ms
+  pw:api   waiting 100ms +1ms
+  pw:api   waiting for element to be visible, enabled and stable +101ms
+  pw:api   element is not enabled +89ms
+  pw:api retrying click action +0ms
+  pw:api   waiting 100ms +0ms
+  pw:api   waiting for element to be visible, enabled and stable +101ms
+  pw:api   element is not enabled +79ms
+  pw:api retrying click action +0ms
+  pw:api   waiting 500ms +0ms
+  pw:api   waiting for element to be visible, enabled and stable +505ms
+  pw:api   element is not enabled +63ms
+  pw:api retrying click action +0ms
+  pw:api   waiting 500ms +0ms
+  pw:api   waiting for element to be visible, enabled and stable +505ms
+  pw:api element was detached from the DOM, retrying +68ms
+  pw:api   locator resolved to <button data-testid="generate-brief-btn" class="justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border shadow-sm rounded-md px-3 h-8 text-xs border-[#2563EB]/30 bg-[#EFF6FF] hover:bg-[#2563EB]/10 text-[#2563EB] flex items-center gap-1.5 font-semibold">…</button> +26ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +73ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +3ms
+  pw:api   performing click action +4ms
+  pw:api   click action done +81ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +4ms
+  pw:api <= locator.click succeeded +0ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +1ms
+  pw:api waiting for locator('text=Core Pain Points & Friction Points').first() +0ms
+  pw:api <= expect.toBeVisible succeeded +7ms
+  pw:api => expect.toBeVisible started +1ms
+  pw:api Expect "toBeVisible" with timeout 5000ms +1ms
+  pw:api waiting for locator('text=Anticipated Objections & Counter-Strategies').first() +0ms
+  pw:api <= expect.toBeVisible succeeded +13ms
+  pw:api => browserContext.close started +7ms
+  pw:api <= browserContext.close succeeded +9ms
+  ✓  1 [chromium] › tests/e2e/opportunities.spec.ts:30:7 › Opportunities Explorer & AI Intelligence Detail › hero opportunity detail runs AI Analysis and Sales Brief actions (18.9s)
+  pw:api => browser.close started +11ms
+  pw:api <= browser.close succeeded +75ms
+
+  2 passed (30.8s)

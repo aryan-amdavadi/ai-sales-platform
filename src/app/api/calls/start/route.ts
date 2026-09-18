@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
 
-    const workspaceId = 'ws-1'; // Hardcoded for demo
+    const workspaceId = lead.workspaceId;
     const usageCheck = await checkUsageLimit(workspaceId, 'VOICE_MINUTES', 1);
     if (!usageCheck.allowed) {
       // Create notification
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     // Create call record with IN_PROGRESS
     const call = await prisma.call.create({
-      data: { workspaceId: "dummy", 
+      data: { workspaceId: lead.workspaceId, 
         leadId: lead.id,
         campaignId: campaignId || null,
         status: 'IN_PROGRESS',
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     // Log Activity
     await prisma.activityLog.create({
-      data: { workspaceId: "dummy", 
+      data: { workspaceId: lead.workspaceId, 
         leadId: lead.id,
         action: 'AI_CALL_STARTED',
         details: `Autonomous AI Sales Call initiated with ${lead.name} (${lead.title}) at ${lead.company.name}.`,

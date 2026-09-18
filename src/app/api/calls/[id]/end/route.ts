@@ -19,7 +19,12 @@ export async function POST(
       scenarioId,
     });
 
-    const workspaceId = 'ws-1'; // Hardcoded for demo
+    let workspaceId = 'ws-1';
+    try {
+      const lead = await import('@/lib/db/prisma').then(m => m.prisma.lead.findUnique({ where: { id: leadId } }));
+      if (lead?.workspaceId) workspaceId = lead.workspaceId;
+    } catch (e) {}
+
     await appendUsage(workspaceId, 'VOICE_MINUTES', Math.ceil(durationSeconds / 60), 'Completed AI outbound call');
 
     return NextResponse.json({

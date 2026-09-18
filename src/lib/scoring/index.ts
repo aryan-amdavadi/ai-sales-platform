@@ -153,8 +153,8 @@ export async function getOpportunities(params: LeadFilterParams, workspaceId: st
     prisma.lead.findMany({
       where,
       orderBy,
-      take: params.limit || 50,
-      skip: params.offset || 0,
+      take: params.limit ? Number(params.limit) : 50,
+      skip: params.offset ? Number(params.offset) : 0,
       include: {
         company: true,
         source: true,

@@ -9,7 +9,13 @@ export async function POST(
     const { id } = await params;
     const body = await req.json().catch(() => ({}));
     const leadId = body.leadId || 'lead-hero-101';
-    const workspaceId = body.workspaceId || 'ws-1';
+    let workspaceId = body.workspaceId;
+
+    if (!workspaceId) {
+      const lead = await import('@/lib/db/prisma').then(m => m.prisma.lead.findUnique({ where: { id: leadId } }));
+      workspaceId = lead?.workspaceId;
+    }
+    if (!workspaceId) workspaceId = 'ws-1';
 
     const crmProvider = await getCRMProvider(workspaceId);
     const result = await crmProvider.pushLead(leadId);

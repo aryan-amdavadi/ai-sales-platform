@@ -22,9 +22,12 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command: 'IS_E2E=true npm run start',
     url: 'http://localhost:3000',
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120 * 1000,
+    env: {
+      IS_E2E: 'true',
+    },
   },
 });

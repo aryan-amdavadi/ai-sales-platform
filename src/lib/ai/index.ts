@@ -275,7 +275,8 @@ export async function regenerateSalesBrief(leadId: string): Promise<SalesBrief> 
   });
 
   await prisma.activityLog.create({
-      data: { workspaceId: "dummy",  
+    data: { 
+      workspaceId: lead.workspaceId,
       leadId: lead.id,
       action: 'SALES_BRIEF_GENERATED',
       details: `Generated contextual pre-call sales brief and objection strategies for ${lead.name} at ${lead.company.name}.`,

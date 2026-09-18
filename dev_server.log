@@ -1,0 +1,24 @@
+
+> intentos-sales-platform@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.2.0
+   - Local:        http://localhost:3000
+   - Network:      http://10.249.227.147:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 3.1s
+ ✓ Compiled /middleware in 260ms (100 modules)
+ ○ Compiling /discover ...
+ ✓ Compiled /discover in 3.4s (945 modules)
+ GET /discover 200 in 3712ms
+ ✓ Compiled in 520ms (444 modules)
+ GET /discover 200 in 17ms
+ ○ Compiling / ...
+ ✓ Compiled / in 930ms (924 modules)
+ GET / 307 in 1339ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 560ms (960 modules)
+ GET /dashboard 200 in 841ms
+[?25h
