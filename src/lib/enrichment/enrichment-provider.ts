@@ -136,8 +136,8 @@ export async function executeEnrichmentPipeline(leadId: string, provider: Enrich
   // ENRICH
   const enrichmentData = await provider.enrichLead(leadId, lead, lead.company);
 
-  let leadUpdateData: any = { enrichmentStatus: 'ENRICHED', isVerified: true };
-  let companyUpdateData: any = {};
+  const leadUpdateData: any = { enrichmentStatus: 'ENRICHED', isVerified: true };
+  const companyUpdateData: any = {};
 
   for (const field of enrichmentData) {
     // Only update if we don't already have high confidence data for this field

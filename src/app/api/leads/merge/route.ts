@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     }
 
     // Merge missing data based on provenance confidence
-    let updateData: any = {};
+    const updateData: any = {};
     for (const secProv of secondary.provenance) {
       const primProv = primary.provenance.find((p: any) => p.fieldName === secProv.fieldName);
       

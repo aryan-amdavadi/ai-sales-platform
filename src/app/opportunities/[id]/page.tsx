@@ -26,6 +26,9 @@ import {
   MessageSquare,
   Clock,
   ShieldCheck,
+  Cloud,
+  CloudOff,
+  RefreshCw,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -50,6 +53,7 @@ export default function OpportunityDetailPage() {
   const [enriching, setEnriching] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [callingState, setCallingState] = useState<'idle' | 'calling' | 'connected'>('idle');
+  const [syncingCrm, setSyncingCrm] = useState(false);
 
   const fetchOpportunity = async () => {
     try {
@@ -141,6 +145,24 @@ export default function OpportunityDetailPage() {
   const handleTriggerCall = () => {
     setCallingState('calling');
     router.push(`/calls?leadId=${id}&start=true`);
+  };
+
+  const handlePushToCrm = async () => {
+    try {
+      setSyncingCrm(true);
+      const res = await fetch('/api/integrations/crm/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId: id })
+      });
+      if (!res.ok) throw new Error('Failed to sync to CRM');
+      await fetchOpportunity();
+      showToast('Successfully synchronized with CRM.');
+    } catch (err: any) {
+      showToast(`CRM Sync error: ${err.message}`);
+    } finally {
+      setSyncingCrm(false);
+    }
   };
 
   if (loading) {
@@ -858,6 +880,56 @@ export default function OpportunityDetailPage() {
                 <StatusBadge status={opportunity.source?.platform || 'LINKEDIN'} type="source" />
               </div>
             </div>
+          </Card>
+
+          {/* CRM Integration Card */}
+          <Card className="p-4 bg-white border-[#DCE5EF] space-y-3 rounded-md shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#DCE5EF] pb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wide text-[#64748B] flex items-center gap-1.5">
+                <Cloud className="w-3.5 h-3.5" /> CRM Integration
+              </h4>
+              {opportunity.crmStatus === 'SYNCED' ? (
+                <span className="flex items-center gap-1 text-[10px] bg-[#DCFCE7] text-[#16A34A] px-2 py-0.5 rounded font-bold border border-[#16A34A]/20">
+                  <CheckCircle2 className="w-3 h-3" /> SYNCED
+                </span>
+              ) : opportunity.crmStatus === 'FAILED' ? (
+                <span className="flex items-center gap-1 text-[10px] bg-[#FEE2E2] text-[#DC2626] px-2 py-0.5 rounded font-bold border border-[#DC2626]/20">
+                  <AlertCircle className="w-3 h-3" /> FAILED
+                </span>
+              ) : (
+                <span className="flex items-center gap-1 text-[10px] bg-[#F1F5F9] text-[#64748B] px-2 py-0.5 rounded font-bold border border-[#64748B]/20">
+                  <CloudOff className="w-3 h-3" /> NOT CONNECTED
+                </span>
+              )}
+            </div>
+
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between items-center text-[#475569]">
+                <span>External ID:</span>
+                <span className="font-mono text-[#10233F] font-semibold">{opportunity.crmExternalId || '--'}</span>
+              </div>
+              <div className="flex justify-between items-center text-[#475569]">
+                <span>Last Sync:</span>
+                <span className="text-[#10233F] font-medium">
+                  {opportunity.crmLastSyncAt ? new Date(opportunity.crmLastSyncAt).toLocaleString() : '--'}
+                </span>
+              </div>
+            </div>
+
+            <Button
+              onClick={handlePushToCrm}
+              disabled={syncingCrm}
+              className="w-full text-xs h-8 mt-2 bg-[#F7F9FC] border border-[#DCE5EF] text-[#10233F] hover:bg-[#E2E8F0] hover:text-[#0F172A]"
+              variant="outline"
+            >
+              {syncingCrm ? (
+                <span className="flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5 animate-spin" /> Syncing...</span>
+              ) : opportunity.crmStatus === 'SYNCED' ? (
+                <span className="flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5" /> Sync Update</span>
+              ) : (
+                <span className="flex items-center gap-1.5"><Cloud className="w-3.5 h-3.5" /> Push to CRM</span>
+              )}
+            </Button>
           </Card>
 
           {/* Signal & Activity Log Timeline */}

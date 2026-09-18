@@ -103,6 +103,7 @@ model Workspace {
   discoveryJobs       DiscoveryJob[]
   scoringConfig       ScoringConfiguration?
   decisionTraces      AIDecisionTrace[]
+  integrations        Integration[]
 }
 
 model Company {
@@ -190,6 +191,12 @@ model Lead {
   decisionTraces     AIDecisionTrace[]
   callbacks          Callback[]
   enrollments        CampaignEnrollment[]
+  
+  // CRM Integration Fields
+  crmIntegrationId   String?
+  crmStatus          String           @default("NOT_CONNECTED") // NOT_CONNECTED, PENDING, SYNCING, SYNCED, FAILED
+  crmExternalId      String?
+  crmLastSyncAt      DateTime?
 }
 
 model Requirement {
@@ -564,3 +571,40 @@ model AIDecisionTrace {
   
   createdAt           DateTime  @default(now())
 }
+
+model Integration {
+  id                     String    @id @default(cuid())
+  workspaceId            String
+  workspace              Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  provider               String    // SALESFORCE, HUBSPOT, DEMO_CRM
+  status                 String    @default("DISCONNECTED") // CONNECTED, DISCONNECTED, ERROR
+  externalAccountId      String?
+  encryptedCredentialRef String?
+  lastSyncAt             DateTime?
+  errorState             String?
+  
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  
+  syncLogs               SyncLog[]
+  
+  @@unique([workspaceId, provider])
+}
+
+model SyncLog {
+  id            String      @id @default(cuid())
+  workspaceId   String
+  integrationId String
+  integration   Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  
+  entityType    String      // LEAD, COMPANY, OPPORTUNITY, CALL
+  entityId      String
+  externalId    String?
+  status        String      @default("PENDING") // PENDING, SYNCING, SYNCED, FAILED, RETRYING
+  errorDetails  String?
+  payload       String?     // JSON of what was sent/received
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+

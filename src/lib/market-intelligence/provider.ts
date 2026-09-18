@@ -43,7 +43,7 @@ export class DeterministicMarketIntelligenceProvider implements MarketIntelligen
     }
 
     // Base score calculation
-    let baseScore = Math.min(100, totalRelevance);
+    const baseScore = Math.min(100, totalRelevance);
     
     // Time decay: highly relevant signals from a long time ago decay.
     // For deterministic provider, we just cap it and write a rationale.
