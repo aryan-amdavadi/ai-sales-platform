@@ -202,6 +202,7 @@ model Lead {
   decisionTraces     AIDecisionTrace[]
   callbacks          Callback[]
   enrollments        CampaignEnrollment[]
+  followUpPlans      FollowUpPlan[]
   
   // CRM Integration Fields
   crmIntegrationId   String?
@@ -332,6 +333,7 @@ model Call {
 
   attempts        CallAttempt[]
   callbacks       Callback[]
+  followUpPlans   FollowUpPlan[]
 
   createdAt       DateTime    @default(now())
 }
@@ -361,6 +363,25 @@ model Callback {
   status          String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model FollowUpPlan {
+  id              String    @id @default(cuid())
+  leadId          String
+  lead            Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  callId          String?
+  call            Call?     @relation(fields: [callId], references: [id], onDelete: SetNull)
+  
+  action          String    // SCHEDULE_MEETING, CALLBACK, RETRY_CALL, SEND_CONTENT, ROUTE_TO_SALES, STOP_CAMPAIGN, SUPPRESS_OUTREACH
+  scheduledFor    DateTime?
+  reason          String
+  channel         String    @default("VOICE")
+  owner           String    @default("AI_AGENT")
+  expectedOutcome String
+  status          String    @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Transcript {

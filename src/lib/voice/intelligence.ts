@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db/prisma';
 import { ConversationAnalysis, CallTurn } from '@/types/voice';
 import { HERO_SCENARIO_EN } from './scenarios';
+import { generateFollowUpPlan } from '@/lib/scoring/planner';
 
 export async function processCompletedCall(params: {
   callId: string;
@@ -191,6 +192,13 @@ export async function processCompletedCall(params: {
         analysis,
       }),
     },
+  });
+
+  // 3. Generate Follow-Up Plan
+  await generateFollowUpPlan({
+    callId,
+    leadId,
+    analysis,
   });
 
   return {

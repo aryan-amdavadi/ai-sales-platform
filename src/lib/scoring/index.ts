@@ -196,6 +196,10 @@ export async function getOpportunityById(id: string) {
           campaign: true,
         },
       },
+      followUpPlans: {
+        orderBy: { createdAt: 'desc' },
+        take: 1,
+      },
     },
   });
 }
